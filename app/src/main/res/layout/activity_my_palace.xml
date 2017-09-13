@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/empty_background">
+
+    <com.example.charles.concentrationpalace.FindSelectedItem
+        android:id="@+id/flower1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/flower1"/>
+
+    <com.example.charles.concentrationpalace.FindSelectedItem
+        android:id="@+id/stone1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/stone1"/>
+
+    <com.example.charles.concentrationpalace.FindSelectedItem
+        android:id="@+id/tree1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tree1"/>
+
+    <com.example.charles.concentrationpalace.FindSelectedItem
+        android:id="@+id/house1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/house1"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/share_button"
+            android:background="@android:drawable/ic_menu_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/slot1_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/start_build_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:drawable/btn_default"
+            android:gravity="center"
+            android:text="@string/start_build_button"
+            android:textSize="20sp"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:id="@+id/countdown_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/palace_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:drawable/btn_default"
+            android:gravity="center"
+            android:text="@string/palace_back_button"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+</FrameLayout>
