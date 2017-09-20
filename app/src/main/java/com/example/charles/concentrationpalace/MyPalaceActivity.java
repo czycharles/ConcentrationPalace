@@ -95,6 +95,14 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         }
         setContentView(R.layout.activity_my_palace);
 
+        Button AD_button = (Button) findViewById(R.id.AD_button);
+
+        AD_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+            }
+            });
+
         flowerImage = (FindSelectedItem)findViewById(R.id.flower1);
         treeImage = (FindSelectedItem)findViewById(R.id.tree1);
         stoneImage = (FindSelectedItem)findViewById(R.id.stone1);
@@ -114,67 +122,81 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 
         flower_slot1 = data.getInt("slot1", 1);
-        switch(flower_slot1) {
-            case 1:
-                flowerImage.setBackgroundResource(R.drawable.flower1);
-                break;
-            case 2:
-                flowerImage.setBackgroundResource(R.drawable.flower2);
-                break;
-            case 3:
-                flowerImage.setBackgroundResource(R.drawable.flower3);
-                break;
-            default:
-                flowerImage.setBackgroundResource(R.drawable.flower3);
+        slot1_crash = data.getBoolean("slot1_crash", false);
+        if(slot1_crash)
+            flowerImage.setBackgroundResource(R.drawable.flower_crush);
+        else {
+            switch (flower_slot1) {
+                case 1:
+                    flowerImage.setBackgroundResource(R.drawable.flower1);
+                    break;
+                case 2:
+                    flowerImage.setBackgroundResource(R.drawable.flower2);
+                    break;
+                case 3:
+                    flowerImage.setBackgroundResource(R.drawable.flower3);
+                    break;
+                default:
+                    flowerImage.setBackgroundResource(R.drawable.flower3);
+            }
         }
-
         tree_slot2 = data.getInt("slot2", 1);
-        switch(tree_slot2) {
-            case 1:
-                treeImage.setBackgroundResource(R.drawable.tree1);
-                break;
-            case 2:
-                treeImage.setBackgroundResource(R.drawable.tree2);
-                break;
-            case 3:
-                treeImage.setBackgroundResource(R.drawable.tree3);
-                break;
-            default:
-                treeImage.setBackgroundResource(R.drawable.tree3);
+        slot2_crash = data.getBoolean("slot2_crash", false);
+        if(slot2_crash)
+            treeImage.setBackgroundResource(R.drawable.tree_crush);
+        else {
+            switch (tree_slot2) {
+                case 1:
+                    treeImage.setBackgroundResource(R.drawable.tree1);
+                    break;
+                case 2:
+                    treeImage.setBackgroundResource(R.drawable.tree2);
+                    break;
+                case 3:
+                    treeImage.setBackgroundResource(R.drawable.tree3);
+                    break;
+                default:
+                    treeImage.setBackgroundResource(R.drawable.tree3);
+            }
         }
         stone_slot3 = data.getInt("slot3", 1);
-        switch(stone_slot3) {
-            case 1:
-                stoneImage.setBackgroundResource(R.drawable.stone1);
-                break;
-            case 2:
-                stoneImage.setBackgroundResource(R.drawable.stone2);
-                break;
-            case 3:
-                stoneImage.setBackgroundResource(R.drawable.stone3);
-                break;
-            default:
-                stoneImage.setBackgroundResource(R.drawable.stone3);
+        slot3_crash = data.getBoolean("slot3_crash", false);
+        if(slot3_crash)
+            stoneImage.setBackgroundResource(R.drawable.stone_crush);
+        else {
+            switch (stone_slot3) {
+                case 1:
+                    stoneImage.setBackgroundResource(R.drawable.stone1);
+                    break;
+                case 2:
+                    stoneImage.setBackgroundResource(R.drawable.stone2);
+                    break;
+                case 3:
+                    stoneImage.setBackgroundResource(R.drawable.stone3);
+                    break;
+                default:
+                    stoneImage.setBackgroundResource(R.drawable.stone3);
+            }
         }
         house_slot4 = data.getInt("slot4", 1);
-        switch(house_slot4) {
-            case 1:
-                houseImage.setBackgroundResource(R.drawable.house1);
-                break;
-            case 2:
-                houseImage.setBackgroundResource(R.drawable.house2);
-                break;
-            case 3:
-                houseImage.setBackgroundResource(R.drawable.house3);
-                break;
-            default:
-                houseImage.setBackgroundResource(R.drawable.house3);
-        }
-
-        slot1_crash = data.getBoolean("slot1_crash", false);
-        slot2_crash = data.getBoolean("slot2_crash", false);
-        slot3_crash = data.getBoolean("slot3_crash", false);
         slot4_crash = data.getBoolean("slot4_crash", false);
+        if(slot4_crash)
+            houseImage.setBackgroundResource(R.drawable.house_crush);
+        else {
+            switch (house_slot4) {
+                case 1:
+                    houseImage.setBackgroundResource(R.drawable.house1);
+                    break;
+                case 2:
+                    houseImage.setBackgroundResource(R.drawable.house2);
+                    break;
+                case 3:
+                    houseImage.setBackgroundResource(R.drawable.house3);
+                    break;
+                default:
+                    houseImage.setBackgroundResource(R.drawable.house3);
+            }
+        }
 
         slot1_show = (TextView)findViewById(R.id.slot1_state);
         if(slot1_crash)
@@ -201,13 +223,36 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     failAlert.setPositiveButton("退出", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface failAlert, int i) {
-                            Toast.makeText(MyPalaceActivity.this, "抱歉，你使用了手机，位置1已经坍塌。", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MyPalaceActivity.this, "抱歉，你使用了手机，位置" + building_slot + "已经坍塌。", Toast.LENGTH_LONG).show();
+                            slot1_show.setText("位置" + building_slot + "目前是废墟状态，点击开始观看一段广告来复原你的建筑");
                             mc.cancel();
-                            slot1_crash = true;
-                            editor.putBoolean("slot1_crash", slot1_crash);
-                            editor.apply();
+                            switch (building_slot) {
+                                case 1:
+                                    slot1_crash = true;
+                                    editor.putBoolean("slot1_crash", slot1_crash);
+                                    editor.apply();
+                                    flowerImage.setBackgroundResource(R.drawable.flower_crush);
+                                    break;
+                                case 2:
+                                    slot2_crash = true;
+                                    editor.putBoolean("slot2_crash", slot2_crash);
+                                    editor.apply();
+                                    treeImage.setBackgroundResource(R.drawable.tree_crush);
+                                    break;
+                                case 3:
+                                    slot3_crash = true;
+                                    editor.putBoolean("slot3_crash", slot3_crash);
+                                    editor.apply();
+                                    stoneImage.setBackgroundResource(R.drawable.stone_crush);
+                                    break;
+                                case 4:
+                                    slot4_crash = true;
+                                    editor.putBoolean("slot4_crash", slot4_crash);
+                                    editor.apply();
+                                    houseImage.setBackgroundResource(R.drawable.house_crush);
+                                    break;
+                            }
                             building_slot = 0;
-                            slot1_show.setText("位置1目前是废墟状态，点击开始观看一段广告来复原你的建筑");
                             int version = Integer.valueOf(Build.VERSION.SDK_INT);
                             if(version > 5 ){
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -291,15 +336,31 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 }
                 else if (slot1_crash) {
                     AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                    ADAlert.setMessage("好了，现在假设你看完了广告");
-                    ADAlert.setCancelable(false);
-                    ADAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    ADAlert.setTitle("观看一段广告来清除掉废墟？");
+                    ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                    ADAlert.setCancelable(true);
+                    ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface ADAlert, int i) {
+                            //开始播放广告
                             slot1_crash = false;
                             editor.putBoolean("slot1_crash", slot1_crash);
                             editor.apply();
                             slot1_show.setText("位置1目前建造到了状态：" + flower_slot1);
+                            switch (flower_slot1) {
+                                case 1:
+                                    flowerImage.setBackgroundResource(R.drawable.flower1);
+                                    break;
+                                case 2:
+                                    flowerImage.setBackgroundResource(R.drawable.flower2);
+                                    break;
+                                case 3:
+                                    flowerImage.setBackgroundResource(R.drawable.flower3);
+                                    break;
+                                default:
+                                    flowerImage.setBackgroundResource(R.drawable.flower1);
+                                    break;
+                            }
                             tv.setVisibility(View.GONE);
                         }
                     });
@@ -354,15 +415,31 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 }
                 else if(slot4_crash){
                     AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                    ADAlert.setMessage("好了，现在假设你看完了广告");
-                    ADAlert.setCancelable(false);
-                    ADAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    ADAlert.setTitle("观看一段广告来清除掉废墟？");
+                    ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                    ADAlert.setCancelable(true);
+                    ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface ADAlert, int i) {
-                            slot1_crash = false;
+                            //开始播放广告
+                            slot4_crash = false;
                             editor.putBoolean("slot4_crash", slot4_crash);
                             editor.apply();
                             slot1_show.setText("位置4目前建造到了状态："+ house_slot4);
+                            switch (house_slot4) {
+                                case 1:
+                                    houseImage.setBackgroundResource(R.drawable.house1);
+                                    break;
+                                case 2:
+                                    houseImage.setBackgroundResource(R.drawable.house2);
+                                    break;
+                                case 3:
+                                    houseImage.setBackgroundResource(R.drawable.house3);
+                                    break;
+                                default:
+                                    houseImage.setBackgroundResource(R.drawable.house1);
+                                    break;
+                            }
                             tv.setVisibility(View.GONE);
                         }
                     });
@@ -417,15 +494,31 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 }
                 else if(slot3_crash){
                     AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                    ADAlert.setMessage("好了，现在假设你看完了广告");
-                    ADAlert.setCancelable(false);
-                    ADAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    ADAlert.setTitle("观看一段广告来清除掉废墟？");
+                    ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                    ADAlert.setCancelable(true);
+                    ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface ADAlert, int i) {
-                            slot1_crash = false;
+                            //开始播放广告
+                            slot3_crash = false;
                             editor.putBoolean("slot3_crash", slot3_crash);
                             editor.apply();
                             slot1_show.setText("位置3目前建造到了状态："+ stone_slot3);
+                            switch (stone_slot3) {
+                                case 1:
+                                    stoneImage.setBackgroundResource(R.drawable.stone1);
+                                    break;
+                                case 2:
+                                    stoneImage.setBackgroundResource(R.drawable.stone2);
+                                    break;
+                                case 3:
+                                    stoneImage.setBackgroundResource(R.drawable.stone3);
+                                    break;
+                                default:
+                                    stoneImage.setBackgroundResource(R.drawable.stone1);
+                                    break;
+                            }
                             tv.setVisibility(View.GONE);
                         }
                     });
@@ -477,17 +570,33 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 if(building_slot > 0) {
                     Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
                 }
-                else if(slot3_crash){
+                else if(slot2_crash){
                     AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                    ADAlert.setMessage("好了，现在假设你看完了广告");
-                    ADAlert.setCancelable(false);
-                    ADAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    ADAlert.setTitle("观看一段广告来清除掉废墟？");
+                    ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                    ADAlert.setCancelable(true);
+                    ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface ADAlert, int i) {
-                            slot1_crash = false;
+                            //开始播放广告
+                            slot2_crash = false;
                             editor.putBoolean("slot2_crash", slot2_crash);
                             editor.apply();
                             slot1_show.setText("位置2目前建造到了状态："+ tree_slot2);
+                            switch (tree_slot2) {
+                                case 1:
+                                    treeImage.setBackgroundResource(R.drawable.tree1);
+                                    break;
+                                case 2:
+                                    treeImage.setBackgroundResource(R.drawable.tree2);
+                                    break;
+                                case 3:
+                                    treeImage.setBackgroundResource(R.drawable.tree3);
+                                    break;
+                                default:
+                                    treeImage.setBackgroundResource(R.drawable.tree1);
+                                    break;
+                            }
                             tv.setVisibility(View.GONE);
                         }
                     });
@@ -496,7 +605,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 else {
                     if (next_building_time == -1) {
                         Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
-                    } else {
+                    }
+                    else {
                         AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
                         BuildAlert.setTitle("升级禅院的树？");
                         BuildAlert.setMessage("建造花费30金币，需要保持" + next_building_time / 1000 + "秒的专注。");
@@ -530,75 +640,85 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 
         flower_slot1 = data.getInt("slot1", 1);
-        switch(flower_slot1) {
-            case 1:
-                flowerImage.setBackgroundResource(R.drawable.flower1);
-                break;
-            case 2:
-                flowerImage.setBackgroundResource(R.drawable.flower2);
-                break;
-            case 3:
-                flowerImage.setBackgroundResource(R.drawable.flower3);
-                break;
-            default:
-                flowerImage.setBackgroundResource(R.drawable.flower3);
+        slot1_crash = data.getBoolean("slot1_crash", false);
+        if(slot1_crash)
+            flowerImage.setBackgroundResource(R.drawable.flower_crush);
+        else {
+            switch (flower_slot1) {
+                case 1:
+                    flowerImage.setBackgroundResource(R.drawable.flower1);
+                    break;
+                case 2:
+                    flowerImage.setBackgroundResource(R.drawable.flower2);
+                    break;
+                case 3:
+                    flowerImage.setBackgroundResource(R.drawable.flower3);
+                    break;
+                default:
+                    flowerImage.setBackgroundResource(R.drawable.flower3);
+            }
         }
-
         tree_slot2 = data.getInt("slot2", 1);
-        switch(tree_slot2) {
-            case 1:
-                flowerImage.setBackgroundResource(R.drawable.tree1);
-                break;
-            case 2:
-                flowerImage.setBackgroundResource(R.drawable.tree2);
-                break;
-            case 3:
-                flowerImage.setBackgroundResource(R.drawable.tree3);
-                break;
-            default:
-                flowerImage.setBackgroundResource(R.drawable.tree3);
+        slot2_crash = data.getBoolean("slot2_crash", false);
+        if(slot2_crash)
+            treeImage.setBackgroundResource(R.drawable.tree_crush);
+        else {
+            switch (tree_slot2) {
+                case 1:
+                    treeImage.setBackgroundResource(R.drawable.tree1);
+                    break;
+                case 2:
+                    treeImage.setBackgroundResource(R.drawable.tree2);
+                    break;
+                case 3:
+                    treeImage.setBackgroundResource(R.drawable.tree3);
+                    break;
+                default:
+                    treeImage.setBackgroundResource(R.drawable.tree3);
+            }
         }
         stone_slot3 = data.getInt("slot3", 1);
-        switch(stone_slot3) {
-            case 1:
-                flowerImage.setBackgroundResource(R.drawable.stone1);
-                break;
-            case 2:
-                flowerImage.setBackgroundResource(R.drawable.stone2);
-                break;
-            case 3:
-                flowerImage.setBackgroundResource(R.drawable.stone3);
-                break;
-            default:
-                flowerImage.setBackgroundResource(R.drawable.stone3);
+        slot3_crash = data.getBoolean("slot3_crash", false);
+        if(slot3_crash)
+            stoneImage.setBackgroundResource(R.drawable.stone_crush);
+        else {
+            switch (stone_slot3) {
+                case 1:
+                    stoneImage.setBackgroundResource(R.drawable.stone1);
+                    break;
+                case 2:
+                    stoneImage.setBackgroundResource(R.drawable.stone2);
+                    break;
+                case 3:
+                    stoneImage.setBackgroundResource(R.drawable.stone3);
+                    break;
+                default:
+                    stoneImage.setBackgroundResource(R.drawable.stone3);
+            }
         }
         house_slot4 = data.getInt("slot4", 1);
-        switch(house_slot4) {
-            case 1:
-                flowerImage.setBackgroundResource(R.drawable.house1);
-                break;
-            case 2:
-                flowerImage.setBackgroundResource(R.drawable.house2);
-                break;
-            case 3:
-                flowerImage.setBackgroundResource(R.drawable.house3);
-                break;
-            default:
-                flowerImage.setBackgroundResource(R.drawable.house3);
+        slot4_crash = data.getBoolean("slot4_crash", false);
+        if(slot4_crash)
+            houseImage.setBackgroundResource(R.drawable.house_crush);
+        else {
+            switch (house_slot4) {
+                case 1:
+                    houseImage.setBackgroundResource(R.drawable.house1);
+                    break;
+                case 2:
+                    houseImage.setBackgroundResource(R.drawable.house2);
+                    break;
+                case 3:
+                    houseImage.setBackgroundResource(R.drawable.house3);
+                    break;
+                default:
+                    houseImage.setBackgroundResource(R.drawable.house3);
+            }
         }
 
-        slot1_crash = data.getBoolean("slot1_crash", false);
-        slot2_crash = data.getBoolean("slot2_crash", false);
-        slot3_crash = data.getBoolean("slot3_crash", false);
-        slot4_crash = data.getBoolean("slot4_crash", false);
 
         slot1_show = (TextView)findViewById(R.id.slot1_state);
-        if(slot1_crash) {
-            slot1_show.setText("位置1目前是废墟状态，点击开始观看一段广告来复原你的建筑");
-            tv.setVisibility(View.VISIBLE);
-            tv.setText("抱歉，你使用了手机，位置1已经坍塌。");
-        }
-        else if(building_slot > 0) {
+        if(building_slot > 0) {
             tv.setText("请等待30秒(" + mc.returnLeftTime() / 1000 + ")...");
         }
         else {
@@ -617,32 +737,33 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             failAlert.setPositiveButton("退出", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface failAlert, int i) {
-                    Toast.makeText(MyPalaceActivity.this, "抱歉，你使用了手机，专注宫殿已经坍塌。", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyPalaceActivity.this, "抱歉，你使用了手机，位置" + building_slot + "已经坍塌。", Toast.LENGTH_LONG).show();
+                    slot1_show.setText("位置" + building_slot + "目前是废墟状态，点击开始观看一段广告来复原你的建筑");
                     mc.cancel();
-                    switch (building_slot){
+                    switch (building_slot) {
                         case 1:
                             slot1_crash = true;
                             editor.putBoolean("slot1_crash", slot1_crash);
                             editor.apply();
-                            slot1_show.setText("位置1目前是废墟状态，点击开始观看一段广告来复原你的建筑");
+                            flowerImage.setBackgroundResource(R.drawable.flower_crush);
                             break;
                         case 2:
                             slot2_crash = true;
                             editor.putBoolean("slot2_crash", slot2_crash);
                             editor.apply();
-                            slot1_show.setText("位置2目前是废墟状态，点击开始观看一段广告来复原你的建筑");
+                            treeImage.setBackgroundResource(R.drawable.tree_crush);
                             break;
                         case 3:
                             slot3_crash = true;
                             editor.putBoolean("slot3_crash", slot3_crash);
                             editor.apply();
-                            slot1_show.setText("位置3目前是废墟状态，点击开始观看一段广告来复原你的建筑");
+                            stoneImage.setBackgroundResource(R.drawable.stone_crush);
                             break;
                         case 4:
-                            slot3_crash = true;
+                            slot4_crash = true;
                             editor.putBoolean("slot4_crash", slot4_crash);
                             editor.apply();
-                            slot1_show.setText("位置4目前是废墟状态，点击开始观看一段广告来复原你的建筑");
+                            houseImage.setBackgroundResource(R.drawable.house_crush);
                             break;
                     }
                     building_slot = 0;
@@ -675,35 +796,35 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         if (level == TRIM_MEMORY_UI_HIDDEN) {
             mc.cancel();
             tv.setVisibility(View.GONE);
-            switch (building_slot){
+            Toast.makeText(MyPalaceActivity.this, "抱歉，你使用了手机，位置" + building_slot + "已经坍塌。", Toast.LENGTH_LONG).show();
+            switch (building_slot) {
                 case 1:
                     slot1_crash = true;
                     editor.putBoolean("slot1_crash", slot1_crash);
                     editor.apply();
-                    slot1_show.setText("位置1目前是废墟状态，点击开始观看一段广告来复原你的建筑");
+                    flowerImage.setBackgroundResource(R.drawable.flower_crush);
                     break;
                 case 2:
                     slot2_crash = true;
                     editor.putBoolean("slot2_crash", slot2_crash);
                     editor.apply();
-                    slot1_show.setText("位置2目前是废墟状态，点击开始观看一段广告来复原你的建筑");
+                    treeImage.setBackgroundResource(R.drawable.tree_crush);
                     break;
                 case 3:
                     slot3_crash = true;
                     editor.putBoolean("slot3_crash", slot3_crash);
                     editor.apply();
-                    slot1_show.setText("位置3目前是废墟状态，点击开始观看一段广告来复原你的建筑");
+                    stoneImage.setBackgroundResource(R.drawable.stone_crush);
                     break;
                 case 4:
-                    slot3_crash = true;
+                    slot4_crash = true;
                     editor.putBoolean("slot4_crash", slot4_crash);
                     editor.apply();
-                    slot1_show.setText("位置4目前是废墟状态，点击开始观看一段广告来复原你的建筑");
+                    houseImage.setBackgroundResource(R.drawable.house_crush);
                     break;
             }
             building_slot = 0;
             finish();
-            Toast.makeText(MyPalaceActivity.this, "抱歉，你使用了手机，正在建造的部分已经坍塌。", Toast.LENGTH_LONG).show();
         }
         super.onTrimMemory(level);
     }
