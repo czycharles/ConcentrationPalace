@@ -31,6 +31,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     private MyCount mc;
     private TextView slot1_show;
     private TextView tv;
+    private TextView coin_display;
 
     private FindSelectedItem flowerImage;
     private FindSelectedItem treeImage;
@@ -66,7 +67,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     SharedPreferences data;
     SharedPreferences.Editor editor;
     DataCleanManager clean = new DataCleanManager();
-    TextView coin_display = (TextView)findViewById(R.id.coin_bar);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         setContentView(R.layout.activity_my_palace);
 
         Button AD_button = (Button) findViewById(R.id.AD_button);
+        TextView coin_display = (TextView)findViewById(R.id.coin_bar);
 
         AD_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +114,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 
         my_coin = data.getInt("my_coin", origin_coin);
+        coin_display = (TextView)findViewById(R.id.coin_bar);
         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
 
         flower_slot1 = data.getInt("slot1", 1);
@@ -305,8 +308,11 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         });
     }
 
+
     @Override
     public void onClick(View v) {
+
+        coin_display = (TextView)findViewById(R.id.coin_bar);
 
         switch (v.getId()) {
 
