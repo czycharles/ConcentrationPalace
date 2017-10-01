@@ -42,7 +42,7 @@ public class ScreenShot {
     }
     // 保存到sdcard
     private static void savePic(Bitmap b, String strFileName) {
-        FileOutputStream fos = null;
+        FileOutputStream fos;
         try {
             fos = new FileOutputStream(strFileName);
             if (null != fos) {
@@ -52,8 +52,10 @@ public class ScreenShot {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            Log.d("savePic","success1");
         } catch (IOException e) {
             e.printStackTrace();
+            Log.d("savePic","success");
         }
     }
     // 程序入口

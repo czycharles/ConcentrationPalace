@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -87,7 +88,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         setContentView(R.layout.activity_my_palace);
 
         Button AD_button = (Button) findViewById(R.id.AD_button);
-        TextView coin_display = (TextView)findViewById(R.id.coin_bar);
 
         AD_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -283,12 +283,13 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 ScreenShot.shoot(MyPalaceActivity.this);
                 File f = new File("sdcard/Share.png");
 
-                if(checkInstallation("com.tencent.mm")) {
+                if(true) {
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_SEND);
                     if (f.exists() && f.isFile()) {
                         intent.setType("image/*");
-                        Uri u = Uri.fromFile(f);
+                        //Uri u = Uri.fromFile(f);
+                        Uri u = FileProvider.getUriForFile(MyPalaceActivity.this, getPackageName() + ".fileprovider", f);
                         intent.putExtra(Intent.EXTRA_STREAM, u);
                         intent.putExtra(Intent.EXTRA_SUBJECT, "专注禅院");
                         intent.putExtra(Intent.EXTRA_TEXT, "我在专注禅院保持了专注");
@@ -785,7 +786,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
     @Override
     public void onTrimMemory(int level) {
-        if (level == TRIM_MEMORY_UI_HIDDEN) {
+        if ((level == TRIM_MEMORY_UI_HIDDEN)&&(building_slot > 0)) {
             mc.cancel();
             tv.setVisibility(View.GONE);
             Toast.makeText(MyPalaceActivity.this, "抱歉，你使用了手机，位置" + building_slot + "已经坍塌。", Toast.LENGTH_LONG).show();
