@@ -1,32 +1,25 @@
 package com.example.charles.concentrationpalace;
 
 
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 import android.os.CountDownTimer;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 
 /**
@@ -49,21 +42,13 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     int stone_slot3 = 1;
     int house_slot4 = 1;
 
-    int slot1_build_time_1 = 15000;
-    int slot1_build_time_2 = 25000;
-    int slot1_build_time_3 = 35000;
+    int slot1_build_time[] = {15000, 25000, 25000};
 
-    int slot2_build_time_1 = 15000;
-    int slot2_build_time_2 = 25000;
-    int slot2_build_time_3 = 35000;
+    int slot2_build_time[] = {15000, 25000, 35000};
 
-    int slot3_build_time_1 = 10000;
-    int slot3_build_time_2 = 15000;
-    int slot3_build_time_3 = 20000;
+    int slot3_build_time[] = {10000, 15000, 20000};
 
-    int slot4_build_time_1 = 5000;
-    int slot4_build_time_2 = 10000;
-    int slot4_build_time_3 = 15000;
+    int slot4_build_time[] = {5000, 10000, 15000};
 
     int next_building_time = 84000;
 
@@ -74,9 +59,14 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     boolean slot3_crash = false;
     boolean slot4_crash = false;
 
+    int origin_coin = 200;
+    int my_coin;
+    int price_matrix[][] = {{50,100,150},{100,200,300},{150,250,350},{200,350,500}};
+
     SharedPreferences data;
     SharedPreferences.Editor editor;
     DataCleanManager clean = new DataCleanManager();
+    TextView coin_display = (TextView)findViewById(R.id.coin_bar);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +111,9 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         data = getSharedPreferences("data", MODE_PRIVATE);
         editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 
+        my_coin = data.getInt("my_coin", origin_coin);
+        coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+
         flower_slot1 = data.getInt("slot1", 1);
         slot1_crash = data.getBoolean("slot1_crash", false);
         if(slot1_crash)
@@ -137,7 +130,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     flowerImage.setBackgroundResource(R.drawable.flower3);
                     break;
                 default:
-                    flowerImage.setBackgroundResource(R.drawable.flower3);
+                    flowerImage.setBackgroundResource(R.drawable.flower1);
             }
         }
         tree_slot2 = data.getInt("slot2", 1);
@@ -156,7 +149,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     treeImage.setBackgroundResource(R.drawable.tree3);
                     break;
                 default:
-                    treeImage.setBackgroundResource(R.drawable.tree3);
+                    treeImage.setBackgroundResource(R.drawable.tree1);
             }
         }
         stone_slot3 = data.getInt("slot3", 1);
@@ -175,7 +168,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     stoneImage.setBackgroundResource(R.drawable.stone3);
                     break;
                 default:
-                    stoneImage.setBackgroundResource(R.drawable.stone3);
+                    stoneImage.setBackgroundResource(R.drawable.stone1);
             }
         }
         house_slot4 = data.getInt("slot4", 1);
@@ -194,7 +187,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     houseImage.setBackgroundResource(R.drawable.house3);
                     break;
                 default:
-                    houseImage.setBackgroundResource(R.drawable.house3);
+                    houseImage.setBackgroundResource(R.drawable.house1);
             }
         }
 
@@ -229,31 +222,31 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                             switch (building_slot) {
                                 case 1:
                                     slot1_crash = true;
-                                    editor.putBoolean("slot1_crash", slot1_crash);
+                                    editor.putBoolean("slot1_crash", true);
                                     editor.apply();
                                     flowerImage.setBackgroundResource(R.drawable.flower_crush);
                                     break;
                                 case 2:
                                     slot2_crash = true;
-                                    editor.putBoolean("slot2_crash", slot2_crash);
+                                    editor.putBoolean("slot2_crash", true);
                                     editor.apply();
                                     treeImage.setBackgroundResource(R.drawable.tree_crush);
                                     break;
                                 case 3:
                                     slot3_crash = true;
-                                    editor.putBoolean("slot3_crash", slot3_crash);
+                                    editor.putBoolean("slot3_crash", true);
                                     editor.apply();
                                     stoneImage.setBackgroundResource(R.drawable.stone_crush);
                                     break;
                                 case 4:
                                     slot4_crash = true;
-                                    editor.putBoolean("slot4_crash", slot4_crash);
+                                    editor.putBoolean("slot4_crash", true);
                                     editor.apply();
                                     houseImage.setBackgroundResource(R.drawable.house_crush);
                                     break;
                             }
                             building_slot = 0;
-                            int version = Integer.valueOf(Build.VERSION.SDK_INT);
+                            int version = Build.VERSION.SDK_INT;
                             if(version > 5 ){
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                             }
@@ -269,7 +262,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     failAlert.show();
                 }
                 else{
-                    int version = Integer.valueOf(Build.VERSION.SDK_INT);
+                    int version = Build.VERSION.SDK_INT;
                     if(version > 5 ){
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     }
@@ -290,7 +283,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 if(checkInstallation("com.tencent.mm")) {
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_SEND);
-                    if (f != null && f.exists() && f.isFile()) {
+                    if (f.exists() && f.isFile()) {
                         intent.setType("image/*");
                         Uri u = Uri.fromFile(f);
                         intent.putExtra(Intent.EXTRA_STREAM, u);
@@ -316,21 +309,11 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     public void onClick(View v) {
 
         switch (v.getId()) {
+
             case R.id.flower1:
-                switch (flower_slot1) {
-                    case 1:
-                        next_building_time = slot1_build_time_1;
-                        break;
-                    case 2:
-                        next_building_time = slot1_build_time_2;
-                        break;
-                    case 3:
-                        next_building_time = slot1_build_time_3;
-                        break;
-                    default:
-                        next_building_time = -1;
-                        break;
-                }
+
+                next_building_time = slot1_build_time[flower_slot1-1];
+
                 if (building_slot > 0) {
                     Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
                 }
@@ -344,7 +327,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                         public void onClick(DialogInterface ADAlert, int i) {
                             //开始播放广告
                             slot1_crash = false;
-                            editor.putBoolean("slot1_crash", slot1_crash);
+                            editor.putBoolean("slot1_crash", false);
                             editor.apply();
                             slot1_show.setText("位置1目前建造到了状态：" + flower_slot1);
                             switch (flower_slot1) {
@@ -373,16 +356,25 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     else {
                         AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
                         BuildAlert.setTitle("升级建造禅院的花朵？");
-                        BuildAlert.setMessage("建造花费30金币，需要保持" + next_building_time / 1000 + "秒的专注。");
+                        BuildAlert.setMessage("建造花费" + price_matrix[0][flower_slot1-1] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
                         BuildAlert.setCancelable(false);
                         BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface BuildAlert, int i) {
-                                mc = new MyCount(next_building_time, 1000);
-                                mc.start();
-                                building_slot = 1;
-                                tv.setVisibility(View.VISIBLE);
-                                Toast.makeText(MyPalaceActivity.this, "位置1已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                if (my_coin < price_matrix[0][flower_slot1 - 1]) {
+                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    mc = new MyCount(next_building_time, 1000);
+                                    mc.start();
+                                    building_slot = 1;
+                                    my_coin = my_coin - price_matrix[0][flower_slot1 - 1];
+                                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                    editor.putInt("my_coin", my_coin);
+                                    editor.apply();
+                                    tv.setVisibility(View.VISIBLE);
+                                    Toast.makeText(MyPalaceActivity.this, "位置1已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
                         BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -396,20 +388,9 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 }
                 break;
             case R.id.house1:
-                switch (house_slot4) {
-                    case 1:
-                        next_building_time = slot4_build_time_1;
-                        break;
-                    case 2:
-                        next_building_time = slot4_build_time_2;
-                        break;
-                    case 3:
-                        next_building_time = slot4_build_time_3;
-                        break;
-                    default:
-                        next_building_time = -1;
-                        break;
-                }
+
+                next_building_time = slot4_build_time[house_slot4-1];
+
                 if(building_slot > 0) {
                     Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
                 }
@@ -452,16 +433,25 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     else {
                         AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
                         BuildAlert.setTitle("升级建造禅院？");
-                        BuildAlert.setMessage("建造花费30金币，需要保持" + next_building_time / 1000 + "秒的专注。");
+                        BuildAlert.setMessage("建造花费" + price_matrix[3][house_slot4-1] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
                         BuildAlert.setCancelable(false);
                         BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface BuildAlert, int i) {
-                                mc = new MyCount(next_building_time, 1000);
-                                mc.start();
-                                building_slot = 4;
-                                tv.setVisibility(View.VISIBLE);
-                                Toast.makeText(MyPalaceActivity.this, "位置4已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                if (my_coin < price_matrix[3][house_slot4 - 1]) {
+                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    mc = new MyCount(next_building_time, 1000);
+                                    mc.start();
+                                    building_slot = 4;
+                                    my_coin = my_coin - price_matrix[3][house_slot4 - 1];
+                                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                    editor.putInt("my_coin", my_coin);
+                                    editor.apply();
+                                    tv.setVisibility(View.VISIBLE);
+                                    Toast.makeText(MyPalaceActivity.this, "位置4已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
                         BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -475,20 +465,9 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 }
                 break;
             case R.id.stone1:
-                switch (stone_slot3) {
-                    case 1:
-                        next_building_time = slot3_build_time_1;
-                        break;
-                    case 2:
-                        next_building_time = slot3_build_time_2;
-                        break;
-                    case 3:
-                        next_building_time = slot3_build_time_3;
-                        break;
-                    default:
-                        next_building_time = -1;
-                        break;
-                }
+
+                    next_building_time = slot3_build_time[stone_slot3-1];
+
                 if(building_slot > 0) {
                     Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
                 }
@@ -530,16 +509,25 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     } else {
                         AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
                         BuildAlert.setTitle("升级建造禅院的岩石？");
-                        BuildAlert.setMessage("建造花费30金币，需要保持" + next_building_time / 1000 + "秒的专注。");
+                        BuildAlert.setMessage("建造花费" + price_matrix[2][stone_slot3-1] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
                         BuildAlert.setCancelable(false);
                         BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface BuildAlert, int i) {
-                                mc = new MyCount(next_building_time, 1000);
-                                mc.start();
-                                building_slot = 3;
-                                tv.setVisibility(View.VISIBLE);
-                                Toast.makeText(MyPalaceActivity.this, "位置3已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                if (my_coin < price_matrix[2][stone_slot3-1]) {
+                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    mc = new MyCount(next_building_time, 1000);
+                                    mc.start();
+                                    building_slot = 3;
+                                    my_coin = my_coin - price_matrix[2][stone_slot3-1];
+                                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                    editor.putInt("my_coin", my_coin);
+                                    editor.apply();
+                                    tv.setVisibility(View.VISIBLE);
+                                    Toast.makeText(MyPalaceActivity.this, "位置3已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
                         BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -553,20 +541,9 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 }
                 break;
             case R.id.tree1:
-                switch (tree_slot2) {
-                    case 1:
-                        next_building_time = slot2_build_time_1;
-                        break;
-                    case 2:
-                        next_building_time = slot2_build_time_2;
-                        break;
-                    case 3:
-                        next_building_time = slot2_build_time_3;
-                        break;
-                    default:
-                        next_building_time = -1;
-                        break;
-                }
+
+                next_building_time = slot2_build_time[tree_slot2-1];
+
                 if(building_slot > 0) {
                     Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
                 }
@@ -609,16 +586,25 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     else {
                         AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
                         BuildAlert.setTitle("升级禅院的树？");
-                        BuildAlert.setMessage("建造花费30金币，需要保持" + next_building_time / 1000 + "秒的专注。");
+                        BuildAlert.setMessage("建造花费" + price_matrix[1][tree_slot2-1] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
                         BuildAlert.setCancelable(false);
                         BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface BuildAlert, int i) {
-                                mc = new MyCount(next_building_time, 1000);
-                                mc.start();
-                                building_slot = 2;
-                                tv.setVisibility(View.VISIBLE);
-                                Toast.makeText(MyPalaceActivity.this, "位置2已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                if (my_coin < price_matrix[1][tree_slot2-1]) {
+                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                                }
+                                else {
+                                    mc = new MyCount(next_building_time, 1000);
+                                    mc.start();
+                                    building_slot = 2;
+                                    my_coin = my_coin - price_matrix[1][tree_slot2-1];
+                                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                    editor.putInt("my_coin", my_coin);
+                                    editor.apply();
+                                    tv.setVisibility(View.VISIBLE);
+                                    Toast.makeText(MyPalaceActivity.this, "位置2已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
                         BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -637,7 +623,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     protected void onRestart(){
         super.onRestart();
         data = getSharedPreferences("data", MODE_PRIVATE);
-        editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+        ///editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 
         flower_slot1 = data.getInt("slot1", 1);
         slot1_crash = data.getBoolean("slot1_crash", false);
@@ -743,31 +729,31 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     switch (building_slot) {
                         case 1:
                             slot1_crash = true;
-                            editor.putBoolean("slot1_crash", slot1_crash);
+                            editor.putBoolean("slot1_crash", true);
                             editor.apply();
                             flowerImage.setBackgroundResource(R.drawable.flower_crush);
                             break;
                         case 2:
                             slot2_crash = true;
-                            editor.putBoolean("slot2_crash", slot2_crash);
+                            editor.putBoolean("slot2_crash", true);
                             editor.apply();
                             treeImage.setBackgroundResource(R.drawable.tree_crush);
                             break;
                         case 3:
                             slot3_crash = true;
-                            editor.putBoolean("slot3_crash", slot3_crash);
+                            editor.putBoolean("slot3_crash", true);
                             editor.apply();
                             stoneImage.setBackgroundResource(R.drawable.stone_crush);
                             break;
                         case 4:
                             slot4_crash = true;
-                            editor.putBoolean("slot4_crash", slot4_crash);
+                            editor.putBoolean("slot4_crash", true);
                             editor.apply();
                             houseImage.setBackgroundResource(R.drawable.house_crush);
                             break;
                     }
                     building_slot = 0;
-                    int version = Integer.valueOf(Build.VERSION.SDK_INT);
+                    int version = Build.VERSION.SDK_INT;
                     if(version > 5 ){
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     }
@@ -783,7 +769,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             failAlert.show();
         }
         else {
-            int version = Integer.valueOf(Build.VERSION.SDK_INT);
+            int version = Build.VERSION.SDK_INT;
             if(version > 5 ){
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -800,25 +786,25 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             switch (building_slot) {
                 case 1:
                     slot1_crash = true;
-                    editor.putBoolean("slot1_crash", slot1_crash);
+                    editor.putBoolean("slot1_crash", true);
                     editor.apply();
                     flowerImage.setBackgroundResource(R.drawable.flower_crush);
                     break;
                 case 2:
                     slot2_crash = true;
-                    editor.putBoolean("slot2_crash", slot2_crash);
+                    editor.putBoolean("slot2_crash", true);
                     editor.apply();
                     treeImage.setBackgroundResource(R.drawable.tree_crush);
                     break;
                 case 3:
                     slot3_crash = true;
-                    editor.putBoolean("slot3_crash", slot3_crash);
+                    editor.putBoolean("slot3_crash", true);
                     editor.apply();
                     stoneImage.setBackgroundResource(R.drawable.stone_crush);
                     break;
                 case 4:
                     slot4_crash = true;
-                    editor.putBoolean("slot4_crash", slot4_crash);
+                    editor.putBoolean("slot4_crash", true);
                     editor.apply();
                     houseImage.setBackgroundResource(R.drawable.house_crush);
                     break;
@@ -972,7 +958,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             tv.setText("请等待" + totalTime/1000 + "秒(" + millisUntilFinished / 1000 + ")...");
         }
 
-        public long returnLeftTime(){
+         long returnLeftTime(){
             return leftTime;
         }
 

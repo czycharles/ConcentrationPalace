@@ -8,4 +8,5 @@
     <string name="palace_content">宫殿背景图</string>
     <string name="exit_button">退出</string>
     <string name="AD_button">播放广告</string>
+    <string name="coin_bar">金币：%1$d</string>
 </resources>

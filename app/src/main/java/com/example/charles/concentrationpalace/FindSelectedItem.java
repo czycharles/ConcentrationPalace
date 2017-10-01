@@ -1,8 +1,5 @@
 package com.example.charles.concentrationpalace;
 
-/**
- * Created by charles on 9/9/2017.
- */
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,9 +12,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+/**
+ * Return the clicked item in the screen.
+ */
 
 public class FindSelectedItem extends FrameLayout {
 
@@ -111,13 +108,14 @@ public class FindSelectedItem extends FrameLayout {
         Log.d("special", x + " and " + y +" clicked. Pixel is " + rgb[0] + ","
                 + rgb[1] + "," + rgb[2] + " w and H is " + bitmap.getWidth() + "," + bitmap.getHeight());
 
-        if(Color.TRANSPARENT == pixel) {
+//        if(Color.TRANSPARENT == pixel) {
+//
+//            return false;
+//
+//        }
+        return (Color.TRANSPARENT != pixel) && (super.onTouchEvent(event));
 
-            return false;
-
-        }
-
-        return super.onTouchEvent( event);
+        //return super.onTouchEvent( event);
 
     }
 

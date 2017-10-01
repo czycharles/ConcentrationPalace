@@ -10,12 +10,13 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
-/**
- * Created by charles on 8/22/2017.
- */
 
 public class ScreenShot {
-    // 获取指定Activity的截屏，保存到png文件
+
+    /**
+     * 获取指定Activity的截屏，保存到png文件。
+     */
+
     private static Bitmap takeScreenShot(Activity activity) {
         // View是你需要截图的View
         View view = activity.getWindow().getDecorView();
