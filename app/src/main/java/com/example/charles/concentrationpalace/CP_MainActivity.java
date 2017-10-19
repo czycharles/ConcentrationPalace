@@ -89,7 +89,7 @@ public class CP_MainActivity extends AppCompatActivity {
                     failAlert.show();
                 }
                 else {
-                    Intent intent = new Intent(CP_MainActivity.this, MyPalaceActivity.class);
+                    Intent intent = new Intent(CP_MainActivity.this, CoverActivity.class);
                     startActivity(intent);
                     if(version > 5 ){
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
