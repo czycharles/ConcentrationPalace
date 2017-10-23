@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -22,7 +24,7 @@ public class CoverActivity extends AppCompatActivity {
     FrameLayout cover_page;
     TextView prologue_1;
     TextView prologue_2;
-
+    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,8 @@ public class CoverActivity extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
-        setContentView(R.layout.activity_cover);
+        view=View.inflate(this, R.layout.activity_cover, null);
+        setContentView(view);
 
         cover_page = (FrameLayout) findViewById(android.R.id.content);
         cover_page.setClickable(true);
@@ -58,11 +61,25 @@ public class CoverActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                prologue_1.setVisibility(View.VISIBLE);
+                //使用AnimationUtils类的静态方法loadAnimation()来加载XML中的动画XML文件
+                Animation animation1= AnimationUtils.loadAnimation(CoverActivity.this, R.anim.fade_in);
+                animation1.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
+
+                    @Override
+                    public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
+
+                    @Override
+                    public void onAnimationEnd(Animation arg0) {
+                        prologue_1.setVisibility(View.VISIBLE);
+                    }
+                });
+                prologue_1.startAnimation(animation1);
             }
         };
         mc1.start();
-        mc2 = new CountDownTimer(3000, 1000) {
+        mc2 = new CountDownTimer(5000, 1000) {
             @Override
             public void onTick(long l) {
 
@@ -70,7 +87,21 @@ public class CoverActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                prologue_2.setVisibility(View.VISIBLE);
+                //使用AnimationUtils类的静态方法loadAnimation()来加载XML中的动画XML文件
+                Animation animation2= AnimationUtils.loadAnimation(CoverActivity.this, R.anim.fade_in);
+                animation2.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
+
+                    @Override
+                    public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
+
+                    @Override
+                    public void onAnimationEnd(Animation arg0) {
+                        prologue_2.setVisibility(View.VISIBLE);
+                    }
+                });
+                prologue_2.startAnimation(animation2);
             }
         };
         mc2.start();
