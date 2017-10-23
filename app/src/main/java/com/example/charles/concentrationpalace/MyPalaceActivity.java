@@ -15,7 +15,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
@@ -33,11 +36,14 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     private TextView slot1_show;
     private TextView tv;
     private TextView coin_display;
+    private TextView item_desc;
 
     private FindSelectedItem flowerImage;
     private FindSelectedItem treeImage;
     private FindSelectedItem stoneImage;
     private FindSelectedItem houseImage;
+    private ImageView item_pic;
+    private ImageView dark_cover;
 
     int flower_slot1 = 1;
     int tree_slot2 = 1;
@@ -88,10 +94,16 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         setContentView(R.layout.activity_my_palace);
 
         Button AD_button = (Button) findViewById(R.id.AD_button);
+        coin_display = (TextView)findViewById(R.id.coin_bar);
 
         AD_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
+                my_coin=my_coin+200;
+                coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                editor.putInt("my_coin", my_coin);
+                editor.apply();
+                Toast.makeText(MyPalaceActivity.this,"假设你看完了广告，金币+200",Toast.LENGTH_LONG).show();
             }
             });
 
@@ -105,6 +117,13 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         findViewById(R.id.stone1).setOnClickListener(MyPalaceActivity.this);
         findViewById(R.id.house1).setOnClickListener(MyPalaceActivity.this);
 
+        item_pic = (ImageView)findViewById(R.id.Item_pic);
+        item_desc = (TextView)findViewById(R.id.Item_desc);
+        dark_cover = (ImageView)findViewById(R.id.dark_cover);
+
+        findViewById(R.id.Item_pic).setOnClickListener(MyPalaceActivity.this);
+        findViewById(R.id.Item_desc).setOnClickListener(MyPalaceActivity.this);
+        findViewById(R.id.dark_cover).setOnClickListener(MyPalaceActivity.this);
 
 //        ActionBar actionbar = getSupportActionBar();
 //        if(actionbar!=null)
@@ -114,7 +133,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 
         my_coin = data.getInt("my_coin", origin_coin);
-        coin_display = (TextView)findViewById(R.id.coin_bar);
+
         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
 
         flower_slot1 = data.getInt("slot1", 1);
@@ -624,6 +643,28 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     }
                 }
                 break;
+            case R.id.Item_pic:case R.id.Item_desc:case R.id.dark_cover:
+                item_pic.setVisibility(View.GONE);
+                item_desc.setVisibility(View.GONE);
+                dark_cover.setVisibility(View.GONE);
+                Animation animation5= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_out);
+                animation5.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
+
+                    @Override
+                    public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
+
+                    @Override
+                    public void onAnimationEnd(Animation arg0) {
+
+                        //item_desc.setVisibility(View.VISIBLE);
+                    }
+                });
+                item_pic.startAnimation(animation5);
+                item_desc.startAnimation(animation5);
+                dark_cover.startAnimation(animation5);
+                break;
         }
     }
     @Override
@@ -873,6 +914,15 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
         @Override
         public void onFinish() {
+            //WindowManager.LayoutParams lp = getWindow().getAttributes();
+            Animation animation1= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_in);
+            Animation animation2= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_in);
+            Animation animation3= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_in);
+            Animation animation4= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_in);
+
+            dark_cover.setVisibility(View.VISIBLE);
+            item_pic.setVisibility(View.VISIBLE);
+            item_desc.setVisibility(View.VISIBLE);
             switch(building_slot){
                 case 1:
                     flower_slot1++;
@@ -884,13 +934,40 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                             break;
                         case 2:
                             flowerImage.setBackgroundResource(R.drawable.flower2);
+                            item_pic.setBackgroundResource(R.drawable.item1);
+                            item_desc.setText(R.string.flower2_desc);
                             break;
                         case 3:
                             flowerImage.setBackgroundResource(R.drawable.flower3);
+                            item_pic.setBackgroundResource(R.drawable.item1);
+                            item_desc.setText(R.string.flower3_desc);
+                            break;
                         default:
                             flowerImage.setBackgroundResource(R.drawable.flower3);
                     }
                     building_slot = 0;
+
+//                    lp.alpha = 0.6f;
+//                    getWindow().setAttributes(lp);
+//                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
+                    animation1.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
+
+                        @Override
+                        public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
+
+                        @Override
+                        public void onAnimationEnd(Animation arg0) {
+
+                            //item_desc.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    item_pic.startAnimation(animation1);
+                    item_desc.startAnimation(animation1);
+
+
                     slot1_show.setText("位置1目前建造到了状态："+ flower_slot1);
                     break;
                 case 2:
@@ -903,14 +980,35 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                             break;
                         case 2:
                             treeImage.setBackgroundResource(R.drawable.tree2);
+                            item_pic.setBackgroundResource(R.drawable.item1);
+                            item_desc.setText(R.string.tree2_desc);
                             break;
                         case 3:
                             treeImage.setBackgroundResource(R.drawable.tree3);
+                            item_pic.setBackgroundResource(R.drawable.item1);
+                            item_desc.setText(R.string.tree3_desc);
                             break;
                         default:
                             treeImage.setBackgroundResource(R.drawable.tree3);
                     }
                     building_slot = 0;
+
+                    animation2.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
+
+                        @Override
+                        public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
+
+                        @Override
+                        public void onAnimationEnd(Animation arg0) {
+                            //item_pic.setVisibility(View.VISIBLE);
+                            //item_desc.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    item_pic.startAnimation(animation2);
+                    item_desc.startAnimation(animation2);
+
                     slot1_show.setText("位置2目前建造到了状态："+ tree_slot2);
                     break;
                 case 3:
@@ -923,14 +1021,35 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                             break;
                         case 2:
                             stoneImage.setBackgroundResource(R.drawable.stone2);
+                            item_pic.setBackgroundResource(R.drawable.item1);
+                            item_desc.setText(R.string.stone2_desc);
                             break;
                         case 3:
                             stoneImage.setBackgroundResource(R.drawable.stone3);
+                            item_pic.setBackgroundResource(R.drawable.item1);
+                            item_desc.setText(R.string.stone3_desc);
                             break;
                         default:
                             stoneImage.setBackgroundResource(R.drawable.stone3);
                     }
                     building_slot = 0;
+
+                    animation3.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
+
+                        @Override
+                        public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
+
+                        @Override
+                        public void onAnimationEnd(Animation arg0) {
+                            //item_pic.setVisibility(View.VISIBLE);
+                            //item_desc.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    item_pic.startAnimation(animation3);
+                    item_desc.startAnimation(animation3);
+
                     slot1_show.setText("位置3目前建造到了状态："+ stone_slot3);
                     break;
                 case 4:
@@ -943,14 +1062,35 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                             break;
                         case 2:
                             houseImage.setBackgroundResource(R.drawable.house2);
+                            item_pic.setBackgroundResource(R.drawable.item1);
+                            item_desc.setText(R.string.house2_desc);
                             break;
                         case 3:
                             houseImage.setBackgroundResource(R.drawable.house3);
+                            item_pic.setBackgroundResource(R.drawable.item1);
+                            item_desc.setText(R.string.house3_desc);
                             break;
                         default:
                             houseImage.setBackgroundResource(R.drawable.house3);
                     }
                     building_slot = 0;
+
+                    animation4.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
+
+                        @Override
+                        public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
+
+                        @Override
+                        public void onAnimationEnd(Animation arg0) {
+                            //item_pic.setVisibility(View.VISIBLE);
+                            //item_desc.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    item_pic.startAnimation(animation4);
+                    item_desc.startAnimation(animation4);
+
                     slot1_show.setText("位置4目前建造到了状态："+ house_slot4);
                     break;
             }

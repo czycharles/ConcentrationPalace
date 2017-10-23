@@ -114,6 +114,7 @@ public class CoverActivity extends AppCompatActivity {
                 if(version > 5 ){
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
+                finish();
             }
         });
     }
