@@ -1,11 +1,13 @@
 package com.example.charles.concentrationpalace;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -60,7 +62,11 @@ public class ScreenShot {
     }
     // 程序入口
     public static void shoot(Activity a) {
-        ScreenShot.savePic(ScreenShot.takeScreenShot(a), "sdcard/Share.png");
+        File directory = new File(Environment.getExternalStorageDirectory().getPath());
+        if(!directory.exists()){
+            directory.mkdir();//没有目录先创建目录
+        }
+        ScreenShot.savePic(ScreenShot.takeScreenShot(a), Environment.getExternalStorageDirectory().getPath()+"Share.png");
     }
     // 程序入口
     public static Bitmap ReturnShoot(Activity a) {

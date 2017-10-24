@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -299,8 +300,12 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         share_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                File directory = new File(Environment.getExternalStorageDirectory().getPath());
+                if(!directory.exists()){
+                    directory.mkdir();//没有目录先创建目录
+                }
                 ScreenShot.shoot(MyPalaceActivity.this);
-                File f = new File("sdcard/Share.png");
+                File f = new File(Environment.getExternalStorageDirectory().getPath()+"Share.png");
 
                 if(true) {
                     Intent intent = new Intent();
