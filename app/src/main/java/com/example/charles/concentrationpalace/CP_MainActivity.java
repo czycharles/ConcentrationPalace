@@ -22,6 +22,7 @@ public class CP_MainActivity extends AppCompatActivity {
 
     File file;
     SharedPreferences data;
+    int version = Build.VERSION.SDK_INT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class CP_MainActivity extends AppCompatActivity {
         continue_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                int version = Integer.valueOf(Build.VERSION.SDK_INT);
+
                 Intent intent = new Intent(CP_MainActivity.this, MyPalaceActivity.class);
                 startActivity(intent);
                 if(version > 5 ){
@@ -63,7 +64,7 @@ public class CP_MainActivity extends AppCompatActivity {
         start_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                int version = Integer.valueOf(Build.VERSION.SDK_INT);
+
                 if(file.exists()) {
                     AlertDialog.Builder failAlert = new AlertDialog.Builder(CP_MainActivity.this);
                     failAlert.setTitle("删除记录？");
@@ -73,7 +74,7 @@ public class CP_MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface failAlert, int i) {
                             data = getSharedPreferences("data",MODE_PRIVATE);
-                            data.edit().clear().commit();
+                            data.edit().clear().apply();
                             file.delete();
                             Toast.makeText(CP_MainActivity.this, "删除成功", Toast.LENGTH_LONG).show();
                             Button continue_button = (Button)findViewById(R.id.continue_button);
@@ -98,6 +99,18 @@ public class CP_MainActivity extends AppCompatActivity {
             }
         });
         Log.d("CP_MainActivity","onCreate: done");
+
+        Button gallery_button = (Button)findViewById(R.id.gallery_button);
+        gallery_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(CP_MainActivity.this, GalleryActivity.class);
+                startActivity(intent);
+                if(version > 5 ){
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        });
 
         Button exit_button = (Button)findViewById(R.id.exit_button);
         exit_button.setOnClickListener(new View.OnClickListener(){

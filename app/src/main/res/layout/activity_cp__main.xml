@@ -34,9 +34,9 @@
         android:gravity="center"
         android:background="@android:drawable/btn_default"
         android:text="@string/continue_button"
-        android:visibility="gone"
+
         android:textSize="20sp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="5dp"/>
 
     <Button
         android:id="@+id/start_button"
@@ -47,7 +47,18 @@
         android:background="@android:drawable/btn_default"
         android:text="@string/start_button"
         android:textSize="20sp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="5dp"/>
+
+    <Button
+        android:id="@+id/gallery_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@android:drawable/btn_default"
+        android:text="@string/gallery_button"
+        android:textSize="20sp"
+        android:layout_marginBottom="5dp"/>
 
     <Button
         android:id="@+id/exit_button"
@@ -64,4 +75,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.2"/>
+
 </LinearLayout>

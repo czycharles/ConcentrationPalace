@@ -2,6 +2,7 @@
     <string name="app_name">专注禅院</string>
     <string name="start_button">开始</string>
     <string name="continue_button">继续</string>
+	<string name="gallery_button">收藏</string>
     <string name="start_build_button">开始建造</string>
     <string name="title_activity_my_palace">我的专注宫殿</string>
     <string name="palace_back_button">返回</string>
