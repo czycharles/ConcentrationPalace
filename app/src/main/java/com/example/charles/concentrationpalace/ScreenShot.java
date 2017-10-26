@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Environment;
@@ -43,10 +46,12 @@ public class ScreenShot {
         return b;
     }
     // 保存到sdcard
-    private static void savePic(Bitmap b, String strFileName) {
+    private static void savePic(Bitmap b, String appDir, String fileName) {
+
+        File file = new File(appDir, fileName);
         FileOutputStream fos;
         try {
-            fos = new FileOutputStream(strFileName);
+            fos = new FileOutputStream(file);
             if (null != fos) {
                 b.compress(Bitmap.CompressFormat.PNG, 90, fos);
                 fos.flush();
@@ -66,7 +71,7 @@ public class ScreenShot {
         if(!directory.exists()){
             directory.mkdir();//没有目录先创建目录
         }
-        ScreenShot.savePic(ScreenShot.takeScreenShot(a), Environment.getExternalStorageDirectory().getPath()+"Share.png");
+        ScreenShot.savePic(ScreenShot.takeScreenShot(a), Environment.getExternalStorageDirectory().getPath(),"Share.png");
     }
     // 程序入口
     public static Bitmap ReturnShoot(Activity a) {

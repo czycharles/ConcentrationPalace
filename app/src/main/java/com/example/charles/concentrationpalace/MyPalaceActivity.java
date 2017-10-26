@@ -1,6 +1,7 @@
 package com.example.charles.concentrationpalace;
 
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -300,12 +301,28 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         share_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                /**
+                 * 动态获取权限，Android 6.0 新特性，一些保护权限，除了要在AndroidManifest中声明权限，还要使用如下代码动态获取
+                 */
+                if (Build.VERSION.SDK_INT >= 23) {
+                    int REQUEST_CODE_CONTACT = 101;
+                    String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                    //验证是否许可权限
+                    for (String str : permissions) {
+                        if (MyPalaceActivity.this.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                            //申请权限
+                            MyPalaceActivity.this.requestPermissions(permissions, REQUEST_CODE_CONTACT);
+                            return;
+                        }
+                    }
+                }
                 File directory = new File(Environment.getExternalStorageDirectory().getPath());
                 if(!directory.exists()){
                     directory.mkdir();//没有目录先创建目录
                 }
                 ScreenShot.shoot(MyPalaceActivity.this);
-                File f = new File(Environment.getExternalStorageDirectory().getPath()+"Share.png");
+                File f = new File(Environment.getExternalStorageDirectory().getPath(),"Share.png");
+                File ft = new File(Environment.getExternalStorageDirectory().getPath(),"Share.txt");
 
                 if(true) {
                     Intent intent = new Intent();
