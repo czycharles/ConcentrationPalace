@@ -99,24 +99,24 @@ public class CoverActivity extends AppCompatActivity {
                     @Override
                     public void onAnimationEnd(Animation arg0) {
                         prologue_2.setVisibility(View.VISIBLE);
+                        cover_page.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v){
+                                int version = Build.VERSION.SDK_INT;
+                                Intent intent = new Intent(CoverActivity.this, MyPalaceActivity.class);
+                                startActivity(intent);
+                                if(version > 5 ){
+                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                }
+                                finish();
+                            }
+                        });
                     }
                 });
                 prologue_2.startAnimation(animation2);
             }
         };
         mc2.start();
-        cover_page.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                int version = Integer.valueOf(Build.VERSION.SDK_INT);
-                Intent intent = new Intent(CoverActivity.this, MyPalaceActivity.class);
-                startActivity(intent);
-                if(version > 5 ){
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                }
-                finish();
-            }
-        });
     }
 
 }

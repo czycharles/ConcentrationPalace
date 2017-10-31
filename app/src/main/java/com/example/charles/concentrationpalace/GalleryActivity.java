@@ -1,5 +1,6 @@
 package com.example.charles.concentrationpalace;
 
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,10 +11,12 @@ import android.os.Bundle;
 import android.renderscript.Allocation;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 /**
  * Created by charles on 10/26/2017.
@@ -49,6 +52,16 @@ public class GalleryActivity extends AppCompatActivity {
         View v = getWindow().getDecorView();
         v.setBackground(new BitmapDrawable(getResources(), bmp));
         rs.destroy();
+    }
+
+    @Override
+    public void onBackPressed(){
+
+            int version = Build.VERSION.SDK_INT;
+            if(version > 5 ){
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+            finish();
     }
 
 }

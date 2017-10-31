@@ -78,7 +78,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     SharedPreferences data;
     SharedPreferences.Editor editor;
     DataCleanManager clean = new DataCleanManager();
-
+    MediaPlayer mpMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,18 +96,14 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_my_palace);
-        MediaPlayer mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing17);
+        mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing17);
         try {
-            mpMediaPlayer.prepare();
             mpMediaPlayer.setLooping(true);
             mpMediaPlayer.start();
         } catch (IllegalArgumentException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -286,6 +282,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     break;
                             }
                             building_slot = 0;
+                            mpMediaPlayer.stop();
+                            mpMediaPlayer.release();
                             int version = Build.VERSION.SDK_INT;
                             if(version > 5 ){
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -302,6 +300,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     failAlert.show();
                 }
                 else{
+                    mpMediaPlayer.stop();
+                    mpMediaPlayer.release();
                     int version = Build.VERSION.SDK_INT;
                     if(version > 5 ){
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -708,6 +708,9 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     @Override
     protected void onRestart(){
         super.onRestart();
+        mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing17);
+        mpMediaPlayer.start();
+        mpMediaPlayer.setLooping(true);
         data = getSharedPreferences("data", MODE_PRIVATE);
         ///editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 
@@ -839,6 +842,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                             break;
                     }
                     building_slot = 0;
+                    mpMediaPlayer.stop();
+                    mpMediaPlayer.release();
                     int version = Build.VERSION.SDK_INT;
                     if(version > 5 ){
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -855,6 +860,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             failAlert.show();
         }
         else {
+            mpMediaPlayer.stop();
+            mpMediaPlayer.release();
             int version = Build.VERSION.SDK_INT;
             if(version > 5 ){
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -896,6 +903,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     break;
             }
             building_slot = 0;
+            mpMediaPlayer.stop();
+            mpMediaPlayer.release();
             finish();
         }
         super.onTrimMemory(level);

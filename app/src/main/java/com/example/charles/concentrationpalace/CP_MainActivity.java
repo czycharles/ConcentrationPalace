@@ -25,6 +25,7 @@ public class CP_MainActivity extends AppCompatActivity {
     File file;
     SharedPreferences data;
     int version = Build.VERSION.SDK_INT;
+    MediaPlayer mpMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +43,14 @@ public class CP_MainActivity extends AppCompatActivity {
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_cp__main);
-        MediaPlayer mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing17);
+        mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing17);
         try {
-            mpMediaPlayer.prepare();
             mpMediaPlayer.setLooping(true);
             mpMediaPlayer.start();
         } catch (IllegalArgumentException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -69,7 +66,8 @@ public class CP_MainActivity extends AppCompatActivity {
         continue_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
+                mpMediaPlayer.stop();
+                mpMediaPlayer.release();
                 Intent intent = new Intent(CP_MainActivity.this, MyPalaceActivity.class);
                 startActivity(intent);
                 if(version > 5 ){
@@ -107,6 +105,8 @@ public class CP_MainActivity extends AppCompatActivity {
                     failAlert.show();
                 }
                 else {
+                    mpMediaPlayer.stop();
+                    mpMediaPlayer.release();
                     Intent intent = new Intent(CP_MainActivity.this, CoverActivity.class);
                     startActivity(intent);
                     if(version > 5 ){
@@ -134,6 +134,8 @@ public class CP_MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 //Toast.makeText(CP_MainActivity.this, "Success by now",Toast.LENGTH_LONG).show();
+                mpMediaPlayer.stop();
+                mpMediaPlayer.release();
                 ActivityCollector.finishAll();
                 android.os.Process.killProcess(android.os.Process.myPid());
                 Log.d("CP_MainActivity","Kill All: done");
@@ -164,6 +166,9 @@ public class CP_MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart(){
         super.onRestart();
+        mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing17);
+        mpMediaPlayer.start();
+        mpMediaPlayer.setLooping(true);
         Button continue_button = (Button)findViewById(R.id.continue_button);
         if(file.exists())
             continue_button.setVisibility(View.VISIBLE);
