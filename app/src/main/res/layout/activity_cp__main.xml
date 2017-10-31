@@ -31,12 +31,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/button_style"
+        android:textColor="@color/whitesmoke"
         android:gravity="center"
-        android:background="@android:drawable/btn_default"
         android:text="@string/continue_button"
-
-        android:textSize="20sp"
-        android:layout_marginBottom="5dp"/>
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/start_button"
@@ -44,7 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@android:drawable/btn_default"
+        android:background="@drawable/button_style"
+        android:textColor="@color/whitesmoke"
         android:text="@string/start_button"
         android:textSize="20sp"
         android:layout_marginBottom="5dp"/>
@@ -55,7 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@android:drawable/btn_default"
+        android:background="@drawable/button_style"
+        android:textColor="@color/whitesmoke"
         android:text="@string/gallery_button"
         android:textSize="20sp"
         android:layout_marginBottom="5dp"/>
@@ -66,7 +68,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:background="@android:drawable/btn_default"
+        android:background="@drawable/button_style"
+        android:textColor="@color/whitesmoke"
         android:text="@string/exit_button"
         android:textSize="20sp"
         android:layout_marginBottom="10dp"/>

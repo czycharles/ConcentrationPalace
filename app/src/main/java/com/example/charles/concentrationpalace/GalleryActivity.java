@@ -38,7 +38,7 @@ public class GalleryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
 
         Resources res=getResources();
-        Bitmap bmp= BitmapFactory.decodeResource(res, R.drawable.main_background);
+        Bitmap bmp= BitmapFactory.decodeResource(res, R.drawable.blur_background);
         RenderScript rs = RenderScript.create(GalleryActivity.this);
         Allocation overlayAlloc = Allocation.createFromBitmap(rs,bmp);
         ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, overlayAlloc.getElement());

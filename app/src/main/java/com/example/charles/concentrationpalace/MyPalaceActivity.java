@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import android.view.View.OnClickListener;
 import android.os.CountDownTimer;
 import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -94,7 +96,21 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_my_palace);
-
+        MediaPlayer mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing17);
+        try {
+            mpMediaPlayer.prepare();
+            mpMediaPlayer.setLooping(true);
+            mpMediaPlayer.start();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         Button AD_button = (Button) findViewById(R.id.AD_button);
         coin_display = (TextView)findViewById(R.id.coin_bar);
 

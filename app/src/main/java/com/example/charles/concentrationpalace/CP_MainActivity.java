@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 
 public class CP_MainActivity extends AppCompatActivity {
 
@@ -40,6 +42,21 @@ public class CP_MainActivity extends AppCompatActivity {
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_cp__main);
+        MediaPlayer mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing17);
+        try {
+            mpMediaPlayer.prepare();
+            mpMediaPlayer.setLooping(true);
+            mpMediaPlayer.start();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 //        ActionBar actionbar = getSupportActionBar();
 //        if(actionbar!=null)
 //            actionbar.hide();
