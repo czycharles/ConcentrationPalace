@@ -302,6 +302,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 else{
                     mpMediaPlayer.stop();
                     mpMediaPlayer.release();
+                    Intent intent = new Intent(MyPalaceActivity.this, CP_MainActivity.class);
+                    startActivity(intent);
                     int version = Build.VERSION.SDK_INT;
                     if(version > 5 ){
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -844,6 +846,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     building_slot = 0;
                     mpMediaPlayer.stop();
                     mpMediaPlayer.release();
+                    Intent intent = new Intent(MyPalaceActivity.this, CP_MainActivity.class);
+                    startActivity(intent);
                     int version = Build.VERSION.SDK_INT;
                     if(version > 5 ){
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -862,6 +866,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         else {
             mpMediaPlayer.stop();
             mpMediaPlayer.release();
+            Intent intent = new Intent(MyPalaceActivity.this, CP_MainActivity.class);
+            startActivity(intent);
             int version = Build.VERSION.SDK_INT;
             if(version > 5 ){
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

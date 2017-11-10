@@ -2,11 +2,9 @@ package com.example.charles.concentrationpalace;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,12 +16,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.IOException;
 
 public class CP_MainActivity extends AppCompatActivity {
 
     File file;
-    SharedPreferences data;
     int version = Build.VERSION.SDK_INT;
     MediaPlayer mpMediaPlayer;
 
@@ -54,20 +50,21 @@ public class CP_MainActivity extends AppCompatActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-//        ActionBar actionbar = getSupportActionBar();
-//        if(actionbar!=null)
-//            actionbar.hide();
-        ActivityCollector.addActivity(this);
-        file= new File("/data/data/com.example.charles.concentrationpalace/shared_prefs","data.xml");
 
+        ActivityCollector.addActivity(this);
+        file= new File(this.getApplication().getFilesDir().getParentFile().getPath()+"/shared_prefs","data.xml");
+        //file= new File("data/data/com.example.charles.concentrationpalace/shared_prefs","data.xml");
         Button continue_button = (Button)findViewById(R.id.continue_button);
         if(file.exists())
             continue_button.setVisibility(View.VISIBLE);
+        //continue_button.setVisibility(View.VISIBLE);
         continue_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                mpMediaPlayer.stop();
-                mpMediaPlayer.release();
+                if(mpMediaPlayer.isPlaying()) {
+                    mpMediaPlayer.stop();
+                    mpMediaPlayer.release();
+                }
                 Intent intent = new Intent(CP_MainActivity.this, MyPalaceActivity.class);
                 startActivity(intent);
                 if(version > 5 ){
@@ -88,10 +85,11 @@ public class CP_MainActivity extends AppCompatActivity {
                     failAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface failAlert, int i) {
-                            data = getSharedPreferences("data",MODE_PRIVATE);
-                            data.edit().clear().apply();
-                            file.delete();
-                            Toast.makeText(CP_MainActivity.this, "删除成功", Toast.LENGTH_LONG).show();
+//                            data = getSharedPreferences("data", MODE_PRIVATE);
+//                            data.edit().clear().apply();
+                            if (file.delete()){
+                                Toast.makeText(CP_MainActivity.this, "删除成功", Toast.LENGTH_LONG).show();
+                            }
                             Button continue_button = (Button)findViewById(R.id.continue_button);
                             continue_button.setVisibility(View.GONE);
                         }
@@ -105,8 +103,10 @@ public class CP_MainActivity extends AppCompatActivity {
                     failAlert.show();
                 }
                 else {
-                    mpMediaPlayer.stop();
-                    mpMediaPlayer.release();
+                    if(mpMediaPlayer.isPlaying()) {
+                        mpMediaPlayer.stop();
+                        mpMediaPlayer.release();
+                    }
                     Intent intent = new Intent(CP_MainActivity.this, CoverActivity.class);
                     startActivity(intent);
                     if(version > 5 ){
@@ -128,40 +128,16 @@ public class CP_MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        Button exit_button = (Button)findViewById(R.id.exit_button);
-        exit_button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                //Toast.makeText(CP_MainActivity.this, "Success by now",Toast.LENGTH_LONG).show();
-                mpMediaPlayer.stop();
-                mpMediaPlayer.release();
-                ActivityCollector.finishAll();
-                android.os.Process.killProcess(android.os.Process.myPid());
-                Log.d("CP_MainActivity","Kill All: done");
-            }
-        });
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-//        Button continue_button = (Button)findViewById(R.id.continue_button);
-//        Log.d("CP_MainActivity","onActivityResult: done");
-//        switch (requestCode){
-//            case 1:
-//                if(resultCode == RESULT_OK){
-//                    Boolean returnedData = data.getBooleanExtra("data_return", false);
-//                    if (returnedData == true)
-//                        continue_button.setVisibility(View.VISIBLE);
-//                }
-//        }
-//        continue_button.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                Intent intent = new Intent(CP_MainActivity.this, MyPalaceActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(mpMediaPlayer.isPlaying()) {
+            mpMediaPlayer.stop();
+            //mpMediaPlayer.release();
+        }
+    }
 
     @Override
     protected void onRestart(){
@@ -178,4 +154,44 @@ public class CP_MainActivity extends AppCompatActivity {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
     }
+
+//    @Override
+//    public boolean dispatchKeyEvent(KeyEvent event) {
+//        //拦截返回键
+//        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+//            //判断触摸UP事件才会进行返回事件处理
+//            if (event.getAction() == KeyEvent.ACTION_UP) {
+//                onBackPressed();
+//            }
+//            //只要是返回事件，直接返回true，表示消费掉
+//            return true;
+//        }
+//        return super.dispatchKeyEvent(event);
+//    }
+
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder exitAlert = new AlertDialog.Builder(CP_MainActivity.this);
+        exitAlert.setTitle("退出游戏？");
+        exitAlert.setCancelable(false);
+        exitAlert.setPositiveButton("退出", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface exitAlert, int i) {
+                if(mpMediaPlayer.isPlaying()) {
+                    mpMediaPlayer.stop();
+                    mpMediaPlayer.release();
+                }
+                ActivityCollector.finishAll();
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        });
+        exitAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface exitAlert, int i) {
+                exitAlert.cancel();
+            }
+        });
+        exitAlert.show();
+    }
+
 }
