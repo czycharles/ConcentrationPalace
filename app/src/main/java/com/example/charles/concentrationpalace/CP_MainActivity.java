@@ -54,10 +54,21 @@ public class CP_MainActivity extends AppCompatActivity {
         ActivityCollector.addActivity(this);
         file= new File(this.getApplication().getFilesDir().getParentFile().getPath()+"/shared_prefs","data.xml");
         //file= new File("data/data/com.example.charles.concentrationpalace/shared_prefs","data.xml");
-        Button continue_button = (Button)findViewById(R.id.continue_button);
+
+        Button info_button = findViewById(R.id.info_button);
+        info_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CP_MainActivity.this, InfoActivity.class);
+                startActivity(intent);
+                if(version > 5 ){
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        });
+        Button continue_button = findViewById(R.id.continue_button);
         if(file.exists())
             continue_button.setVisibility(View.VISIBLE);
-        //continue_button.setVisibility(View.VISIBLE);
         continue_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -72,7 +83,7 @@ public class CP_MainActivity extends AppCompatActivity {
                 }
             }
         });
-        Button start_button = (Button)findViewById(R.id.start_button);
+        Button start_button = findViewById(R.id.start_button);
         start_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -90,7 +101,7 @@ public class CP_MainActivity extends AppCompatActivity {
                             if (file.delete()){
                                 Toast.makeText(CP_MainActivity.this, "删除成功", Toast.LENGTH_LONG).show();
                             }
-                            Button continue_button = (Button)findViewById(R.id.continue_button);
+                            Button continue_button = findViewById(R.id.continue_button);
                             continue_button.setVisibility(View.GONE);
                         }
                     });
@@ -117,7 +128,7 @@ public class CP_MainActivity extends AppCompatActivity {
         });
         Log.d("CP_MainActivity","onCreate: done");
 
-        Button gallery_button = (Button)findViewById(R.id.gallery_button);
+        Button gallery_button = findViewById(R.id.gallery_button);
         gallery_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -131,11 +142,11 @@ public class CP_MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         if(mpMediaPlayer.isPlaying()) {
             mpMediaPlayer.stop();
-            //mpMediaPlayer.release();
+            mpMediaPlayer.release();
         }
     }
 
@@ -145,7 +156,7 @@ public class CP_MainActivity extends AppCompatActivity {
         mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing17);
         mpMediaPlayer.start();
         mpMediaPlayer.setLooping(true);
-        Button continue_button = (Button)findViewById(R.id.continue_button);
+        Button continue_button = findViewById(R.id.continue_button);
         if(file.exists())
             continue_button.setVisibility(View.VISIBLE);
     }

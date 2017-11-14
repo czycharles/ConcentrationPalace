@@ -5,10 +5,11 @@
 
     <ImageView
         android:id="@+id/white_cover"
+        android:contentDescription="@string/app_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
-        android:alpha="0.2" />
+        android:alpha="0.3" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,6 +33,7 @@
 
             <ImageView
                 android:id="@+id/flower1"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -39,6 +41,7 @@
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/flower2"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -46,6 +49,7 @@
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/flower3"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -53,6 +57,7 @@
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/flower4"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -67,6 +72,7 @@
 
             <ImageView
                 android:id="@+id/tree1"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -74,6 +80,7 @@
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/tree2"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -81,6 +88,7 @@
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/tree3"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -88,6 +96,7 @@
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/tree4"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -102,6 +111,7 @@
 
             <ImageView
                 android:id="@+id/stone1"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -109,6 +119,7 @@
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/stone2"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -116,6 +127,7 @@
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/stone3"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -123,6 +135,7 @@
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/stone4"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -137,6 +150,7 @@
 
             <ImageView
                 android:id="@+id/house1"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -144,6 +158,7 @@
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/house2"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -151,6 +166,7 @@
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/house3"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -158,6 +174,7 @@
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/house4"
+                android:contentDescription="@string/app_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"

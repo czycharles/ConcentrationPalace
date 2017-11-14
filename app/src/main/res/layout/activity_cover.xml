@@ -6,6 +6,7 @@
     android:background="@color/black">
 
     <ImageView
+        android:contentDescription="@string/app_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2.5"/>
@@ -35,6 +36,7 @@
         android:visibility="invisible"/>
 
     <ImageView
+        android:contentDescription="@string/app_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2.5"/>

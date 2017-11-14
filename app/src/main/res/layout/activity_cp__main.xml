@@ -22,9 +22,11 @@
         android:textSize="50sp" />
 
     <ImageView
+        android:contentDescription="@string/app_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2.5"/>
+
 
     <Button
         android:id="@+id/continue_button"
@@ -63,9 +65,16 @@
         android:textSize="20sp"
         android:layout_marginBottom="5dp"/>
 
-    <ImageView
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/info_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.2"/>
+        android:layout_gravity="end"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:drawable/ic_menu_info_details"
+        android:minHeight="0dp"
+        android:minWidth="0dp" />
+
 
 </LinearLayout>

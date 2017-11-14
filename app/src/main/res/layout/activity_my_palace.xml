@@ -44,7 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="@string/coin_bar"
@@ -55,7 +54,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:gravity="center"
             android:textSize="20sp"
@@ -70,11 +68,11 @@
             android:minWidth="0dp"
             android:layout_gravity="end"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginEnd="20dp" />
     </LinearLayout>
 
         <ImageView
+            android:contentDescription="@string/app_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
@@ -120,6 +118,7 @@
             android:textSize="20sp" />
 
         <ImageView
+            android:contentDescription="@string/app_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.1"/>
@@ -132,6 +131,7 @@
 
     <ImageView
         android:id="@+id/dark_cover"
+        android:contentDescription="@string/app_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
@@ -146,12 +146,14 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:contentDescription="@string/app_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"/>
 
         <ImageView
             android:id="@+id/Item_pic"
+            android:contentDescription="@string/app_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -172,6 +174,7 @@
             android:visibility="gone" />
 
         <ImageView
+            android:contentDescription="@string/app_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"/>
