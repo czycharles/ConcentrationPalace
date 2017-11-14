@@ -15,6 +15,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -917,7 +918,34 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     }
 
     @Override
+    protected void onStop() {
+        if(mpMediaPlayer!=null) {
+            try{
+                mpMediaPlayer.stop();
+                Log.d("Media","stop success");
+            }catch(IllegalStateException e) {
+                mpMediaPlayer.release();
+                Log.d("Media", "release success");
+                mpMediaPlayer = null;
+                Log.d("Media", "null success");
+            }
+        }
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
+        if(mpMediaPlayer!=null) {
+            try{
+                mpMediaPlayer.stop();
+                Log.d("Media","stop success");
+            }catch(IllegalStateException e) {
+                mpMediaPlayer.release();
+                Log.d("Media", "release success");
+                mpMediaPlayer = null;
+                Log.d("Media", "null success");
+            }
+        }
         super.onDestroy();
         clean.cleanExternalCache(MyPalaceActivity.this);
         ActivityCollector.removeActivity(this);

@@ -25,13 +25,13 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ViewHolder>{
     static class ViewHolder extends RecyclerView.ViewHolder{
         View InfoView;
         TextView InfoText;
-        public ViewHolder(View view){
+        ViewHolder(View view){
             super (view);
             InfoView = view;
             InfoText = view.findViewById(R.id.info_list);
         }
     }
-    public InfoAdapter(List<String> InfoList){
+    InfoAdapter(List<String> InfoList){
         mInfoList = InfoList;
     }
 
@@ -44,9 +44,9 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ViewHolder>{
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 final Context context = v.getContext();
-                Toast.makeText(context, "位置"+position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "位置"+position, Toast.LENGTH_SHORT).show();
                 switch (position) {
-                    case 1:
+                    case 0:
                         AlertDialog.Builder ResetAlert = new AlertDialog.Builder(context);
                         ResetAlert.setTitle("删除记录？");
                         ResetAlert.setMessage("你目前的游戏进度会被清空");
@@ -73,7 +73,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ViewHolder>{
                 }
             }
         });
-        return new ViewHolder(view);
+        return holder;
     }
 
     @Override

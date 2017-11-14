@@ -16,12 +16,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 
 public class CP_MainActivity extends AppCompatActivity {
 
     File file;
     int version = Build.VERSION.SDK_INT;
-    MediaPlayer mpMediaPlayer;
+    MediaPlayer mpMediaPlayer=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,61 +67,28 @@ public class CP_MainActivity extends AppCompatActivity {
                 }
             }
         });
-        Button continue_button = findViewById(R.id.continue_button);
-        if(file.exists())
-            continue_button.setVisibility(View.VISIBLE);
-        continue_button.setOnClickListener(new View.OnClickListener(){
+
+        Button start_button = findViewById(R.id.start_button);
+        if(file.exists()) {
+            start_button.setText(R.string.continue_button);
+        }
+        start_button.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
-                if(mpMediaPlayer.isPlaying()) {
+            public void onClick(View v) {
+                if (mpMediaPlayer.isPlaying()) {
                     mpMediaPlayer.stop();
                     mpMediaPlayer.release();
                 }
-                Intent intent = new Intent(CP_MainActivity.this, MyPalaceActivity.class);
-                startActivity(intent);
-                if(version > 5 ){
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                }
-            }
-        });
-        Button start_button = findViewById(R.id.start_button);
-        start_button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-                if(file.exists()) {
-                    AlertDialog.Builder failAlert = new AlertDialog.Builder(CP_MainActivity.this);
-                    failAlert.setTitle("删除记录？");
-                    failAlert.setMessage("你目前的游戏进度会被清空");
-                    failAlert.setCancelable(false);
-                    failAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface failAlert, int i) {
-//                            data = getSharedPreferences("data", MODE_PRIVATE);
-//                            data.edit().clear().apply();
-                            if (file.delete()){
-                                Toast.makeText(CP_MainActivity.this, "删除成功", Toast.LENGTH_LONG).show();
-                            }
-                            Button continue_button = findViewById(R.id.continue_button);
-                            continue_button.setVisibility(View.GONE);
-                        }
-                    });
-                    failAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface failAlert, int i) {
-                            failAlert.cancel();
-                        }
-                    });
-                    failAlert.show();
-                }
-                else {
-                    if(mpMediaPlayer.isPlaying()) {
-                        mpMediaPlayer.stop();
-                        mpMediaPlayer.release();
+                if (file.exists()) {
+                    Intent intent = new Intent(CP_MainActivity.this, MyPalaceActivity.class);
+                    startActivity(intent);
+                    if (version > 5) {
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     }
+                } else {
                     Intent intent = new Intent(CP_MainActivity.this, CoverActivity.class);
                     startActivity(intent);
-                    if(version > 5 ){
+                    if (version > 5) {
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     }
                 }
@@ -143,11 +111,18 @@ public class CP_MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        super.onStop();
-        if(mpMediaPlayer.isPlaying()) {
-            mpMediaPlayer.stop();
-            mpMediaPlayer.release();
+        if(mpMediaPlayer!=null) {
+            try{
+                mpMediaPlayer.stop();
+                Log.d("Media","stop success");
+            }catch(IllegalStateException e) {
+                mpMediaPlayer.release();
+                Log.d("Media", "release success");
+                mpMediaPlayer = null;
+                Log.d("Media", "null success");
+            }
         }
+        super.onStop();
     }
 
     @Override
@@ -156,12 +131,23 @@ public class CP_MainActivity extends AppCompatActivity {
         mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing17);
         mpMediaPlayer.start();
         mpMediaPlayer.setLooping(true);
-        Button continue_button = findViewById(R.id.continue_button);
+        Button start_button = findViewById(R.id.start_button);
         if(file.exists())
-            continue_button.setVisibility(View.VISIBLE);
+            start_button.setText(R.string.continue_button);
     }
     @Override
     protected void onDestroy() {
+        if(mpMediaPlayer!=null) {
+            try{
+                mpMediaPlayer.stop();
+                Log.d("Media","stop success");
+            }catch(IllegalStateException e) {
+                mpMediaPlayer.release();
+                Log.d("Media", "release success");
+                mpMediaPlayer = null;
+                Log.d("Media", "null success");
+            }
+        }
         super.onDestroy();
         ActivityCollector.removeActivity(this);
     }

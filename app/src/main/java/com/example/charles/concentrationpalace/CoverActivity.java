@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 
 /**
- * Created by charles on 10/19/2017.
+ * Story Cover
  */
 
 public class CoverActivity extends AppCompatActivity {
@@ -44,11 +44,11 @@ public class CoverActivity extends AppCompatActivity {
         view=View.inflate(this, R.layout.activity_cover, null);
         setContentView(view);
 
-        cover_page = (FrameLayout) findViewById(android.R.id.content);
+        cover_page = findViewById(android.R.id.content);
         cover_page.setClickable(true);
 
-        prologue_1 = (TextView)findViewById(R.id.prologue_1);
-        prologue_2 = (TextView)findViewById(R.id.prologue_2);
+        prologue_1 = findViewById(R.id.prologue_1);
+        prologue_2 = findViewById(R.id.prologue_2);
 
         CountDownTimer mc1;
         CountDownTimer mc2;

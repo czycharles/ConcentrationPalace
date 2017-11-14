@@ -60,24 +60,8 @@ public class InfoActivity extends AppCompatActivity {
 
         mInfoList.add(getResources().getString(R.string.info1));
         mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
-        mInfoList.add(getResources().getString(R.string.info2));
+        mInfoList.add(getResources().getString(R.string.info3));
+
         RecyclerView recyclerView = findViewById(R.id.info_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
