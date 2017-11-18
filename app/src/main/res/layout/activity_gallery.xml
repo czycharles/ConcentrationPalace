@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/item1"
+                android:src="@drawable/item_unknown"
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/flower3"
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/item1"
+                android:src="@drawable/item_unknown"
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/flower4"
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/item1"
+                android:src="@drawable/item_unknown"
                 android:layout_weight="0.2"/>
         </LinearLayout>
         <LinearLayout
@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/item1"
+                android:src="@drawable/item_unknown"
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/tree3"
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/item1"
+                android:src="@drawable/item_unknown"
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/tree4"
@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/item1"
+                android:src="@drawable/item_unknown"
                 android:layout_weight="0.2"/>
         </LinearLayout>
         <LinearLayout
@@ -123,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/item1"
+                android:src="@drawable/item_unknown"
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/stone3"
@@ -131,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/item1"
+                android:src="@drawable/item_unknown"
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/stone4"
@@ -139,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/item1"
+                android:src="@drawable/item_unknown"
                 android:layout_weight="0.2"/>
         </LinearLayout>
         <LinearLayout
@@ -162,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/item1"
+                android:src="@drawable/item_unknown"
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/house3"
@@ -170,7 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/item1"
+                android:src="@drawable/item_unknown"
                 android:layout_weight="0.2"/>
             <ImageView
                 android:id="@+id/house4"
@@ -178,9 +178,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/item1"
+                android:src="@drawable/item_unknown"
                 android:layout_weight="0.2"/>
         </LinearLayout>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/dark_cover"
+        android:contentDescription="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:alpha="0.5"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/big_item"
+        android:contentDescription="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:src="@drawable/item_unknown"
+        android:visibility="gone" />
 
 </FrameLayout>

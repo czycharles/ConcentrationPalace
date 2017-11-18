@@ -28,7 +28,6 @@ import android.widget.Toast;
 import android.view.View.OnClickListener;
 import android.os.CountDownTimer;
 import java.io.File;
-import java.io.IOException;
 
 
 /**
@@ -108,8 +107,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        Button AD_button = (Button) findViewById(R.id.AD_button);
-        coin_display = (TextView)findViewById(R.id.coin_bar);
+        Button AD_button = findViewById(R.id.AD_button);
+        coin_display = findViewById(R.id.coin_bar);
 
         AD_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,19 +121,19 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             }
             });
 
-        flowerImage = (FindSelectedItem)findViewById(R.id.flower1);
-        treeImage = (FindSelectedItem)findViewById(R.id.tree1);
-        stoneImage = (FindSelectedItem)findViewById(R.id.stone1);
-        houseImage = (FindSelectedItem)findViewById(R.id.house1);
+        flowerImage = findViewById(R.id.flower1);
+        treeImage = findViewById(R.id.tree1);
+        stoneImage = findViewById(R.id.stone1);
+        houseImage = findViewById(R.id.house1);
 
         findViewById(R.id.flower1).setOnClickListener(MyPalaceActivity.this);
         findViewById(R.id.tree1).setOnClickListener(MyPalaceActivity.this);
         findViewById(R.id.stone1).setOnClickListener(MyPalaceActivity.this);
         findViewById(R.id.house1).setOnClickListener(MyPalaceActivity.this);
 
-        item_pic = (ImageView)findViewById(R.id.Item_pic);
-        item_desc = (TextView)findViewById(R.id.Item_desc);
-        dark_cover = (ImageView)findViewById(R.id.dark_cover);
+        item_pic = findViewById(R.id.Item_pic);
+        item_desc = findViewById(R.id.Item_desc);
+        dark_cover = findViewById(R.id.dark_cover);
 
         findViewById(R.id.Item_pic).setOnClickListener(MyPalaceActivity.this);
         findViewById(R.id.Item_desc).setOnClickListener(MyPalaceActivity.this);
@@ -228,19 +227,19 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             }
         }
 
-        slot1_show = (TextView)findViewById(R.id.slot1_state);
+        slot1_show = findViewById(R.id.slot1_state);
         if(slot1_crash)
             slot1_show.setText("位置1目前是废墟状态，点击开始观看一段广告来复原你的建筑");
         else
             slot1_show.setText("位置1目前建造到了状态："+flower_slot1);
 
-        tv = (TextView)findViewById(R.id.countdown_hint);
+        tv = findViewById(R.id.countdown_hint);
         if(slot1_crash){
             tv.setVisibility(View.VISIBLE);
             tv.setText("抱歉，你使用了手机，位置1已经坍塌。");
         }
 
-        Button palace_back_button = (Button) findViewById(R.id.palace_back_button);
+        Button palace_back_button = findViewById(R.id.palace_back_button);
 
         palace_back_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -315,7 +314,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         });
 
 
-        Button share_button = (Button) findViewById(R.id.share_button);
+        Button share_button = findViewById(R.id.share_button);
 
         share_button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -373,7 +372,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     @Override
     public void onClick(View v) {
 
-        coin_display = (TextView)findViewById(R.id.coin_bar);
+        coin_display = findViewById(R.id.coin_bar);
 
         switch (v.getId()) {
 
@@ -795,7 +794,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         }
 
 
-        slot1_show = (TextView)findViewById(R.id.slot1_state);
+        slot1_show = findViewById(R.id.slot1_state);
         if(building_slot > 0) {
             tv.setText("请等待30秒(" + mc.returnLeftTime() / 1000 + ")...");
         }
@@ -865,8 +864,17 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             failAlert.show();
         }
         else {
-            mpMediaPlayer.stop();
-            mpMediaPlayer.release();
+            if(mpMediaPlayer!=null) {
+                try{
+                    mpMediaPlayer.stop();
+                    Log.d("Media","stop success");
+                }catch(IllegalStateException e) {
+                    mpMediaPlayer.release();
+                    Log.d("Media", "release success");
+                    mpMediaPlayer = null;
+                    Log.d("Media", "null success");
+                }
+            }
             Intent intent = new Intent(MyPalaceActivity.this, CP_MainActivity.class);
             startActivity(intent);
             int version = Build.VERSION.SDK_INT;
@@ -910,8 +918,17 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     break;
             }
             building_slot = 0;
-            mpMediaPlayer.stop();
-            mpMediaPlayer.release();
+            if(mpMediaPlayer!=null) {
+                try{
+                    mpMediaPlayer.stop();
+                    Log.d("Media","stop success");
+                }catch(IllegalStateException e) {
+                    mpMediaPlayer.release();
+                    Log.d("Media", "release success");
+                    mpMediaPlayer = null;
+                    Log.d("Media", "null success");
+                }
+            }
             finish();
         }
         super.onTrimMemory(level);
@@ -996,10 +1013,10 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         @Override
         public void onFinish() {
             //WindowManager.LayoutParams lp = getWindow().getAttributes();
-            Animation animation1= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_in);
-            Animation animation2= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_in);
-            Animation animation3= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_in);
-            Animation animation4= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_in);
+            Animation animation1= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_in_fast);
+            Animation animation2= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_in_fast);
+            Animation animation3= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_in_fast);
+            Animation animation4= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_in_fast);
 
             dark_cover.setVisibility(View.VISIBLE);
             item_pic.setVisibility(View.VISIBLE);
