@@ -125,37 +125,37 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
             flower2.setImageResource(R.drawable.item1);
         }
         if(flower_slot1>=3) {
-            flower2.setImageResource(R.drawable.item1);
+            flower3.setImageResource(R.drawable.item1);
         }
         if(flower_slot1>=4) {
-            flower2.setImageResource(R.drawable.item1);
+            flower4.setImageResource(R.drawable.item1);
         }
         if(tree_slot2>=2) {
-            flower2.setImageResource(R.drawable.item1);
+            tree2.setImageResource(R.drawable.item1);
         }
         if(tree_slot2>=3) {
-            flower2.setImageResource(R.drawable.item1);
+            tree3.setImageResource(R.drawable.item1);
         }
         if(tree_slot2>=4) {
-            flower2.setImageResource(R.drawable.item1);
+            tree4.setImageResource(R.drawable.item1);
         }
         if(stone_slot3>=2) {
-            flower2.setImageResource(R.drawable.item1);
+            stone2.setImageResource(R.drawable.item1);
         }
         if(stone_slot3>=3) {
-            flower2.setImageResource(R.drawable.item1);
+            stone3.setImageResource(R.drawable.item1);
         }
         if(stone_slot3>=4) {
-            flower2.setImageResource(R.drawable.item1);
+            stone4.setImageResource(R.drawable.item1);
         }
         if(house_slot4>=2) {
-            flower2.setImageResource(R.drawable.item1);
+            house2.setImageResource(R.drawable.item1);
         }
         if(house_slot4>=3) {
-            flower2.setImageResource(R.drawable.item1);
+            house3.setImageResource(R.drawable.item1);
         }
         if(house_slot4>=4) {
-            flower2.setImageResource(R.drawable.item1);
+            house4.setImageResource(R.drawable.item1);
         }
 
         flower1.setOnClickListener(GalleryActivity.this);

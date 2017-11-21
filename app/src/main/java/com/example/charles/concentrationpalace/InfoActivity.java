@@ -58,6 +58,7 @@ public class InfoActivity extends AppCompatActivity {
         v.setBackground(new BitmapDrawable(getResources(), bmp));
         rs.destroy();
 
+        mInfoList.add(getResources().getString(R.string.info0));
         mInfoList.add(getResources().getString(R.string.info1));
         mInfoList.add(getResources().getString(R.string.info2));
         mInfoList.add(getResources().getString(R.string.info3));

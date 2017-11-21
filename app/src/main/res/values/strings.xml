@@ -29,7 +29,8 @@
 	<string name="house2_desc">本是后山人，偶坐前堂客。</string>
 	<string name="house3_desc">斯是陋室,惟吾德馨。</string>
 	<string name="house4_desc">相黏蚝山作居室，窍凿混沌无完肤。</string>
+	<string name="info0">设置与信息</string>
 	<string name="info1">重置游戏</string>
-	<string name="info2">音乐来源：\nhttps://maoudamashii.jokersounds.com/</string>
+	<string name="info2">音乐：maoudamashii.jokersounds.com</string>
 	<string name="info3">联系我们：1234567@163.com</string>
 </resources>

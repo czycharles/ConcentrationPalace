@@ -11,6 +11,12 @@
         android:background="@drawable/flower1"/>
 
     <com.example.charles.concentrationpalace.FindSelectedItem
+        android:id="@+id/island"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/island_on_the_flower"/>
+
+    <com.example.charles.concentrationpalace.FindSelectedItem
         android:id="@+id/stone1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,21 +103,12 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/palace_back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@android:drawable/btn_default"
-            android:gravity="center"
-            android:text="@string/palace_back_button"
-            android:layout_marginBottom="10dp"
-            android:textSize="20sp" />
-        <Button
             android:id="@+id/AD_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@android:drawable/btn_default"
+            android:background="@drawable/button_style"
+            android:textColor="@color/whitesmoke"
             android:gravity="center"
             android:text="@string/AD_button"
             android:layout_marginBottom="10dp"

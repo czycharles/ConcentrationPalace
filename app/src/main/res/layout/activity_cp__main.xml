@@ -18,7 +18,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/app_name"
-        android:textColor="?android:attr/textColorPrimary"
+        android:textColor="@color/whitesmoke"
         android:textSize="50sp" />
 
     <ImageView
