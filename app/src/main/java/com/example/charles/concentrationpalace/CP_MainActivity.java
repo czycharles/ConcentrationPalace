@@ -13,10 +13,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.io.File;
-import java.io.IOException;
 
 public class CP_MainActivity extends AppCompatActivity {
 
@@ -43,7 +41,7 @@ public class CP_MainActivity extends AppCompatActivity {
         mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing08);
         try {
             mpMediaPlayer.setLooping(true);
-            volumeGradient.vGradient(mpMediaPlayer,0f, 1f);
+            //volumeGradient.vGradient(mpMediaPlayer,0f, 1f);
             mpMediaPlayer.start();
         } catch (IllegalArgumentException e) {
             // TODO Auto-generated catch block

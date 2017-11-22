@@ -8,7 +8,7 @@
         android:id="@+id/flower1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/flower1"/>
+        android:background="@drawable/flower_crush"/>
 
     <com.example.charles.concentrationpalace.FindSelectedItem
         android:id="@+id/island"
@@ -20,19 +20,25 @@
         android:id="@+id/stone1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/stone1"/>
+        android:background="@drawable/stone_crush"/>
 
     <com.example.charles.concentrationpalace.FindSelectedItem
         android:id="@+id/tree1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/tree1"/>
+        android:background="@drawable/tree_crush"/>
 
     <com.example.charles.concentrationpalace.FindSelectedItem
         android:id="@+id/house1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/house1"/>
+        android:background="@drawable/house_crush"/>
+
+    <com.example.charles.concentrationpalace.FindSelectedItem
+        android:id="@+id/luwei1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/luwei_crush"/>
 
     <LinearLayout
         android:orientation="vertical"

@@ -2,6 +2,8 @@ package com.example.charles.concentrationpalace;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,8 +37,15 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ViewHolder>{
         mInfoList = InfoList;
     }
 
+//    private Resources getResources() {
+//    // TODO Auto-generated method stub
+//        Resources mResources;
+//        mResources = getResources();
+//        return mResources;
+//    }
+
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.info_layout,parent,false);
         final ViewHolder holder = new ViewHolder(view);
         holder.InfoView.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +55,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ViewHolder>{
                 final Context context = v.getContext();
                 //Toast.makeText(context, "位置"+position, Toast.LENGTH_SHORT).show();
                 switch (position) {
-                    case 0:
+                    case 1:
                         AlertDialog.Builder ResetAlert = new AlertDialog.Builder(context);
                         ResetAlert.setTitle("删除记录？");
                         ResetAlert.setMessage("你目前的游戏进度会被清空");
@@ -69,6 +78,18 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ViewHolder>{
                             }
                         });
                         ResetAlert.show();
+                        break;
+                    case 2:
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(parent.getContext().getResources().getString((R.string.info2_2))));
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        parent.getContext().startActivity(intent);
+                        break;
+                    case 3:
+                        Intent intent1 = new Intent(Intent.ACTION_SENDTO);
+                        intent1.setData(Uri.parse("mailto: "+ parent.getContext().getResources().getString((R.string.info3_2))));
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        parent.getContext().startActivity(intent1);
                         break;
                 }
             }
