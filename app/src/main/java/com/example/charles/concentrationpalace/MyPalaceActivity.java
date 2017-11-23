@@ -535,7 +535,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     ADAlert.show();
                 }
                 else {
-                    if (next_building_time == -1) {
+                    if (stone_slot3 == 3) {
                         Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
                     } else {
                         AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
@@ -620,7 +620,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     else {
                         AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
                         BuildAlert.setTitle("升级禅院的树？");
-                        BuildAlert.setMessage("建造花费" + price_matrix[1][tree_slot2-1] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
+                        BuildAlert.setMessage("建造花费" + price_matrix[1][tree_slot2] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
                         BuildAlert.setCancelable(false);
                         BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
