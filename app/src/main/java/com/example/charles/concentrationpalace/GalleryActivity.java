@@ -1,6 +1,5 @@
 package com.example.charles.concentrationpalace;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -8,43 +7,36 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.renderscript.Allocation;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Gallery Page.
  */
 
-public class GalleryActivity extends AppCompatActivity implements View.OnClickListener {
+public class GalleryActivity extends AppCompatActivity {
 
-//    private ImageView flower1;
-//    private ImageView flower2;
-//    private ImageView flower3;
-//    private ImageView flower4;
-//    private ImageView tree1;
-//    private ImageView tree2;
-//    private ImageView tree3;
-//    private ImageView tree4;
-//    private ImageView stone1;
-//    private ImageView stone2;
-//    private ImageView stone3;
-//    private ImageView stone4;
-//    private ImageView house1;
-//    private ImageView house2;
-//    private ImageView house3;
-//    private ImageView house4;
+
+    private List<GalleryItem> mGalleryList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,210 +68,152 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
         v.setBackground(new BitmapDrawable(getResources(), bmp));
         rs.destroy();
 
-        ImageView flower1;
-        ImageView flower2;
-        ImageView flower3;
-        ImageView flower4;
-        ImageView tree1;
-        ImageView tree2;
-        ImageView tree3;
-        ImageView tree4;
-        ImageView stone1;
-        ImageView stone2;
-        ImageView stone3;
-        ImageView stone4;
-        ImageView house1;
-        ImageView house2;
-        ImageView house3;
-        ImageView house4;
-
         int flower_slot1;
         int tree_slot2;
         int stone_slot3;
         int house_slot4;
+        int luwei_slot5;
 
-        flower1 = findViewById(R.id.flower1);
-        flower2 = findViewById(R.id.flower2);
-        flower3 = findViewById(R.id.flower3);
-        flower4 = findViewById(R.id.flower4);
-        tree1 = findViewById(R.id.tree1);
-        tree2 = findViewById(R.id.tree2);
-        tree3 = findViewById(R.id.tree3);
-        tree4 = findViewById(R.id.tree4);
-        stone1 = findViewById(R.id.stone1);
-        stone2 = findViewById(R.id.stone2);
-        stone3 = findViewById(R.id.stone3);
-        stone4 = findViewById(R.id.stone4);
-        house1 = findViewById(R.id.house1);
-        house2 = findViewById(R.id.house2);
-        house3 = findViewById(R.id.house3);
-        house4 = findViewById(R.id.house4);
 
         SharedPreferences data;
         data = getSharedPreferences("data", MODE_PRIVATE);
-        flower_slot1 = data.getInt("slot1", 1);
-        tree_slot2 = data.getInt("slot2", 1);
-        stone_slot3 = data.getInt("slot3", 1);
-        house_slot4 = data.getInt("slot4", 1);
-        if(flower_slot1>=2) {
-            flower2.setImageResource(R.drawable.item1);
-        }
-        if(flower_slot1>=3) {
-            flower3.setImageResource(R.drawable.item1);
-        }
-        if(flower_slot1>=4) {
-            flower4.setImageResource(R.drawable.item1);
-        }
-        if(tree_slot2>=2) {
-            tree2.setImageResource(R.drawable.item1);
-        }
-        if(tree_slot2>=3) {
-            tree3.setImageResource(R.drawable.item1);
-        }
-        if(tree_slot2>=4) {
-            tree4.setImageResource(R.drawable.item1);
-        }
-        if(stone_slot3>=2) {
-            stone2.setImageResource(R.drawable.item1);
-        }
-        if(stone_slot3>=3) {
-            stone3.setImageResource(R.drawable.item1);
-        }
-        if(stone_slot3>=4) {
-            stone4.setImageResource(R.drawable.item1);
-        }
-        if(house_slot4>=2) {
-            house2.setImageResource(R.drawable.item1);
-        }
-        if(house_slot4>=3) {
-            house3.setImageResource(R.drawable.item1);
-        }
-        if(house_slot4>=4) {
-            house4.setImageResource(R.drawable.item1);
-        }
+        flower_slot1 = data.getInt("slot1", 0);
+        tree_slot2 = data.getInt("slot2", 0);
+        stone_slot3 = data.getInt("slot3", 0);
+        house_slot4 = data.getInt("slot4", 0);
+        luwei_slot5 = data.getInt("slot5",0);
 
-        flower1.setOnClickListener(GalleryActivity.this);
-        flower2.setOnClickListener(GalleryActivity.this);
-        flower3.setOnClickListener(GalleryActivity.this);
-        flower4.setOnClickListener(GalleryActivity.this);
-        tree1.setOnClickListener(GalleryActivity.this);
-        tree2.setOnClickListener(GalleryActivity.this);
-        tree3.setOnClickListener(GalleryActivity.this);
-        tree4.setOnClickListener(GalleryActivity.this);
-        stone1.setOnClickListener(GalleryActivity.this);
-        stone2.setOnClickListener(GalleryActivity.this);
-        stone3.setOnClickListener(GalleryActivity.this);
-        stone4.setOnClickListener(GalleryActivity.this);
-        house1.setOnClickListener(GalleryActivity.this);
-        house2.setOnClickListener(GalleryActivity.this);
-        house3.setOnClickListener(GalleryActivity.this);
-        house4.setOnClickListener(GalleryActivity.this);
+        initGalleryItems(flower_slot1,tree_slot2,stone_slot3,house_slot4,luwei_slot5);
+
+        RecyclerView recyclerView = findViewById(R.id.gallery_view);
+        GridLayoutManager glm = new GridLayoutManager(this,4);
+        recyclerView.setLayoutManager(glm);
+        GalleryAdapter adapter = new GalleryAdapter(mGalleryList,glm);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+        adapter.setOnItemClickListener(new GalleryAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                GalleryItem currentItem = mGalleryList.get(position);
+
+                final TextView big_image = findViewById(R.id.big_image);
+                Animation animation1 = AnimationUtils.loadAnimation(GalleryActivity.this, R.anim.fade_in_fast);
+                final ImageView dark_cover = findViewById(R.id.dark_cover);
+
+                if (currentItem.getImageId() == R.drawable.item_unknown)
+                    Toast.makeText(GalleryActivity.this, "该物品尚未解锁", Toast.LENGTH_SHORT).show();
+                else {
+                    big_image.setText(currentItem.getDesc());
+                    big_image.setVisibility(View.VISIBLE);
+                    Drawable drawable = getResources().getDrawable(currentItem.getImageId());
+                    drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), (drawable.getMinimumHeight()));
+                    big_image.setCompoundDrawables(null, drawable, null, null);
+                    dark_cover.setVisibility(View.VISIBLE);
+                    Toast.makeText(GalleryActivity.this, "位置" + position, Toast.LENGTH_SHORT).show();
+                    big_image.startAnimation(animation1);
+                    dark_cover.startAnimation(animation1);
+                    big_image.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(Until.isFastClick()) {
+                                big_image.setVisibility(View.GONE);
+                                dark_cover.setVisibility(View.GONE);
+                                Animation animation2 = AnimationUtils.loadAnimation(GalleryActivity.this, R.anim.fade_out_fast);
+                                big_image.startAnimation(animation2);
+                                dark_cover.startAnimation(animation2);
+                            }
+                        }
+                    });
+                    dark_cover.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(Until.isFastClick()) {
+                                big_image.setVisibility(View.GONE);
+                                dark_cover.setVisibility(View.GONE);
+                                Animation animation2 = AnimationUtils.loadAnimation(GalleryActivity.this, R.anim.fade_out_fast);
+                                big_image.startAnimation(animation2);
+                                dark_cover.startAnimation(animation2);
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
+    private void initGalleryItems(int slot1, int slot2, int slot3, int slot4, int slot5){
 
-        Animation animation1= AnimationUtils.loadAnimation(GalleryActivity.this, R.anim.fade_in_fast);
-        ImageView dark_cover = findViewById(R.id.dark_cover);
-        ImageView big_image = findViewById(R.id.big_item);
+        mGalleryList.add(new GalleryItem(getResources().getString(R.string.flower0_desc),R.drawable.item1));
+        if(slot1>0)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.flower1_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.flower1_desc),R.drawable.item_unknown));
+        if(slot1>1)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.flower2_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.flower2_desc),R.drawable.item_unknown));
+        if(slot1>2)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.flower3_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.flower3_desc),R.drawable.item_unknown));
 
-        big_image.setOnClickListener(GalleryActivity.this);
-        dark_cover.setOnClickListener(GalleryActivity.this);
+        mGalleryList.add(new GalleryItem(getResources().getString(R.string.house0_desc),R.drawable.item1));
+        if(slot2>0)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house1_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house1_desc),R.drawable.item_unknown));
+        if(slot2>1)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house2_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house2_desc),R.drawable.item_unknown));
+        if(slot2>2)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house3_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house3_desc),R.drawable.item_unknown));
 
-        switch (v.getId()) {
-            case R.id.flower1:
-                dark_cover.setVisibility(View.VISIBLE);
-                big_image.setVisibility(View.VISIBLE);
-//                animation1.setAnimationListener(new Animation.AnimationListener() {
-//                    @Override
-//                    public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
-//
-//                    @Override
-//                    public void onAnimationEnd(Animation arg0) {
-//
-//                        //dark_cover.setVisibility(View.GONE);
-//                    }
-//                });
-                big_image.startAnimation(animation1);
-                break;
-            case R.id.flower2:
-                dark_cover.setVisibility(View.VISIBLE);
-                big_image.setVisibility(View.VISIBLE);
-//                animation1.setAnimationListener(new Animation.AnimationListener() {
-//                    @Override
-//                    public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
-//
-//                    @Override
-//                    public void onAnimationEnd(Animation arg0) {
-//
-//                        //dark_cover.setVisibility(View.GONE);
-//                    }
-//                });
-                big_image.startAnimation(animation1);
-                break;
-            case R.id.flower3:
-                dark_cover.setVisibility(View.VISIBLE);
-                big_image.setVisibility(View.VISIBLE);
-//                animation1.setAnimationListener(new Animation.AnimationListener() {
-//                    @Override
-//                    public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
-//
-//                    @Override
-//                    public void onAnimationEnd(Animation arg0) {
-//
-//                        //dark_cover.setVisibility(View.GONE);
-//                    }
-//                });
-                big_image.startAnimation(animation1);
-                break;
-            case R.id.flower4:
-                dark_cover.setVisibility(View.VISIBLE);
-                big_image.setVisibility(View.VISIBLE);
-//                animation1.setAnimationListener(new Animation.AnimationListener() {
-//                    @Override
-//                    public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
-//
-//                    @Override
-//                    public void onAnimationEnd(Animation arg0) {
-//
-//                        //dark_cover.setVisibility(View.GONE);
-//                    }
-//                });
-                big_image.startAnimation(animation1);
-                break;
-            case R.id.big_item:case R.id.dark_cover:
-                big_image.setVisibility(View.GONE);
-                dark_cover.setVisibility(View.GONE);
-                Animation animation2= AnimationUtils.loadAnimation(GalleryActivity.this, R.anim.fade_out_fast);
-//                animation5.setAnimationListener(new Animation.AnimationListener() {
-//                    @Override
-//                    public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
-//
-//                    @Override
-//                    public void onAnimationEnd(Animation arg0) {
-//
-//                        //item_desc.setVisibility(View.VISIBLE);
-//                    }
-//                });
-                big_image.startAnimation(animation2);
-                dark_cover.startAnimation(animation2);
-                break;
-        }
+        mGalleryList.add(new GalleryItem(getResources().getString(R.string.stone0_desc),R.drawable.item1));
+        if(slot3>0)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.stone1_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.stone1_desc),R.drawable.item_unknown));
+        if(slot3>1)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.stone2_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.stone2_desc),R.drawable.item_unknown));
+        if(slot3>2)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.stone3_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.stone3_desc),R.drawable.item_unknown));
+
+        mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree0_desc),R.drawable.item1));
+        if(slot4>0)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree1_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree1_desc),R.drawable.item_unknown));
+        if(slot4>1)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree2_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree2_desc),R.drawable.item_unknown));
+        if(slot4>2)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree3_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree2_desc),R.drawable.item_unknown));
+
+        mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei0_desc),R.drawable.item1));
+        if(slot5>0)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei1_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei1_desc),R.drawable.item_unknown));
+        if(slot5>1)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei2_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei2_desc),R.drawable.item_unknown));
+        if(slot5>2)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei3_desc),R.drawable.item1));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei3_desc),R.drawable.item_unknown));
 
     }
     @Override

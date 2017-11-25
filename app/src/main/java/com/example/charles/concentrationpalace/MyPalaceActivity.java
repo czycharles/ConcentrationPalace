@@ -330,429 +330,402 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
         coin_display = findViewById(R.id.coin_bar);
 
-        switch (v.getId()) {
+        if(Until.isFastClick()) {
+            switch (v.getId()) {
 
-            case R.id.flower1:
+                case R.id.flower1:
 
-                next_building_time = slot1_build_time[flower_slot1];
+                    next_building_time = slot1_build_time[flower_slot1];
 
-                if (building_slot > 0) {
-                    Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
-                }
-                else if (slot1_crash) {
-                    AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                    ADAlert.setTitle("观看一段广告来清除掉废墟？");
-                    ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
-                    ADAlert.setCancelable(true);
-                    ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface ADAlert, int i) {
-                            //开始播放广告
-                            slot1_crash = false;
-                            editor.putBoolean("slot1_crash", false);
-                            editor.apply();
-                            slot1_show.setText("位置1目前建造到了状态：" + flower_slot1);
-                            switch (flower_slot1) {
-                                case 0:
-                                    flowerImage.setBackgroundResource(R.drawable.flower_crush);
-                                    break;
-                                case 1:
-                                    flowerImage.setBackgroundResource(R.drawable.flower1);
-                                    break;
-                                case 2:
-                                    flowerImage.setBackgroundResource(R.drawable.flower2);
-                                    break;
-                                case 3:
-                                    flowerImage.setBackgroundResource(R.drawable.flower3);
-                                    break;
-                                default:
-                                    flowerImage.setBackgroundResource(R.drawable.flower_crush);
-                                    break;
+                    if (building_slot > 0) {
+                        Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
+                    } else if (slot1_crash) {
+                        AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                        ADAlert.setTitle("观看一段广告来清除掉废墟？");
+                        ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                        ADAlert.setCancelable(true);
+                        ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface ADAlert, int i) {
+                                //开始播放广告
+                                slot1_crash = false;
+                                editor.putBoolean("slot1_crash", false);
+                                editor.apply();
+                                slot1_show.setText("位置1目前建造到了状态：" + flower_slot1);
+                                switch (flower_slot1) {
+                                    case 0:
+                                        flowerImage.setBackgroundResource(R.drawable.flower_crush);
+                                        break;
+                                    case 1:
+                                        flowerImage.setBackgroundResource(R.drawable.flower1);
+                                        break;
+                                    case 2:
+                                        flowerImage.setBackgroundResource(R.drawable.flower2);
+                                        break;
+                                    case 3:
+                                        flowerImage.setBackgroundResource(R.drawable.flower3);
+                                        break;
+                                    default:
+                                        flowerImage.setBackgroundResource(R.drawable.flower_crush);
+                                        break;
+                                }
+                                tv.setVisibility(View.GONE);
                             }
-                            tv.setVisibility(View.GONE);
+                        });
+                        ADAlert.show();
+                    } else {
+                        if (flower_slot1 == 3) {
+                            Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
+                        } else {
+                            AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                            BuildAlert.setTitle("升级禅院的荷花？");
+                            BuildAlert.setMessage("建造花费" + price_matrix[0][flower_slot1] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
+                            BuildAlert.setCancelable(false);
+                            BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface BuildAlert, int i) {
+                                    if (my_coin < price_matrix[0][flower_slot1]) {
+                                        Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        mc = new MyCount(next_building_time, 1000);
+                                        mc.start();
+                                        building_slot = 1;
+                                        my_coin = my_coin - price_matrix[0][flower_slot1];
+                                        coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                        editor.putInt("my_coin", my_coin);
+                                        editor.apply();
+                                        tv.setVisibility(View.VISIBLE);
+                                        Toast.makeText(MyPalaceActivity.this, "位置1已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                            BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface BuildAlert, int i) {
+                                    BuildAlert.cancel();
+                                }
+                            });
+                            BuildAlert.show();
                         }
-                    });
-                    ADAlert.show();
-                }
-                else{
-                    if(flower_slot1 == 3){
-                        Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
                     }
-                    else {
-                        AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        BuildAlert.setTitle("升级禅院的荷花？");
-                        BuildAlert.setMessage("建造花费" + price_matrix[0][flower_slot1] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
-                        BuildAlert.setCancelable(false);
-                        BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    break;
+                case R.id.house1:
+
+                    next_building_time = slot4_build_time[house_slot4];
+
+                    if (building_slot > 0) {
+                        Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
+                    } else if (slot4_crash) {
+                        AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                        ADAlert.setTitle("观看一段广告来清除掉废墟？");
+                        ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                        ADAlert.setCancelable(true);
+                        ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface BuildAlert, int i) {
-                                if (my_coin < price_matrix[0][flower_slot1]) {
-                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                            public void onClick(DialogInterface ADAlert, int i) {
+                                //开始播放广告
+                                slot4_crash = false;
+                                editor.putBoolean("slot4_crash", slot4_crash);
+                                editor.apply();
+                                slot1_show.setText("位置4目前建造到了状态：" + house_slot4);
+                                switch (house_slot4) {
+                                    case 0:
+                                        houseImage.setBackgroundResource(R.drawable.house_crush);
+                                        break;
+                                    case 1:
+                                        houseImage.setBackgroundResource(R.drawable.house1);
+                                        break;
+                                    case 2:
+                                        houseImage.setBackgroundResource(R.drawable.house2);
+                                        break;
+                                    case 3:
+                                        houseImage.setBackgroundResource(R.drawable.house3);
+                                        break;
+                                    default:
+                                        houseImage.setBackgroundResource(R.drawable.house_crush);
+                                        break;
                                 }
-                                else {
-                                    mc = new MyCount(next_building_time, 1000);
-                                    mc.start();
-                                    building_slot = 1;
-                                    my_coin = my_coin - price_matrix[0][flower_slot1];
-                                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                                    editor.putInt("my_coin", my_coin);
-                                    editor.apply();
-                                    tv.setVisibility(View.VISIBLE);
-                                    Toast.makeText(MyPalaceActivity.this, "位置1已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
-                                }
+                                tv.setVisibility(View.GONE);
                             }
                         });
-                        BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface BuildAlert, int i) {
-                                BuildAlert.cancel();
-                            }
-                        });
-                        BuildAlert.show();
-                    }
-                }
-                break;
-            case R.id.house1:
-
-                next_building_time = slot4_build_time[house_slot4];
-
-                if(building_slot > 0) {
-                    Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
-                }
-                else if(slot4_crash){
-                    AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                    ADAlert.setTitle("观看一段广告来清除掉废墟？");
-                    ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
-                    ADAlert.setCancelable(true);
-                    ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface ADAlert, int i) {
-                            //开始播放广告
-                            slot4_crash = false;
-                            editor.putBoolean("slot4_crash", slot4_crash);
-                            editor.apply();
-                            slot1_show.setText("位置4目前建造到了状态："+ house_slot4);
-                            switch (house_slot4) {
-                                case 0:
-                                    houseImage.setBackgroundResource(R.drawable.house_crush);
-                                    break;
-                                case 1:
-                                    houseImage.setBackgroundResource(R.drawable.house1);
-                                    break;
-                                case 2:
-                                    houseImage.setBackgroundResource(R.drawable.house2);
-                                    break;
-                                case 3:
-                                    houseImage.setBackgroundResource(R.drawable.house3);
-                                    break;
-                                default:
-                                    houseImage.setBackgroundResource(R.drawable.house_crush);
-                                    break;
-                            }
-                            tv.setVisibility(View.GONE);
+                        ADAlert.show();
+                    } else {
+                        if (house_slot4 == 3) {
+                            Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
+                        } else {
+                            AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                            BuildAlert.setTitle("升级建造禅院？");
+                            BuildAlert.setMessage("建造花费" + price_matrix[3][house_slot4] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
+                            BuildAlert.setCancelable(false);
+                            BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface BuildAlert, int i) {
+                                    if (my_coin < price_matrix[3][house_slot4]) {
+                                        Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        mc = new MyCount(next_building_time, 1000);
+                                        mc.start();
+                                        building_slot = 4;
+                                        my_coin = my_coin - price_matrix[3][house_slot4];
+                                        coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                        editor.putInt("my_coin", my_coin);
+                                        editor.apply();
+                                        tv.setVisibility(View.VISIBLE);
+                                        Toast.makeText(MyPalaceActivity.this, "位置4已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                            BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface BuildAlert, int i) {
+                                    BuildAlert.cancel();
+                                }
+                            });
+                            BuildAlert.show();
                         }
-                    });
-                    ADAlert.show();
-                }
-                else{
-                    if(house_slot4 == 3){
-                        Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
                     }
-                    else {
-                        AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        BuildAlert.setTitle("升级建造禅院？");
-                        BuildAlert.setMessage("建造花费" + price_matrix[3][house_slot4] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
-                        BuildAlert.setCancelable(false);
-                        BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface BuildAlert, int i) {
-                                if (my_coin < price_matrix[3][house_slot4]) {
-                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
-                                }
-                                else {
-                                    mc = new MyCount(next_building_time, 1000);
-                                    mc.start();
-                                    building_slot = 4;
-                                    my_coin = my_coin - price_matrix[3][house_slot4];
-                                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                                    editor.putInt("my_coin", my_coin);
-                                    editor.apply();
-                                    tv.setVisibility(View.VISIBLE);
-                                    Toast.makeText(MyPalaceActivity.this, "位置4已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-                        BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface BuildAlert, int i) {
-                                BuildAlert.cancel();
-                            }
-                        });
-                        BuildAlert.show();
-                    }
-                }
-                break;
-            case R.id.stone1:
+                    break;
+                case R.id.stone1:
 
                     next_building_time = slot3_build_time[stone_slot3];
 
-                if(building_slot > 0) {
-                    Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
-                }
-                else if(slot3_crash){
-                    AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                    ADAlert.setTitle("观看一段广告来清除掉废墟？");
-                    ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
-                    ADAlert.setCancelable(true);
-                    ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface ADAlert, int i) {
-                            //开始播放广告
-                            slot3_crash = false;
-                            editor.putBoolean("slot3_crash", slot3_crash);
-                            editor.apply();
-                            slot1_show.setText("位置3目前建造到了状态："+ stone_slot3);
-                            switch (stone_slot3) {
-                                case 0:
-                                    stoneImage.setBackgroundResource(R.drawable.stone_crush);
-                                    break;
-                                case 1:
-                                    stoneImage.setBackgroundResource(R.drawable.stone1);
-                                    break;
-                                case 2:
-                                    stoneImage.setBackgroundResource(R.drawable.stone2);
-                                    break;
-                                case 3:
-                                    stoneImage.setBackgroundResource(R.drawable.stone3);
-                                    break;
-                                default:
-                                    stoneImage.setBackgroundResource(R.drawable.stone_crush);
-                                    break;
+                    if (building_slot > 0) {
+                        Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
+                    } else if (slot3_crash) {
+                        AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                        ADAlert.setTitle("观看一段广告来清除掉废墟？");
+                        ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                        ADAlert.setCancelable(true);
+                        ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface ADAlert, int i) {
+                                //开始播放广告
+                                slot3_crash = false;
+                                editor.putBoolean("slot3_crash", slot3_crash);
+                                editor.apply();
+                                slot1_show.setText("位置3目前建造到了状态：" + stone_slot3);
+                                switch (stone_slot3) {
+                                    case 0:
+                                        stoneImage.setBackgroundResource(R.drawable.stone_crush);
+                                        break;
+                                    case 1:
+                                        stoneImage.setBackgroundResource(R.drawable.stone1);
+                                        break;
+                                    case 2:
+                                        stoneImage.setBackgroundResource(R.drawable.stone2);
+                                        break;
+                                    case 3:
+                                        stoneImage.setBackgroundResource(R.drawable.stone3);
+                                        break;
+                                    default:
+                                        stoneImage.setBackgroundResource(R.drawable.stone_crush);
+                                        break;
+                                }
+                                tv.setVisibility(View.GONE);
                             }
-                            tv.setVisibility(View.GONE);
-                        }
-                    });
-                    ADAlert.show();
-                }
-                else {
-                    if (stone_slot3 == 3) {
-                        Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
+                        });
+                        ADAlert.show();
                     } else {
-                        AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        BuildAlert.setTitle("升级建造禅院的岩石？");
-                        BuildAlert.setMessage("建造花费" + price_matrix[2][stone_slot3] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
-                        BuildAlert.setCancelable(false);
-                        BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface BuildAlert, int i) {
-                                if (my_coin < price_matrix[2][stone_slot3]) {
-                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                        if (stone_slot3 == 3) {
+                            Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
+                        } else {
+                            AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                            BuildAlert.setTitle("升级建造禅院的岩石？");
+                            BuildAlert.setMessage("建造花费" + price_matrix[2][stone_slot3] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
+                            BuildAlert.setCancelable(false);
+                            BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface BuildAlert, int i) {
+                                    if (my_coin < price_matrix[2][stone_slot3]) {
+                                        Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        mc = new MyCount(next_building_time, 1000);
+                                        mc.start();
+                                        building_slot = 3;
+                                        my_coin = my_coin - price_matrix[2][stone_slot3];
+                                        coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                        editor.putInt("my_coin", my_coin);
+                                        editor.apply();
+                                        tv.setVisibility(View.VISIBLE);
+                                        Toast.makeText(MyPalaceActivity.this, "位置3已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                    }
                                 }
-                                else {
-                                    mc = new MyCount(next_building_time, 1000);
-                                    mc.start();
-                                    building_slot = 3;
-                                    my_coin = my_coin - price_matrix[2][stone_slot3];
-                                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                                    editor.putInt("my_coin", my_coin);
-                                    editor.apply();
-                                    tv.setVisibility(View.VISIBLE);
-                                    Toast.makeText(MyPalaceActivity.this, "位置3已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                            });
+                            BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface BuildAlert, int i) {
+                                    BuildAlert.cancel();
                                 }
-                            }
-                        });
-                        BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface BuildAlert, int i) {
-                                BuildAlert.cancel();
-                            }
-                        });
-                        BuildAlert.show();
-                    }
-                }
-                break;
-            case R.id.tree1:
-
-                next_building_time = slot2_build_time[tree_slot2];
-
-                if(building_slot > 0) {
-                    Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
-                }
-                else if(slot2_crash){
-                    AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                    ADAlert.setTitle("观看一段广告来清除掉废墟？");
-                    ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
-                    ADAlert.setCancelable(true);
-                    ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface ADAlert, int i) {
-                            //开始播放广告
-                            slot2_crash = false;
-                            editor.putBoolean("slot2_crash", slot2_crash);
-                            editor.apply();
-                            slot1_show.setText("位置2目前建造到了状态："+ tree_slot2);
-                            switch (tree_slot2) {
-                                case 0:
-                                    treeImage.setBackgroundResource(R.drawable.tree_crush);
-                                    break;
-                                case 1:
-                                    treeImage.setBackgroundResource(R.drawable.tree1);
-                                    break;
-                                case 2:
-                                    treeImage.setBackgroundResource(R.drawable.tree2);
-                                    break;
-                                case 3:
-                                    treeImage.setBackgroundResource(R.drawable.tree3);
-                                    break;
-                                default:
-                                    treeImage.setBackgroundResource(R.drawable.tree_crush);
-                                    break;
-                            }
-                            tv.setVisibility(View.GONE);
+                            });
+                            BuildAlert.show();
                         }
-                    });
-                    ADAlert.show();
-                }
-                else {
-                    if (tree_slot2 == 3) {
-                        Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
                     }
-                    else {
-                        AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        BuildAlert.setTitle("升级禅院的树？");
-                        BuildAlert.setMessage("建造花费" + price_matrix[1][tree_slot2] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
-                        BuildAlert.setCancelable(false);
-                        BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    break;
+                case R.id.tree1:
+
+                    next_building_time = slot2_build_time[tree_slot2];
+
+                    if (building_slot > 0) {
+                        Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
+                    } else if (slot2_crash) {
+                        AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                        ADAlert.setTitle("观看一段广告来清除掉废墟？");
+                        ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                        ADAlert.setCancelable(true);
+                        ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface BuildAlert, int i) {
-                                if (my_coin < price_matrix[1][tree_slot2]) {
-                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                            public void onClick(DialogInterface ADAlert, int i) {
+                                //开始播放广告
+                                slot2_crash = false;
+                                editor.putBoolean("slot2_crash", slot2_crash);
+                                editor.apply();
+                                slot1_show.setText("位置2目前建造到了状态：" + tree_slot2);
+                                switch (tree_slot2) {
+                                    case 0:
+                                        treeImage.setBackgroundResource(R.drawable.tree_crush);
+                                        break;
+                                    case 1:
+                                        treeImage.setBackgroundResource(R.drawable.tree1);
+                                        break;
+                                    case 2:
+                                        treeImage.setBackgroundResource(R.drawable.tree2);
+                                        break;
+                                    case 3:
+                                        treeImage.setBackgroundResource(R.drawable.tree3);
+                                        break;
+                                    default:
+                                        treeImage.setBackgroundResource(R.drawable.tree_crush);
+                                        break;
                                 }
-                                else {
-                                    mc = new MyCount(next_building_time, 1000);
-                                    mc.start();
-                                    building_slot = 2;
-                                    my_coin = my_coin - price_matrix[1][tree_slot2];
-                                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                                    editor.putInt("my_coin", my_coin);
-                                    editor.apply();
-                                    tv.setVisibility(View.VISIBLE);
-                                    Toast.makeText(MyPalaceActivity.this, "位置2已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
-                                }
+                                tv.setVisibility(View.GONE);
                             }
                         });
-                        BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface BuildAlert, int i) {
-                                BuildAlert.cancel();
-                            }
-                        });
-                        BuildAlert.show();
-                    }
-                }
-                break;
-            case R.id.luwei1:
-
-                next_building_time = slot5_build_time[luwei_slot5];
-
-                if(building_slot > 0) {
-                    Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
-                }
-                else if(slot5_crash){
-                    AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                    ADAlert.setTitle("观看一段广告来清除掉废墟？");
-                    ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
-                    ADAlert.setCancelable(true);
-                    ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface ADAlert, int i) {
-                            //开始播放广告
-                            slot5_crash = false;
-                            editor.putBoolean("slot5_crash", slot5_crash);
-                            editor.apply();
-                            slot1_show.setText("位置5目前建造到了状态："+ luwei_slot5);
-                            switch (luwei_slot5) {
-                                case 0:
-                                    luweiImage.setBackgroundResource(R.drawable.luwei_crush);
-                                    break;
-                                case 1:
-                                    luweiImage.setBackgroundResource(R.drawable.luwei1);
-                                    break;
-                                case 2:
-                                    luweiImage.setBackgroundResource(R.drawable.luwei2);
-                                    break;
-                                case 3:
-                                    luweiImage.setBackgroundResource(R.drawable.luwei3);
-                                    break;
-                                default:
-                                    luweiImage.setBackgroundResource(R.drawable.luwei_crush);
-                                    break;
-                            }
-                            tv.setVisibility(View.GONE);
+                        ADAlert.show();
+                    } else {
+                        if (tree_slot2 == 3) {
+                            Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
+                        } else {
+                            AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                            BuildAlert.setTitle("升级禅院的树？");
+                            BuildAlert.setMessage("建造花费" + price_matrix[1][tree_slot2] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
+                            BuildAlert.setCancelable(false);
+                            BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface BuildAlert, int i) {
+                                    if (my_coin < price_matrix[1][tree_slot2]) {
+                                        Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        mc = new MyCount(next_building_time, 1000);
+                                        mc.start();
+                                        building_slot = 2;
+                                        my_coin = my_coin - price_matrix[1][tree_slot2];
+                                        coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                        editor.putInt("my_coin", my_coin);
+                                        editor.apply();
+                                        tv.setVisibility(View.VISIBLE);
+                                        Toast.makeText(MyPalaceActivity.this, "位置2已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                            BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface BuildAlert, int i) {
+                                    BuildAlert.cancel();
+                                }
+                            });
+                            BuildAlert.show();
                         }
-                    });
-                    ADAlert.show();
-                }
-                else {
-                    if (luwei_slot5 == 3) {
-                        Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
                     }
-                    else {
-                        AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        BuildAlert.setTitle("升级禅院的鹿威？");
-                        BuildAlert.setMessage("建造花费" + price_matrix[4][luwei_slot5] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
-                        BuildAlert.setCancelable(false);
-                        BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    break;
+                case R.id.luwei1:
+
+                    next_building_time = slot5_build_time[luwei_slot5];
+
+                    if (building_slot > 0) {
+                        Toast.makeText(MyPalaceActivity.this, "请等待当前部分建造完再建造", Toast.LENGTH_LONG).show();
+                    } else if (slot5_crash) {
+                        AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                        ADAlert.setTitle("观看一段广告来清除掉废墟？");
+                        ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                        ADAlert.setCancelable(true);
+                        ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface BuildAlert, int i) {
-                                if (my_coin < price_matrix[4][luwei_slot5]) {
-                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                            public void onClick(DialogInterface ADAlert, int i) {
+                                //开始播放广告
+                                slot5_crash = false;
+                                editor.putBoolean("slot5_crash", slot5_crash);
+                                editor.apply();
+                                slot1_show.setText("位置5目前建造到了状态：" + luwei_slot5);
+                                switch (luwei_slot5) {
+                                    case 0:
+                                        luweiImage.setBackgroundResource(R.drawable.luwei_crush);
+                                        break;
+                                    case 1:
+                                        luweiImage.setBackgroundResource(R.drawable.luwei1);
+                                        break;
+                                    case 2:
+                                        luweiImage.setBackgroundResource(R.drawable.luwei2);
+                                        break;
+                                    case 3:
+                                        luweiImage.setBackgroundResource(R.drawable.luwei3);
+                                        break;
+                                    default:
+                                        luweiImage.setBackgroundResource(R.drawable.luwei_crush);
+                                        break;
                                 }
-                                else {
-                                    mc = new MyCount(next_building_time, 1000);
-                                    mc.start();
-                                    building_slot = 5;
-                                    my_coin = my_coin - price_matrix[4][luwei_slot5];
-                                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                                    editor.putInt("my_coin", my_coin);
-                                    editor.apply();
-                                    tv.setVisibility(View.VISIBLE);
-                                    Toast.makeText(MyPalaceActivity.this, "位置5已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
-                                }
+                                tv.setVisibility(View.GONE);
                             }
                         });
-                        BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface BuildAlert, int i) {
-                                BuildAlert.cancel();
-                            }
-                        });
-                        BuildAlert.show();
+                        ADAlert.show();
+                    } else {
+                        if (luwei_slot5 == 3) {
+                            Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
+                        } else {
+                            AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                            BuildAlert.setTitle("升级禅院的鹿威？");
+                            BuildAlert.setMessage("建造花费" + price_matrix[4][luwei_slot5] + "金币，需要保持" + next_building_time / 1000 + "秒的专注。");
+                            BuildAlert.setCancelable(false);
+                            BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface BuildAlert, int i) {
+                                    if (my_coin < price_matrix[4][luwei_slot5]) {
+                                        Toast.makeText(MyPalaceActivity.this, "抱歉，您的金币不足，每天登录或观看广告可以获得新的金币。", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        mc = new MyCount(next_building_time, 1000);
+                                        mc.start();
+                                        building_slot = 5;
+                                        my_coin = my_coin - price_matrix[4][luwei_slot5];
+                                        coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                        editor.putInt("my_coin", my_coin);
+                                        editor.apply();
+                                        tv.setVisibility(View.VISIBLE);
+                                        Toast.makeText(MyPalaceActivity.this, "位置5已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                            BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface BuildAlert, int i) {
+                                    BuildAlert.cancel();
+                                }
+                            });
+                            BuildAlert.show();
+                        }
                     }
-                }
-                break;
-            case R.id.Item_pic:case R.id.Item_desc:case R.id.dark_cover:
-                item_pic.setVisibility(View.GONE);
-                item_desc.setVisibility(View.GONE);
-                dark_cover.setVisibility(View.GONE);
-                Animation animation5= AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_out);
-                animation5.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
+                    break;
+                case R.id.Item_pic:
+                case R.id.Item_desc:
+                case R.id.dark_cover:
+                    item_pic.setVisibility(View.GONE);
+                    item_desc.setVisibility(View.GONE);
+                    dark_cover.setVisibility(View.GONE);
+                    Animation animation5 = AnimationUtils.loadAnimation(MyPalaceActivity.this, R.anim.fade_out);
 
-                    @Override
-                    public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
-
-                    @Override
-                    public void onAnimationEnd(Animation arg0) {
-
-                        //item_desc.setVisibility(View.VISIBLE);
-                    }
-                });
-                item_pic.startAnimation(animation5);
-                item_desc.startAnimation(animation5);
-                dark_cover.startAnimation(animation5);
-                break;
+                    item_pic.startAnimation(animation5);
+                    item_desc.startAnimation(animation5);
+                    dark_cover.startAnimation(animation5);
+                    break;
+            }
         }
     }
     @Override
@@ -1061,38 +1034,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         ActivityCollector.removeActivity(this);
     }
 
-    //    @Override
-//    public boolean onKeyUp(int keyCode, KeyEvent event){
-//        if(mc != null && mc.returnLeftTime()/1000 > 0) {
-//            AlertDialog.Builder failAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-//            failAlert.setTitle("坚持就是胜利！");
-//            failAlert.setMessage("如果现在操作手机，正在建造的宫殿就会坍塌。");
-//            failAlert.setCancelable(false);
-//            failAlert.setPositiveButton("继续操作", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface failAlert, int i) {
-//                    Toast.makeText(MyPalaceActivity.this, "抱歉，你使用了手机，专注宫殿已经坍塌。", Toast.LENGTH_LONG).show();
-//                    mc.cancel();
-//                    build_success = 1;
-//                    Intent intent = new Intent();
-//                    intent.putExtra("data_return", true);
-//                    setResult(RESULT_OK, intent);
-//                    finish();
-//                }
-//            });
-//            failAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface failAlert, int i) {
-//                    failAlert.cancel();
-//                }
-//            });
-//            failAlert.show();
-//        }
-//        else {
-//            return super.onKeyUp(keyCode, event);
-//        }
-//        return true;
-//    }
     private class MyCount extends CountDownTimer {
 
         long totalTime = 0;
@@ -1147,19 +1088,19 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 //                    getWindow().setAttributes(lp);
 //                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
-                    animation1.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
-
-                        @Override
-                        public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
-
-                        @Override
-                        public void onAnimationEnd(Animation arg0) {
-
-                            //item_desc.setVisibility(View.VISIBLE);
-                        }
-                    });
+//                    animation1.setAnimationListener(new Animation.AnimationListener() {
+//                        @Override
+//                        public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
+//
+//                        @Override
+//                        public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
+//
+//                        @Override
+//                        public void onAnimationEnd(Animation arg0) {
+//
+//                            //item_desc.setVisibility(View.VISIBLE);
+//                        }
+//                    });
                     item_pic.startAnimation(animation1);
                     item_desc.startAnimation(animation1);
 
@@ -1194,19 +1135,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     }
                     building_slot = 0;
 
-                    animation2.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
-
-                        @Override
-                        public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
-
-                        @Override
-                        public void onAnimationEnd(Animation arg0) {
-                            //item_pic.setVisibility(View.VISIBLE);
-                            //item_desc.setVisibility(View.VISIBLE);
-                        }
-                    });
                     item_pic.startAnimation(animation2);
                     item_desc.startAnimation(animation2);
 
@@ -1240,19 +1168,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     }
                     building_slot = 0;
 
-                    animation3.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
-
-                        @Override
-                        public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
-
-                        @Override
-                        public void onAnimationEnd(Animation arg0) {
-                            //item_pic.setVisibility(View.VISIBLE);
-                            //item_desc.setVisibility(View.VISIBLE);
-                        }
-                    });
                     item_pic.startAnimation(animation3);
                     item_desc.startAnimation(animation3);
 
@@ -1286,19 +1201,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     }
                     building_slot = 0;
 
-                    animation4.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
-
-                        @Override
-                        public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
-
-                        @Override
-                        public void onAnimationEnd(Animation arg0) {
-                            //item_pic.setVisibility(View.VISIBLE);
-                            //item_desc.setVisibility(View.VISIBLE);
-                        }
-                    });
                     item_pic.startAnimation(animation4);
                     item_desc.startAnimation(animation4);
 
@@ -1332,19 +1234,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     }
                     building_slot = 0;
 
-                    animation4.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation arg0) {}   //在动画开始时使用
-
-                        @Override
-                        public void onAnimationRepeat(Animation arg0) {}  //在动画重复时使用
-
-                        @Override
-                        public void onAnimationEnd(Animation arg0) {
-                            //item_pic.setVisibility(View.VISIBLE);
-                            //item_desc.setVisibility(View.VISIBLE);
-                        }
-                    });
                     item_pic.startAnimation(animation4);
                     item_desc.startAnimation(animation4);
 
