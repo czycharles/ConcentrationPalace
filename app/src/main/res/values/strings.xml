@@ -9,7 +9,11 @@
     <string name="palace_back_button">返回</string>
     <string name="palace_content">禅院背景</string>
     <string name="exit_button">退出</string>
-    <string name="AD_button">播放广告</string>
+	<string name="crush_button">放弃</string>
+    <string name="AD_button">加速</string>
+	<string name="OK_button">好的</string>
+	<string name="finish_hint">建造成功</string>
+	<string name="fail_hint">建造成功</string>
     <string name="coin_bar">金币：%1$d</string>
 	<string name="prologue_1">人们从过往的废墟中铭记历史，</string>
 	<string name="prologue_2">然后从过往的历史中学会专注。</string>

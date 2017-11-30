@@ -38,7 +38,7 @@ public class CP_MainActivity extends AppCompatActivity {
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_cp__main);
-        mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing08);
+        mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_piano31);
         try {
             mpMediaPlayer.setLooping(true);
             //volumeGradient.vGradient(mpMediaPlayer,0f, 1f);
