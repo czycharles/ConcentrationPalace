@@ -30,6 +30,7 @@ public class InfoActivity extends AppCompatActivity {
     private List<String> mInfoList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActivityCollector.addActivity(this);
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -60,7 +61,7 @@ public class InfoActivity extends AppCompatActivity {
 
         mInfoList.add(getResources().getString(R.string.info0));
         mInfoList.add(getResources().getString(R.string.info1));
-        mInfoList.add(getResources().getString(R.string.info2_1)+getResources().getString(R.string.info2_2));
+        mInfoList.add(getResources().getString(R.string.info2_1));
         mInfoList.add(getResources().getString(R.string.info3_1)+getResources().getString(R.string.info3_2));
 
         RecyclerView recyclerView = findViewById(R.id.info_view);
@@ -84,5 +85,9 @@ public class InfoActivity extends AppCompatActivity {
         }
         finish();
     }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

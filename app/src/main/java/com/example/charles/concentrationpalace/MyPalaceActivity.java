@@ -19,14 +19,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
-import android.os.CountDownTimer;
 import java.io.File;
 
 
@@ -36,8 +32,6 @@ import java.io.File;
  */
 public class MyPalaceActivity extends AppCompatActivity implements OnClickListener {
 
-    private TextView slot1_show;
-    private TextView tv;
     private TextView coin_display;
 
     private FindSelectedItem flowerImage;
@@ -76,7 +70,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
     SharedPreferences data;
     SharedPreferences.Editor editor;
-    DataCleanManager clean = new DataCleanManager();
+    //DataCleanManager clean = new DataCleanManager();
     MediaPlayer mpMediaPlayer;
 
     private void initMapItems(){
@@ -91,8 +85,10 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 //        if(actionbar!=null)
 //            actionbar.hide();
 
+        DataCleanManager.cleanExternalCache(MyPalaceActivity.this);
+
         data = getSharedPreferences("data", MODE_PRIVATE);
-        editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+
 
         my_coin = data.getInt("my_coin", origin_coin);
 
@@ -209,22 +205,12 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             }
         }
 
-        slot1_show = findViewById(R.id.slot1_state);
-        if(slot1_crash)
-            slot1_show.setText("位置1目前是废墟状态，点击开始观看一段广告来复原你的建筑");
-        else
-            slot1_show.setText("位置1目前建造到了状态："+flower_slot1);
-
-        tv = findViewById(R.id.countdown_hint);
-        if(slot1_crash){
-            tv.setVisibility(View.VISIBLE);
-            tv.setText("抱歉，你使用了手机，位置1已经坍塌。");
-        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -250,13 +236,13 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         try {
             mpMediaPlayer.setLooping(true);
             mpMediaPlayer.start();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException|IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+
         Button AD_button = findViewById(R.id.AD_button);
 
         AD_button.setOnClickListener(new View.OnClickListener() {
@@ -293,12 +279,11 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                             return;
                         }
                     }
-                    File ft = new File(Environment.getExternalStorageDirectory().getPath(),"Share.txt");
                 }
-                File directory = new File(Environment.getExternalStorageDirectory().getPath());
-                if(!directory.exists()){
-                    directory.mkdir();//没有目录先创建目录
-                }
+//                File directory = new File(Environment.getExternalStorageDirectory().getPath());
+//                if(!directory.exists()){
+//                    directory.mkdir();//没有目录先创建目录
+//                }
                 ScreenShot.shoot(MyPalaceActivity.this);
                 File f = new File(Environment.getExternalStorageDirectory().getPath(),"Share.png");
 
@@ -352,7 +337,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
-                                    slot1_show.setText("位置1目前建造到了状态：" + flower_slot1);
                                     switch (flower_slot1) {
                                         case 0:
                                             flowerImage.setBackgroundResource(R.drawable.flower_crush);
@@ -370,7 +354,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                             flowerImage.setBackgroundResource(R.drawable.flower_crush);
                                             break;
                                     }
-                                    tv.setVisibility(View.GONE);
                                 }
                             }
                         });
@@ -393,7 +376,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                         editor.putInt("my_coin", my_coin);
                                         editor.apply();
-                                        tv.setVisibility(View.VISIBLE);
                                         Toast.makeText(MyPalaceActivity.this, "位置1已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                         intent.putExtra("building_slot",1);
@@ -433,13 +415,12 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                 } else {
                                     //开始播放广告
                                     slot4_crash = false;
-                                    editor.putBoolean("slot4_crash", slot4_crash);
+                                    editor.putBoolean("slot4_crash", false);
                                     editor.apply();
                                     my_coin = my_coin - price_matrix[3][house_slot4];
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
-                                    slot1_show.setText("位置4目前建造到了状态：" + house_slot4);
                                     switch (house_slot4) {
                                         case 0:
                                             houseImage.setBackgroundResource(R.drawable.house_crush);
@@ -457,7 +438,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                             houseImage.setBackgroundResource(R.drawable.house_crush);
                                             break;
                                     }
-                                    tv.setVisibility(View.GONE);
                                 }
                             }
                         });
@@ -480,7 +460,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                         editor.putInt("my_coin", my_coin);
                                         editor.apply();
-                                        tv.setVisibility(View.VISIBLE);
                                         Toast.makeText(MyPalaceActivity.this, "位置4已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                         intent.putExtra("building_slot",4);
@@ -520,13 +499,12 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                 } else {
                                     //开始播放广告
                                     slot3_crash = false;
-                                    editor.putBoolean("slot3_crash", slot3_crash);
+                                    editor.putBoolean("slot3_crash", false);
                                     editor.apply();
                                     my_coin = my_coin - price_matrix[2][stone_slot3];
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
-                                    slot1_show.setText("位置3目前建造到了状态：" + stone_slot3);
                                     switch (stone_slot3) {
                                         case 0:
                                             stoneImage.setBackgroundResource(R.drawable.stone_crush);
@@ -544,7 +522,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                             stoneImage.setBackgroundResource(R.drawable.stone_crush);
                                             break;
                                     }
-                                    tv.setVisibility(View.GONE);
                                 }
                             }
                         });
@@ -567,7 +544,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                         editor.putInt("my_coin", my_coin);
                                         editor.apply();
-                                        tv.setVisibility(View.VISIBLE);
                                         Toast.makeText(MyPalaceActivity.this, "位置3已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                         intent.putExtra("building_slot",3);
@@ -607,13 +583,12 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                 } else {
                                     //开始播放广告
                                     slot2_crash = false;
-                                    editor.putBoolean("slot2_crash", slot2_crash);
+                                    editor.putBoolean("slot2_crash", false);
                                     editor.apply();
                                     my_coin = my_coin - price_matrix[1][tree_slot2];
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
-                                    slot1_show.setText("位置2目前建造到了状态：" + tree_slot2);
                                     switch (tree_slot2) {
                                         case 0:
                                             treeImage.setBackgroundResource(R.drawable.tree_crush);
@@ -631,7 +606,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                             treeImage.setBackgroundResource(R.drawable.tree_crush);
                                             break;
                                     }
-                                    tv.setVisibility(View.GONE);
                                 }
                             }
                         });
@@ -654,7 +628,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                         editor.putInt("my_coin", my_coin);
                                         editor.apply();
-                                        tv.setVisibility(View.VISIBLE);
                                         Toast.makeText(MyPalaceActivity.this, "位置2已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                         intent.putExtra("building_slot",2);
@@ -695,13 +668,12 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                 else {
                                     //开始播放广告
                                     slot5_crash = false;
-                                    editor.putBoolean("slot5_crash", slot5_crash);
+                                    editor.putBoolean("slot5_crash", false);
                                     editor.apply();
                                     my_coin = my_coin - price_matrix[4][luwei_slot5];
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
-                                    slot1_show.setText("位置5目前建造到了状态：" + luwei_slot5);
                                     switch (luwei_slot5) {
                                         case 0:
                                             luweiImage.setBackgroundResource(R.drawable.luwei_crush);
@@ -719,7 +691,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                             luweiImage.setBackgroundResource(R.drawable.luwei_crush);
                                             break;
                                     }
-                                    tv.setVisibility(View.GONE);
                                 }
                             }
                         });
@@ -742,7 +713,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                         editor.putInt("my_coin", my_coin);
                                         editor.apply();
-                                        tv.setVisibility(View.VISIBLE);
                                         Toast.makeText(MyPalaceActivity.this, "位置5已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                         intent.putExtra("building_slot",5);
@@ -781,10 +751,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         try {
             mpMediaPlayer.setLooping(true);
             mpMediaPlayer.start();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException|IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -842,7 +809,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             }
         }
         super.onDestroy();
-        clean.cleanExternalCache(MyPalaceActivity.this);
+        //clean.cleanExternalCache(MyPalaceActivity.this);
         ActivityCollector.removeActivity(this);
     }
 }

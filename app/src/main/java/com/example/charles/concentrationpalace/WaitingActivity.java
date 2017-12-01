@@ -3,18 +3,11 @@ package com.example.charles.concentrationpalace;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.renderscript.Allocation;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -64,6 +57,7 @@ public class WaitingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActivityCollector.addActivity(this);
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -91,10 +85,7 @@ public class WaitingActivity extends AppCompatActivity {
         try {
             mpMediaPlayer.setLooping(true);
             mpMediaPlayer.start();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException|IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -112,7 +103,7 @@ public class WaitingActivity extends AppCompatActivity {
         item_pic = findViewById(R.id.Item_pic);
         item_desc = findViewById(R.id.Item_desc);
         countdown = findViewById(R.id.Countdown_hint);
-        countdown.setText("00:00");
+        countdown.setText(String.format(getResources().getString(R.string.countdown_timer),0,0,0,0));
         coin_display = findViewById(R.id.coin_bar);
         my_coin = data.getInt("my_coin", origin_coin);
         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
@@ -481,56 +472,74 @@ public class WaitingActivity extends AppCompatActivity {
         }
     }
 
-private class MyCount extends CountDownTimer {
-
-    long totalTime = 0;
-
-    private MyCount(long millisInFuture, long countDownInterval) {
-        super(millisInFuture, countDownInterval);
-        totalTime = millisInFuture;
+    @Override
+    protected void onDestroy() {
+        if(mpMediaPlayer!=null) {
+            try{
+                mpMediaPlayer.stop();
+                Log.d("Media","stop success");
+            }catch(IllegalStateException e) {
+                mpMediaPlayer.release();
+                Log.d("Media", "release success");
+                mpMediaPlayer = null;
+                Log.d("Media", "null success");
+            }
+        }
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 
-    @Override
-    public void onFinish() {
 
-        switch(building_slot){
-            case 1:
-                flower_slot1++;
-                editor.putInt("slot1", flower_slot1);
-                editor.apply();
-                break;
-            case 2:
-                tree_slot2++;
-                editor.putInt("slot2", tree_slot2);
-                editor.apply();
-                break;
-            case 3:
-                stone_slot3++;
-                editor.putInt("slot3", stone_slot3);
-                editor.apply();
-                break;
-            case 4:
-                house_slot4++;
-                editor.putInt("slot4", house_slot4);
-                editor.apply();
-                break;
-            case 5:
-                luwei_slot5++;
-                editor.putInt("slot5", luwei_slot5);
-                editor.apply();
-                break;
+    private class MyCount extends CountDownTimer {
+
+        long totalTime = 0;
+
+        private MyCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+            totalTime = millisInFuture;
         }
 
-        mc.cancel();
-        crush_button.setText(R.string.OK_button);
-        countdown.setText(R.string.finish_hint);
-        building_slot = 0;
-    }
-    @Override
-    public void onTick(long millisUntilFinished) {
+        @Override
+        public void onFinish() {
 
-        countdown.setText(millisUntilFinished / 1000 / 60 + ":" + millisUntilFinished / 1000 );
-    }
+            switch(building_slot){
+                case 1:
+                    flower_slot1++;
+                    editor.putInt("slot1", flower_slot1);
+                    editor.apply();
+                    break;
+                case 2:
+                    tree_slot2++;
+                    editor.putInt("slot2", tree_slot2);
+                    editor.apply();
+                    break;
+                case 3:
+                    stone_slot3++;
+                    editor.putInt("slot3", stone_slot3);
+                    editor.apply();
+                    break;
+                case 4:
+                    house_slot4++;
+                    editor.putInt("slot4", house_slot4);
+                    editor.apply();
+                    break;
+                case 5:
+                    luwei_slot5++;
+                    editor.putInt("slot5", luwei_slot5);
+                    editor.apply();
+                    break;
+            }
 
-}
+            mc.cancel();
+            crush_button.setText(R.string.OK_button);
+            countdown.setText(R.string.finish_hint);
+            building_slot = 0;
+        }
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+            countdown.setText(String.format(getResources().getString(R.string.countdown_timer),millisUntilFinished / 1000 / 60 /10 , millisUntilFinished / 1000 / 60 %10 ,millisUntilFinished / 1000 / 10 , millisUntilFinished / 1000 %10 ));
+        }
+
+    }
 }

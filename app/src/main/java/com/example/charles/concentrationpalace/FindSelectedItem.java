@@ -34,23 +34,17 @@ public class FindSelectedItem extends FrameLayout {
 
     }
 
-
-
-    public FindSelectedItem(Context context, AttributeSet attrs, int defStyle) {
-
-        super( context, attrs, defStyle);
-
-    }
-
-
-
     public FindSelectedItem(Context context, AttributeSet attrs) {
 
         super( context, attrs);
 
     }
 
+    public FindSelectedItem(Context context, AttributeSet attrs, int defStyle) {
 
+        super( context, attrs, defStyle);
+
+    }
 
     @Override
 

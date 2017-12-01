@@ -2,6 +2,7 @@ package com.example.charles.concentrationpalace;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -25,6 +26,7 @@ public class CP_MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -43,15 +45,11 @@ public class CP_MainActivity extends AppCompatActivity {
             mpMediaPlayer.setLooping(true);
             //volumeGradient.vGradient(mpMediaPlayer,0f, 1f);
             mpMediaPlayer.start();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        ActivityCollector.addActivity(this);
         file= new File(this.getApplication().getFilesDir().getParentFile().getPath()+"/shared_prefs","data.xml");
         //file= new File("data/data/com.example.charles.concentrationpalace/shared_prefs","data.xml");
 
@@ -85,6 +83,30 @@ public class CP_MainActivity extends AppCompatActivity {
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     }
                 } else {
+                    SharedPreferences.Editor editor;
+                    editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                    editor.putInt("my_coin", 200);
+                    editor.apply();
+                    editor.putInt("slot1", 0);
+                    editor.apply();
+                    editor.putBoolean("slot1_crash", false);
+                    editor.apply();
+                    editor.putInt("slot2", 0);
+                    editor.apply();
+                    editor.putBoolean("slot2_crash", false);
+                    editor.apply();
+                    editor.putInt("slot3", 0);
+                    editor.apply();
+                    editor.putBoolean("slot3_crash", false);
+                    editor.apply();
+                    editor.putInt("slot4", 0);
+                    editor.apply();
+                    editor.putBoolean("slot4_crash", false);
+                    editor.apply();
+                    editor.putInt("slot5", 0);
+                    editor.apply();
+                    editor.putBoolean("slot5_crash", false);
+                    editor.apply();
                     Intent intent = new Intent(CP_MainActivity.this, CoverActivity.class);
                     startActivity(intent);
                     if (version > 5) {
@@ -93,7 +115,6 @@ public class CP_MainActivity extends AppCompatActivity {
                 }
             }
         });
-        Log.d("CP_MainActivity","onCreate: done");
 
         Button gallery_button = findViewById(R.id.gallery_button);
         gallery_button.setOnClickListener(new View.OnClickListener(){
@@ -151,20 +172,6 @@ public class CP_MainActivity extends AppCompatActivity {
         ActivityCollector.removeActivity(this);
     }
 
-//    @Override
-//    public boolean dispatchKeyEvent(KeyEvent event) {
-//        //拦截返回键
-//        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK){
-//            //判断触摸UP事件才会进行返回事件处理
-//            if (event.getAction() == KeyEvent.ACTION_UP) {
-//                onBackPressed();
-//            }
-//            //只要是返回事件，直接返回true，表示消费掉
-//            return true;
-//        }
-//        return super.dispatchKeyEvent(event);
-//    }
-
     @Override
     public void onBackPressed(){
         AlertDialog.Builder exitAlert = new AlertDialog.Builder(CP_MainActivity.this);
@@ -173,9 +180,16 @@ public class CP_MainActivity extends AppCompatActivity {
         exitAlert.setPositiveButton("退出", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface exitAlert, int i) {
-                if(mpMediaPlayer.isPlaying()) {
-                    mpMediaPlayer.stop();
-                    mpMediaPlayer.release();
+                if(mpMediaPlayer!=null) {
+                    try{
+                        mpMediaPlayer.stop();
+                        Log.d("Media","stop success");
+                    }catch(IllegalStateException e) {
+                        mpMediaPlayer.release();
+                        Log.d("Media", "release success");
+                        mpMediaPlayer = null;
+                        Log.d("Media", "null success");
+                    }
                 }
                 ActivityCollector.finishAll();
                 android.os.Process.killProcess(android.os.Process.myPid());

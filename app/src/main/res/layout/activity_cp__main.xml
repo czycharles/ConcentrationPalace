@@ -37,7 +37,9 @@
         android:textColor="@color/whitesmoke"
         android:text="@string/start_button"
         android:textSize="20sp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:focusable="true"/>
 
     <Button
         android:id="@+id/gallery_button"
@@ -49,7 +51,9 @@
         android:textColor="@color/whitesmoke"
         android:text="@string/gallery_button"
         android:textSize="20sp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:focusable="true"/>
 
     <Button
         android:id="@+id/info_button"
@@ -60,7 +64,9 @@
         android:layout_marginEnd="20dp"
         android:background="@android:drawable/ic_menu_info_details"
         android:minHeight="0dp"
-        android:minWidth="0dp" />
+        android:minWidth="0dp"
+        android:clickable="true"
+        android:focusable="true"/>
 
 
 </LinearLayout>
