@@ -2,17 +2,10 @@ package com.example.charles.concentrationpalace;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.renderscript.Allocation;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
@@ -56,19 +49,6 @@ public class GalleryActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_gallery);
 
-        Resources res=getResources();
-        Bitmap bmp= BitmapFactory.decodeResource(res, R.drawable.blur_background);
-        RenderScript rs = RenderScript.create(GalleryActivity.this);
-        Allocation overlayAlloc = Allocation.createFromBitmap(rs,bmp);
-        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, overlayAlloc.getElement());
-        blur.setInput(overlayAlloc);
-        blur.setRadius(20);
-        blur.forEach(overlayAlloc);
-        overlayAlloc.copyTo(bmp);
-        View v = getWindow().getDecorView();
-        v.setBackground(new BitmapDrawable(getResources(), bmp));
-        rs.destroy();
-
         int flower_slot1;
         int tree_slot2;
         int stone_slot3;
@@ -102,6 +82,7 @@ public class GalleryActivity extends AppCompatActivity {
                 final TextView big_image = findViewById(R.id.big_image);
                 Animation animation1 = AnimationUtils.loadAnimation(GalleryActivity.this, R.anim.fade_in_fast);
                 final ImageView dark_cover = findViewById(R.id.dark_cover);
+                final ImageView dark_background = findViewById(R.id.dark_background);
 
                 if (currentItem.getImageId() == R.drawable.item_unknown)
                     Toast.makeText(GalleryActivity.this, "该物品尚未解锁", Toast.LENGTH_SHORT).show();
@@ -109,21 +90,25 @@ public class GalleryActivity extends AppCompatActivity {
                     big_image.setText(currentItem.getDesc());
                     big_image.setVisibility(View.VISIBLE);
                     Drawable drawable = getResources().getDrawable(currentItem.getImageId());
-                    drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), (drawable.getMinimumHeight()));
+                    drawable.setBounds(0, 0, drawable.getIntrinsicWidth()*3/2, drawable.getMinimumHeight()*3/2);
                     big_image.setCompoundDrawables(null, drawable, null, null);
                     dark_cover.setVisibility(View.VISIBLE);
-                    Toast.makeText(GalleryActivity.this, "位置" + position, Toast.LENGTH_SHORT).show();
+                    dark_background.setVisibility(View.VISIBLE);
+                    //Toast.makeText(GalleryActivity.this, "位置" + position, Toast.LENGTH_SHORT).show();
                     big_image.startAnimation(animation1);
                     dark_cover.startAnimation(animation1);
+                    dark_background.startAnimation(animation1);
                     big_image.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             if(Until.isFastClick()) {
                                 big_image.setVisibility(View.GONE);
                                 dark_cover.setVisibility(View.GONE);
+                                dark_background.setVisibility(View.GONE);
                                 Animation animation2 = AnimationUtils.loadAnimation(GalleryActivity.this, R.anim.fade_out_fast);
                                 big_image.startAnimation(animation2);
                                 dark_cover.startAnimation(animation2);
+                                dark_background.startAnimation(animation2);
                             }
                         }
                     });
@@ -133,9 +118,11 @@ public class GalleryActivity extends AppCompatActivity {
                             if(Until.isFastClick()) {
                                 big_image.setVisibility(View.GONE);
                                 dark_cover.setVisibility(View.GONE);
+                                dark_background.setVisibility(View.GONE);
                                 Animation animation2 = AnimationUtils.loadAnimation(GalleryActivity.this, R.anim.fade_out_fast);
                                 big_image.startAnimation(animation2);
                                 dark_cover.startAnimation(animation2);
+                                dark_background.startAnimation(animation2);
                             }
                         }
                     });
