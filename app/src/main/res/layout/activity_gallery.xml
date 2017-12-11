@@ -60,7 +60,7 @@
         android:textColor="@color/whitesmoke"
         android:textSize="25sp"
         android:layout_marginTop="90dp"
-        android:drawableTop="@drawable/item_unknown"
+        android:drawableTop="@drawable/item_background"
         android:visibility="gone"/>
 
 </FrameLayout>
