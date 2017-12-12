@@ -18,17 +18,30 @@
         android:orientation="vertical"
         android:layout_marginTop="30dp">
 
-        <TextView
-            android:id="@+id/coin_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:text="@string/coin_bar"
-            android:textSize="20sp"
-            android:textColor="@color/whitesmoke"
-            android:layout_weight="0.05"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+            <ImageView
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/coin"
+                android:layout_marginTop="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_width="25sp"
+                android:layout_height="25sp" />
+
+            <TextView
+                android:id="@+id/coin_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coin_bar"
+                android:layout_marginStart="5dp"
+                android:textAlignment="textStart"
+                android:textSize="20sp"
+                android:textColor="@color/whitesmoke"/>
+
+    </LinearLayout>
 
         <TextView
             android:id="@+id/Countdown_hint"
@@ -44,8 +57,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center_vertical">
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/background_style">
 
         <ImageView
             android:id="@+id/Pre_Item_pic"
@@ -54,14 +70,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:adjustViewBounds="true"
-            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="5dp"
             android:src="@drawable/item_unknown"
             android:layout_weight="2"/>
 
         <ImageView
             android:id="@+id/Arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
             android:layout_gravity="center_vertical"
             android:adjustViewBounds="true"
             android:background="@android:drawable/ic_menu_send"
@@ -74,7 +93,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:adjustViewBounds="true"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="25dp"
             android:src="@drawable/item_unknown"
             android:layout_weight="2"/>
 
@@ -88,7 +110,7 @@
             android:text="@string/gallery_title"
             android:textColor="@color/whitesmoke"
             android:textSize="25sp"
-            android:layout_weight="2"/>
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/AD_button"
@@ -113,7 +135,7 @@
             android:textColor="@color/whitesmoke"
             android:gravity="center"
             android:text="@string/crush_button"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="20dp"
             android:textSize="20sp"
             android:clickable="true"
             android:focusable="true" />

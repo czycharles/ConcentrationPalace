@@ -15,7 +15,7 @@
 	<string name="finish_hint">建造成功</string>
 	<string name="fail_hint">建造失败</string>
 	<string name="countdown_timer">%1$d%2$d:%3$d%4$d</string>
-	<string name="coin_bar">金币：%1$d</string>
+	<string name="coin_bar">%1$d</string>
 	<string name="prologue_1">人们从过往的废墟中铭记历史，</string>
 	<string name="prologue_2">然后从过往的历史中学会专注。</string>
 	<string name="flower0_desc">荣枯盛衰一瞬梦</string>
