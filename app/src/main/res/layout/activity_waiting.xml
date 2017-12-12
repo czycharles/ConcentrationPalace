@@ -40,15 +40,45 @@
             android:textSize="45sp"
             android:layout_weight="1"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/Pre_Item_pic"
+            android:contentDescription="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/item_unknown"
+            android:layout_weight="2"/>
+
+        <ImageView
+            android:id="@+id/Arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:background="@android:drawable/ic_menu_send"
+            android:contentDescription="@string/app_name" />
+
         <ImageView
             android:id="@+id/Item_pic"
             android:contentDescription="@string/app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical"
             android:adjustViewBounds="true"
+            android:layout_marginEnd="20dp"
             android:src="@drawable/item_unknown"
             android:layout_weight="2"/>
+
+    </LinearLayout>
 
         <TextView
             android:id="@+id/Item_desc"
@@ -58,7 +88,6 @@
             android:text="@string/gallery_title"
             android:textColor="@color/whitesmoke"
             android:textSize="25sp"
-            android:layout_marginBottom="20dp"
             android:layout_weight="2"/>
 
         <Button
@@ -84,10 +113,10 @@
             android:textColor="@color/whitesmoke"
             android:gravity="center"
             android:text="@string/crush_button"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:textSize="20sp"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true" />
 
     </LinearLayout>
 

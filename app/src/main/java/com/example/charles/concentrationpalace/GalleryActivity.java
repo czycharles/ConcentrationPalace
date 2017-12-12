@@ -3,9 +3,7 @@ package com.example.charles.concentrationpalace;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -74,8 +72,6 @@ public class GalleryActivity extends AppCompatActivity {
         GalleryAdapter adapter = new GalleryAdapter(mGalleryList,glm);
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        int spacingInPixels = 9;
-        recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
         adapter.setOnItemClickListener(new GalleryAdapter.OnItemClickListener() {
             @Override
@@ -137,7 +133,7 @@ public class GalleryActivity extends AppCompatActivity {
 
     private void initGalleryItems(int slot1, int slot2, int slot3, int slot4, int slot5){
 
-        mGalleryList.add(new GalleryItem(getResources().getString(R.string.flower0_desc),R.drawable.flower_crush));
+        mGalleryList.add(new GalleryItem(getResources().getString(R.string.flower0_desc),R.drawable.flower_crush_gallery));
         if(slot1>0)
             mGalleryList.add(new GalleryItem(getResources().getString(R.string.flower1_desc),R.drawable.flower1_gallery));
         else
@@ -151,19 +147,19 @@ public class GalleryActivity extends AppCompatActivity {
         else
             mGalleryList.add(new GalleryItem(getResources().getString(R.string.flower3_desc),R.drawable.item_unknown));
 
-        mGalleryList.add(new GalleryItem(getResources().getString(R.string.house0_desc),R.drawable.tree_crush_gallery));
+        mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree0_desc),R.drawable.tree_crush_gallery));
         if(slot2>0)
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house1_desc),R.drawable.tree1_gallery));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree1_desc),R.drawable.tree1_gallery));
         else
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house1_desc),R.drawable.item_unknown));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree1_desc),R.drawable.item_unknown));
         if(slot2>1)
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house2_desc),R.drawable.tree2_gallery));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree2_desc),R.drawable.tree2_gallery));
         else
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house2_desc),R.drawable.item_unknown));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree2_desc),R.drawable.item_unknown));
         if(slot2>2)
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house3_desc),R.drawable.tree3_gallery));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree3_desc),R.drawable.tree3_gallery));
         else
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house3_desc),R.drawable.item_unknown));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree3_desc),R.drawable.item_unknown));
 
         mGalleryList.add(new GalleryItem(getResources().getString(R.string.stone0_desc),R.drawable.stone_crush_gallery));
         if(slot3>0)
@@ -179,19 +175,19 @@ public class GalleryActivity extends AppCompatActivity {
         else
             mGalleryList.add(new GalleryItem(getResources().getString(R.string.stone3_desc),R.drawable.item_unknown));
 
-        mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree0_desc),R.drawable.house_crush_gallery));
+        mGalleryList.add(new GalleryItem(getResources().getString(R.string.house0_desc),R.drawable.house_crush_gallery));
         if(slot4>0)
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree1_desc),R.drawable.house1_gallery));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house1_desc),R.drawable.house1_gallery));
         else
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree1_desc),R.drawable.item_unknown));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house1_desc),R.drawable.item_unknown));
         if(slot4>1)
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree2_desc),R.drawable.house2_gallery));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house2_desc),R.drawable.house2_gallery));
         else
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree2_desc),R.drawable.item_unknown));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house2_desc),R.drawable.item_unknown));
         if(slot4>2)
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree3_desc),R.drawable.house3_gallery));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house3_desc),R.drawable.house3_gallery));
         else
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.tree2_desc),R.drawable.item_unknown));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.house3_desc),R.drawable.item_unknown));
 
         mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei0_desc),R.drawable.luwei_crush_gallery));
         if(slot5>0)
@@ -203,27 +199,10 @@ public class GalleryActivity extends AppCompatActivity {
         else
             mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei2_desc),R.drawable.item_unknown));
         if(slot5>2)
-            mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei3_desc),R.drawable.luwei2_gallery));
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei3_desc),R.drawable.luwei3_gallery));
         else
             mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei3_desc),R.drawable.item_unknown));
 
-    }
-
-    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
-        private int space;
-        public SpacesItemDecoration(int space) {
-            this.space = space;
-        }
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.left = space;
-            outRect.right = space;
-            outRect.bottom = space;
-            // Add top margin only for the first item to avoid double space between items
-//        if(itemPosition == 0)
-//            outRect.top = space;
-        }
     }
 
     @Override

@@ -102,7 +102,7 @@ public class WaitingActivity extends AppCompatActivity {
         luwei_slot5 = data.getInt("slot5",0);
 
         item_pic = findViewById(R.id.Item_pic);
-        pre_item_pic = findViewById(R.id.Item_pic);
+        pre_item_pic = findViewById(R.id.Pre_Item_pic);
         item_desc = findViewById(R.id.Item_desc);
         countdown = findViewById(R.id.Countdown_hint);
         countdown.setText(String.format(getResources().getString(R.string.countdown_timer),0,0,0,0));
