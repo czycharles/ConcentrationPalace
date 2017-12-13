@@ -5,21 +5,23 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_background">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/MainBackground"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:adjustViewBounds="true"-->
-        <!--android:src="@drawable/MainBackground"/>-->
-
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textColor="@color/whitesmoke"
-        android:textSize="50sp" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/whitesmoke"
+            android:background="@drawable/title_background_style"
+            android:layout_marginTop="30dp"
+            android:textSize="50sp" />
+
+    </LinearLayout>
 
     <ImageView
         android:contentDescription="@string/app_name"
@@ -27,33 +29,55 @@
         android:layout_height="wrap_content"
         android:layout_weight="2.5"/>
 
-    <Button
-        android:id="@+id/start_button"
-        android:layout_width="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/btn1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@drawable/button_style"
-        android:textColor="@color/whitesmoke"
-        android:text="@string/start_button"
-        android:textSize="20sp"
+        android:orientation="vertical"
         android:layout_marginBottom="5dp"
-        android:clickable="true"
-        android:focusable="true"/>
+        android:background="@drawable/title_background_style">
 
-    <Button
-        android:id="@+id/gallery_button"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/start_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/button_style"
+            android:textColor="@color/whitesmoke"
+            android:text="@string/start_button"
+            android:textSize="20sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/btn2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@drawable/button_style"
-        android:textColor="@color/whitesmoke"
-        android:text="@string/gallery_button"
-        android:textSize="20sp"
-        android:layout_marginBottom="5dp"
-        android:clickable="true"
-        android:focusable="true"/>
+        android:orientation="vertical"
+        android:background="@drawable/title_background_style">
+
+        <Button
+            android:id="@+id/gallery_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/button_style"
+            android:textColor="@color/whitesmoke"
+            android:text="@string/gallery_button"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/info_button"

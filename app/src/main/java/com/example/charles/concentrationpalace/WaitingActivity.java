@@ -14,8 +14,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +58,13 @@ public class WaitingActivity extends AppCompatActivity {
 
     Button crush_button;
 
+    int string_ID;
+    Animation animation1;
+    LinearLayout Waiting;
+    LinearLayout Finish;
+    ImageView finish_item;
+    TextView item_desc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ActivityCollector.addActivity(this);
@@ -92,7 +102,6 @@ public class WaitingActivity extends AppCompatActivity {
 
         ImageView item_pic;
         ImageView pre_item_pic;
-        TextView item_desc;
 
         data = getSharedPreferences("data", MODE_PRIVATE);
         flower_slot1 = data.getInt("slot1", 0);
@@ -101,36 +110,48 @@ public class WaitingActivity extends AppCompatActivity {
         house_slot4 = data.getInt("slot4", 0);
         luwei_slot5 = data.getInt("slot5",0);
 
+        animation1 = AnimationUtils.loadAnimation(WaitingActivity.this, R.anim.fade_in);
+        Waiting = findViewById(R.id.Waiting_ui);
+        Finish = findViewById(R.id.Finish_ui);
+
         item_pic = findViewById(R.id.Item_pic);
         pre_item_pic = findViewById(R.id.Pre_Item_pic);
         item_desc = findViewById(R.id.Item_desc);
+        finish_item = findViewById(R.id.Finish_item);
+
         countdown = findViewById(R.id.Countdown_hint);
         countdown.setText(String.format(getResources().getString(R.string.countdown_timer),0,0,0,0));
         coin_display = findViewById(R.id.coin_bar);
         my_coin = data.getInt("my_coin", origin_coin);
         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
 
+        item_desc.setText(R.string.waiting_hint);
+
         switch(building_slot){
             case 1:
                 switch(flower_slot1+1) {
                     case 0:
                         item_pic.setImageResource(R.drawable.item_unknown);
+                        finish_item.setImageResource(R.drawable.item_unknown);
                         pre_item_pic.setImageResource(R.drawable.item_unknown);
                         break;
                     case 1:
                         item_pic.setImageResource(R.drawable.flower1_gallery);
+                        finish_item.setImageResource(R.drawable.flower1_gallery);
                         pre_item_pic.setImageResource(R.drawable.flower_crush_gallery);
-                        item_desc.setText(R.string.flower1_desc);
+                        string_ID = R.string.flower1_desc;
                         break;
                     case 2:
                         item_pic.setImageResource(R.drawable.flower2_gallery);
+                        finish_item.setImageResource(R.drawable.flower2_gallery);
                         pre_item_pic.setImageResource(R.drawable.flower1_gallery);
-                        item_desc.setText(R.string.flower2_desc);
+                        string_ID = R.string.flower2_desc;
                         break;
                     case 3:
                         item_pic.setImageResource(R.drawable.flower3_gallery);
+                        finish_item.setImageResource(R.drawable.flower3_gallery);
                         pre_item_pic.setImageResource(R.drawable.flower2_gallery);
-                        item_desc.setText(R.string.flower3_desc);
+                        string_ID = R.string.flower3_desc;
                         break;
                 }
 
@@ -139,22 +160,26 @@ public class WaitingActivity extends AppCompatActivity {
                 switch(tree_slot2+1) {
                     case 0:
                         item_pic.setImageResource(R.drawable.item_unknown);
+                        finish_item.setImageResource(R.drawable.item_unknown);
                         pre_item_pic.setImageResource(R.drawable.item_unknown);
                         break;
                     case 1:
                         item_pic.setImageResource(R.drawable.tree1_gallery);
+                        finish_item.setImageResource(R.drawable.tree1_gallery);
                         pre_item_pic.setImageResource(R.drawable.tree_crush_gallery);
-                        item_desc.setText(R.string.tree1_desc);
+                        string_ID = R.string.tree1_desc;
                         break;
                     case 2:
                         item_pic.setImageResource(R.drawable.tree2_gallery);
+                        finish_item.setImageResource(R.drawable.tree2_gallery);
                         pre_item_pic.setImageResource(R.drawable.tree1_gallery);
-                        item_desc.setText(R.string.tree2_desc);
+                        string_ID = R.string.tree2_desc;
                         break;
                     case 3:
                         item_pic.setImageResource(R.drawable.tree3_gallery);
+                        finish_item.setImageResource(R.drawable.tree3_gallery);
                         pre_item_pic.setImageResource(R.drawable.tree2_gallery);
-                        item_desc.setText(R.string.tree3_desc);
+                        string_ID = R.string.tree3_desc;
                         break;
                 }
 
@@ -163,22 +188,26 @@ public class WaitingActivity extends AppCompatActivity {
                 switch(stone_slot3+1) {
                     case 0:
                         item_pic.setImageResource(R.drawable.item_unknown);
+                        finish_item.setImageResource(R.drawable.item_unknown);
                         pre_item_pic.setImageResource(R.drawable.item_unknown);
                         break;
                     case 1:
                         item_pic.setImageResource(R.drawable.stone1_gallery);
+                        finish_item.setImageResource(R.drawable.stone1_gallery);
                         pre_item_pic.setImageResource(R.drawable.stone_crush_gallery);
-                        item_desc.setText(R.string.stone1_desc);
+                        string_ID = R.string.stone1_desc;
                         break;
                     case 2:
                         item_pic.setImageResource(R.drawable.stone2_gallery);
+                        finish_item.setImageResource(R.drawable.stone2_gallery);
                         pre_item_pic.setImageResource(R.drawable.stone1_gallery);
-                        item_desc.setText(R.string.stone2_desc);
+                        string_ID = R.string.stone2_desc;
                         break;
                     case 3:
                         item_pic.setImageResource(R.drawable.stone3_gallery);
+                        finish_item.setImageResource(R.drawable.stone3_gallery);
                         pre_item_pic.setImageResource(R.drawable.stone2_gallery);
-                        item_desc.setText(R.string.stone3_desc);
+                        string_ID = R.string.stone3_desc;
                         break;
                 }
                 break;
@@ -186,22 +215,26 @@ public class WaitingActivity extends AppCompatActivity {
                 switch(house_slot4+1) {
                     case 0:
                         item_pic.setImageResource(R.drawable.item_unknown);
+                        finish_item.setImageResource(R.drawable.item_unknown);
                         pre_item_pic.setImageResource(R.drawable.item_unknown);
                         break;
                     case 1:
                         item_pic.setImageResource(R.drawable.house1_gallery);
+                        finish_item.setImageResource(R.drawable.house1_gallery);
                         pre_item_pic.setImageResource(R.drawable.house_crush_gallery);
-                        item_desc.setText(R.string.house1_desc);
+                        string_ID = R.string.house1_desc;
                         break;
                     case 2:
                         item_pic.setImageResource(R.drawable.house2_gallery);
+                        finish_item.setImageResource(R.drawable.house2_gallery);
                         pre_item_pic.setImageResource(R.drawable.house1_gallery);
-                        item_desc.setText(R.string.house2_desc);
+                        string_ID = R.string.house2_desc;
                         break;
                     case 3:
                         item_pic.setImageResource(R.drawable.house3_gallery);
+                        finish_item.setImageResource(R.drawable.house3_gallery);
                         pre_item_pic.setImageResource(R.drawable.house2_gallery);
-                        item_desc.setText(R.string.house3_desc);
+                        string_ID = R.string.house3_desc;
                         break;
                 }
                 break;
@@ -209,22 +242,26 @@ public class WaitingActivity extends AppCompatActivity {
                 switch(luwei_slot5+1) {
                     case 0:
                         item_pic.setImageResource(R.drawable.item_unknown);
+                        finish_item.setImageResource(R.drawable.item_unknown);
                         pre_item_pic.setImageResource(R.drawable.item_unknown);
                         break;
                     case 1:
                         item_pic.setImageResource(R.drawable.luwei1_gallery);
+                        finish_item.setImageResource(R.drawable.luwei1_gallery);
                         pre_item_pic.setImageResource(R.drawable.luwei_crush_gallery);
-                        item_desc.setText(R.string.luwei1_desc);
+                        string_ID = R.string.luwei1_desc;
                         break;
                     case 2:
                         item_pic.setImageResource(R.drawable.luwei2_gallery);
+                        finish_item.setImageResource(R.drawable.luwei2_gallery);
                         pre_item_pic.setImageResource(R.drawable.luwei1_gallery);
-                        item_desc.setText(R.string.luwei2_desc);
+                        string_ID = R.string.luwei2_desc;
                         break;
                     case 3:
                         item_pic.setImageResource(R.drawable.luwei3_gallery);
+                        finish_item.setImageResource(R.drawable.luwei3_gallery);
                         pre_item_pic.setImageResource(R.drawable.luwei2_gallery);
-                        item_desc.setText(R.string.luwei3_desc);
+                        string_ID = R.string.luwei3_desc;
                         break;
                 }
                 break;
@@ -552,6 +589,11 @@ public class WaitingActivity extends AppCompatActivity {
                     break;
             }
 
+            Waiting.setVisibility(View.GONE);
+            Finish.setVisibility(View.VISIBLE);
+            Finish.startAnimation(animation1);
+            item_desc.setText(string_ID);
+            item_desc.startAnimation(animation1);
             mc.cancel();
             crush_button.setText(R.string.OK_button);
             countdown.setText(R.string.finish_hint);

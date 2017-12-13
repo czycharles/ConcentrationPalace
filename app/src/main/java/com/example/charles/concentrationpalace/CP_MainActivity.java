@@ -13,7 +13,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import java.io.File;
 
@@ -52,6 +55,15 @@ public class CP_MainActivity extends AppCompatActivity {
 
         file= new File(this.getApplication().getFilesDir().getParentFile().getPath()+"/shared_prefs","data.xml");
         //file= new File("data/data/com.example.charles.concentrationpalace/shared_prefs","data.xml");
+
+        Animation animation1 = AnimationUtils.loadAnimation(CP_MainActivity.this, R.anim.fade_in);
+        LinearLayout title = findViewById(R.id.title);
+        LinearLayout btn1 = findViewById(R.id.btn1);
+        LinearLayout btn2 = findViewById(R.id.btn2);
+
+        title.startAnimation(animation1);
+        btn1.startAnimation(animation1);
+        btn2.startAnimation(animation1);
 
         Button info_button = findViewById(R.id.info_button);
         info_button.setOnClickListener(new View.OnClickListener() {

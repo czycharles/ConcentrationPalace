@@ -14,6 +14,7 @@
 	<string name="OK_button">好的</string>
 	<string name="finish_hint">建造成功</string>
 	<string name="fail_hint">建造失败</string>
+	<string name="waiting_hint">保持专注\n升级将在倒计时结束后完成</string>
 	<string name="countdown_timer">%1$d%2$d:%3$d%4$d</string>
 	<string name="coin_bar">%1$d</string>
 	<string name="prologue_1">人们从过往的废墟中铭记历史，</string>

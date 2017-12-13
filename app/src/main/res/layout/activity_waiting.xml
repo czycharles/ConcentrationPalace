@@ -23,13 +23,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-            <ImageView
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/coin"
-                android:layout_marginTop="1dp"
-                android:layout_marginStart="15dp"
-                android:layout_width="25sp"
-                android:layout_height="25sp" />
+            <!--<ImageView-->
+                <!--android:contentDescription="@string/app_name"-->
+                <!--android:src="@drawable/coin"-->
+                <!--android:layout_marginTop="1dp"-->
+                <!--android:layout_marginStart="15dp"-->
+                <!--android:layout_width="25sp"-->
+                <!--android:layout_height="25sp" />-->
 
             <TextView
                 android:id="@+id/coin_bar"
@@ -39,7 +39,8 @@
                 android:layout_marginStart="5dp"
                 android:textAlignment="textStart"
                 android:textSize="20sp"
-                android:textColor="@color/whitesmoke"/>
+                android:textColor="@color/whitesmoke"
+                android:drawableStart="@drawable/coin" />
 
     </LinearLayout>
 
@@ -54,6 +55,7 @@
             android:layout_weight="1"/>
 
     <LinearLayout
+        android:id="@+id/Waiting_ui"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -99,6 +101,26 @@
             android:layout_marginEnd="25dp"
             android:src="@drawable/item_unknown"
             android:layout_weight="2"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Finish_ui"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/Finish_item"
+            android:contentDescription="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:src="@drawable/item_unknown" />
 
     </LinearLayout>
 

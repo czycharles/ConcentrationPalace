@@ -121,6 +121,8 @@
 
     <color name="goldenrod">#DAA520</color><!--金麒麟色 -->
 
+    <color name="halfgoldenrod">#55DAA520</color><!--金麒麟色 -->
+
     <color name="orchid">#DA70D6</color><!--淡紫色 -->
 
     <color name="thistle">#D8BFD8</color><!--蓟色 -->
@@ -298,6 +300,8 @@
     <color name="navy">#000080</color><!--海军色 -->
 
     <color name="black">#000000</color><!--黑色 -->
+
+    <color name="halfblack">#33000000</color><!--半黑色 -->
 
     <color name="black_overlay">#66000000</color>
 </resources>
