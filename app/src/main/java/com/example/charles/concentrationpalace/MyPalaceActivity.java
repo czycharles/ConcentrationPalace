@@ -39,12 +39,14 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     private FindSelectedItem stoneImage;
     private FindSelectedItem houseImage;
     private FindSelectedItem luweiImage;
+    private FindSelectedItem lotusImage;
 
     int flower_slot1 = 0;
     int tree_slot2 = 0;
     int stone_slot3 = 0;
     int house_slot4 = 0;
     int luwei_slot5 = 0;
+    int lotus_slot = 0;
 
     int slot1_build_time[] = {15000, 25000, 25000, 25000};
 
@@ -74,18 +76,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     MediaPlayer mpMediaPlayer;
 
     private void initMapItems(){
-
-        flowerImage = findViewById(R.id.flower1);
-        treeImage = findViewById(R.id.tree1);
-        stoneImage = findViewById(R.id.stone1);
-        houseImage = findViewById(R.id.house1);
-        luweiImage = findViewById(R.id.luwei1);
-
-//        ActionBar actionbar = getSupportActionBar();
-//        if(actionbar!=null)
-//            actionbar.hide();
-
-        DataCleanManager.cleanExternalCache(MyPalaceActivity.this);
 
         data = getSharedPreferences("data", MODE_PRIVATE);
 
@@ -205,6 +195,27 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             }
         }
 
+        switch (flower_slot1 + tree_slot2 + stone_slot3 + house_slot4 + luwei_slot5) {
+            case 0:case 1:case 2:case 3:case 4:
+                lotusImage.setBackgroundResource(R.drawable.lotus1);
+                lotus_slot = R.drawable.lotus1_gallery;
+                break;
+            case 5:case 6:case 7:case 8:case 9:
+                lotusImage.setBackgroundResource(R.drawable.lotus2);
+                lotus_slot = R.drawable.lotus2_gallery;
+                break;
+            case 10:case 11:case 12:case 13:case 14:
+                lotusImage.setBackgroundResource(R.drawable.lotus3);
+                lotus_slot = R.drawable.lotus3_gallery;
+                break;
+            case 15:
+                lotusImage.setBackgroundResource(R.drawable.lotus4);
+                lotus_slot = R.drawable.lotus4_gallery;
+                break;
+            default:
+                lotusImage.setBackgroundResource(R.drawable.lotus1);
+                lotus_slot = R.drawable.lotus1_gallery;
+        }
     }
 
     @Override
@@ -225,6 +236,14 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         }
         setContentView(R.layout.activity_my_palace);
 
+        flowerImage = findViewById(R.id.flower1);
+        treeImage = findViewById(R.id.tree1);
+        stoneImage = findViewById(R.id.stone1);
+        houseImage = findViewById(R.id.house1);
+        luweiImage = findViewById(R.id.luwei1);
+        lotusImage = findViewById(R.id.lotus1);
+
+
         coin_display = findViewById(R.id.coin_bar);
 
         initMapItems();
@@ -241,26 +260,14 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             e.printStackTrace();
         }
 
-        editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-
-        Button AD_button = findViewById(R.id.AD_button);
-
-        AD_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View v) {
-                my_coin=my_coin+200;
-                coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                editor.putInt("my_coin", my_coin);
-                editor.apply();
-                Toast.makeText(MyPalaceActivity.this,"假设你看完了广告，金币+200",Toast.LENGTH_LONG).show();
-            }
-            });
-
         flowerImage.setOnClickListener(MyPalaceActivity.this);
         treeImage.setOnClickListener(MyPalaceActivity.this);
         stoneImage.setOnClickListener(MyPalaceActivity.this);
         houseImage.setOnClickListener(MyPalaceActivity.this);
         luweiImage.setOnClickListener(MyPalaceActivity.this);
+        lotusImage.setOnClickListener(MyPalaceActivity.this);
+
+        editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 
         Button share_button = findViewById(R.id.share_button);
 
@@ -280,10 +287,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                         }
                     }
                 }
-//                File directory = new File(Environment.getExternalStorageDirectory().getPath());
-//                if(!directory.exists()){
-//                    directory.mkdir();//没有目录先创建目录
-//                }
                 ScreenShot.shoot(MyPalaceActivity.this);
                 File f = new File(Environment.getExternalStorageDirectory().getPath(),"Share.png");
 
@@ -337,23 +340,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
-                                    switch (flower_slot1) {
-                                        case 0:
-                                            flowerImage.setBackgroundResource(R.drawable.flower_crush);
-                                            break;
-                                        case 1:
-                                            flowerImage.setBackgroundResource(R.drawable.flower1);
-                                            break;
-                                        case 2:
-                                            flowerImage.setBackgroundResource(R.drawable.flower2);
-                                            break;
-                                        case 3:
-                                            flowerImage.setBackgroundResource(R.drawable.flower3);
-                                            break;
-                                        default:
-                                            flowerImage.setBackgroundResource(R.drawable.flower_crush);
-                                            break;
-                                    }
                                 }
                             }
                         });
@@ -421,23 +407,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
-                                    switch (house_slot4) {
-                                        case 0:
-                                            houseImage.setBackgroundResource(R.drawable.house_crush);
-                                            break;
-                                        case 1:
-                                            houseImage.setBackgroundResource(R.drawable.house1);
-                                            break;
-                                        case 2:
-                                            houseImage.setBackgroundResource(R.drawable.house2);
-                                            break;
-                                        case 3:
-                                            houseImage.setBackgroundResource(R.drawable.house3);
-                                            break;
-                                        default:
-                                            houseImage.setBackgroundResource(R.drawable.house_crush);
-                                            break;
-                                    }
                                 }
                             }
                         });
@@ -505,23 +474,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
-                                    switch (stone_slot3) {
-                                        case 0:
-                                            stoneImage.setBackgroundResource(R.drawable.stone_crush);
-                                            break;
-                                        case 1:
-                                            stoneImage.setBackgroundResource(R.drawable.stone1);
-                                            break;
-                                        case 2:
-                                            stoneImage.setBackgroundResource(R.drawable.stone2);
-                                            break;
-                                        case 3:
-                                            stoneImage.setBackgroundResource(R.drawable.stone3);
-                                            break;
-                                        default:
-                                            stoneImage.setBackgroundResource(R.drawable.stone_crush);
-                                            break;
-                                    }
                                 }
                             }
                         });
@@ -589,23 +541,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
-                                    switch (tree_slot2) {
-                                        case 0:
-                                            treeImage.setBackgroundResource(R.drawable.tree_crush);
-                                            break;
-                                        case 1:
-                                            treeImage.setBackgroundResource(R.drawable.tree1);
-                                            break;
-                                        case 2:
-                                            treeImage.setBackgroundResource(R.drawable.tree2);
-                                            break;
-                                        case 3:
-                                            treeImage.setBackgroundResource(R.drawable.tree3);
-                                            break;
-                                        default:
-                                            treeImage.setBackgroundResource(R.drawable.tree_crush);
-                                            break;
-                                    }
                                 }
                             }
                         });
@@ -674,23 +609,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
-                                    switch (luwei_slot5) {
-                                        case 0:
-                                            luweiImage.setBackgroundResource(R.drawable.luwei_crush);
-                                            break;
-                                        case 1:
-                                            luweiImage.setBackgroundResource(R.drawable.luwei1);
-                                            break;
-                                        case 2:
-                                            luweiImage.setBackgroundResource(R.drawable.luwei2);
-                                            break;
-                                        case 3:
-                                            luweiImage.setBackgroundResource(R.drawable.luwei3);
-                                            break;
-                                        default:
-                                            luweiImage.setBackgroundResource(R.drawable.luwei_crush);
-                                            break;
-                                    }
                                 }
                             }
                         });
@@ -735,7 +653,92 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                         }
                     }
                     break;
+                case R.id.lotus1:
+
+                    final AlertDialog.Builder builder;
+                    final AlertDialog.Builder builder1;
+                    builder=new AlertDialog.Builder(this);
+                    builder1=new AlertDialog.Builder(this);
+                    builder.setIcon(lotus_slot);
+                    builder.setTitle(R.string.lotus_title);
+                    //builder.setMessage(R.string.lotus_msg);
+                    builder1.setIcon(R.drawable.coin);
+                    builder1.setTitle(R.string.time_title);
+
+                    final String[] items={getResources().getString(R.string.lotus_opt1),getResources().getString(R.string.lotus_opt2),getResources().getString(R.string.lotus_opt3)};
+                    final int[] time_num = {1,10,30};
+                    final int[] coin_gain = {100,200,500};
+                    final String[] times={String.format(getResources().getString(R.string.time_opt), time_num[0],coin_gain[0]),String.format(getResources().getString(R.string.time_opt), time_num[1],coin_gain[1]),String.format(getResources().getString(R.string.time_opt), time_num[2],coin_gain[2])};
+                    builder.setItems(items, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            switch (i) {
+                                case 0:
+                                    builder1.setItems(times, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int j) {
+                                            Intent intent = new Intent(MyPalaceActivity.this, WaitingActivity.class);
+                                            intent.putExtra("building_slot", 0);
+                                            intent.putExtra("building_time", time_num[j] * 60 * 1000);
+                                            intent.putExtra("building_coin", coin_gain[j]);
+                                            startActivity(intent);
+                                            int version = Build.VERSION.SDK_INT;
+                                            if (version > 5) {
+                                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                            }
+                                        }
+                                    });
+                                    builder1.setCancelable(true);
+                                    AlertDialog dialog=builder1.create();
+                                    dialog.show();
+                                    break;
+                                case 1:
+                                    //* 动态获取权限，Android 6.0 新特性，一些保护权限，除了要在AndroidManifest中声明权限，还要使用如下代码动态获取
+                                    if (Build.VERSION.SDK_INT >= 23) {
+                                        int REQUEST_CODE_CONTACT = 101;
+                                        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                                        //验证是否许可权限
+                                        for (String str : permissions) {
+                                            if (MyPalaceActivity.this.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                                                //申请权限
+                                                MyPalaceActivity.this.requestPermissions(permissions, REQUEST_CODE_CONTACT);
+                                                return;
+                                            }
+                                        }
+                                    }
+                                    ScreenShot.shoot(MyPalaceActivity.this);
+                                    File f = new File(Environment.getExternalStorageDirectory().getPath(), "Share.png");
+
+                                    Intent intent = new Intent();
+                                    intent.setAction(Intent.ACTION_SEND);
+                                    if (f.exists() && f.isFile()) {
+                                        intent.setType("image/*");
+                                        //Uri u = Uri.fromFile(f);
+                                        Uri u = FileProvider.getUriForFile(MyPalaceActivity.this, getPackageName() + ".fileprovider", f);
+                                        intent.putExtra(Intent.EXTRA_STREAM, u);
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "专注禅院");
+                                        intent.putExtra(Intent.EXTRA_TEXT, "我在专注禅院保持了专注");
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(Intent.createChooser(intent, "请选择分享方式："));
+                                    } else
+                                        Toast.makeText(MyPalaceActivity.this, "生成分享图失败", Toast.LENGTH_LONG).show();
+                                    break;
+                                case 2:
+                                    my_coin = my_coin + 10;
+                                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                    editor.putInt("my_coin", my_coin);
+                                    editor.apply();
+                                    Toast.makeText(MyPalaceActivity.this, "假设你看完了广告，金币+" + 10, Toast.LENGTH_LONG).show();
+                                    break;
+                            }
+                        }
+                    });
+
+                    builder.setCancelable(true);
+                    AlertDialog dialog=builder.create();
+                    dialog.show();
             }
+            initMapItems();
         }
     }
     @Override

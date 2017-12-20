@@ -6,39 +6,45 @@
 
     <com.example.charles.concentrationpalace.FindSelectedItem
         android:id="@+id/flower1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/flower_crush"/>
 
     <com.example.charles.concentrationpalace.FindSelectedItem
         android:id="@+id/island"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/island_on_the_flower"/>
 
     <com.example.charles.concentrationpalace.FindSelectedItem
         android:id="@+id/stone1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/stone_crush"/>
 
     <com.example.charles.concentrationpalace.FindSelectedItem
         android:id="@+id/tree1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/tree_crush"/>
 
     <com.example.charles.concentrationpalace.FindSelectedItem
         android:id="@+id/house1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/house_crush"/>
 
     <com.example.charles.concentrationpalace.FindSelectedItem
         android:id="@+id/luwei1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/luwei_crush"/>
+
+    <com.example.charles.concentrationpalace.FindSelectedItem
+        android:id="@+id/lotus1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/lotus1"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -89,48 +95,6 @@
             android:layout_marginEnd="20dp" />
     </LinearLayout>
 
-        <ImageView
-            android:contentDescription="@string/app_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/slot1_state"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:layout_marginBottom="10dp"/>
-
-        <TextView
-            android:id="@+id/countdown_hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:layout_marginBottom="10dp"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/AD_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/button_style"
-            android:textColor="@color/whitesmoke"
-            android:gravity="center"
-            android:text="@string/AD_button"
-            android:layout_marginBottom="10dp"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:contentDescription="@string/app_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"/>
     </LinearLayout>
 
 </FrameLayout>

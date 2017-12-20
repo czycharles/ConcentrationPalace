@@ -203,6 +203,19 @@ public class GalleryActivity extends AppCompatActivity {
         else
             mGalleryList.add(new GalleryItem(getResources().getString(R.string.luwei3_desc),R.drawable.item_unknown));
 
+        mGalleryList.add(new GalleryItem(getResources().getString(R.string.lotus0_desc),R.drawable.lotus1_gallery));
+        if(slot1 + slot2 + slot3 + slot4 + slot5>4)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.lotus1_desc),R.drawable.lotus2_gallery));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.lotus1_desc),R.drawable.item_unknown));
+        if(slot1 + slot2 + slot3 + slot4 + slot5>9)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.lotus2_desc),R.drawable.lotus3_gallery));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.lotus2_desc),R.drawable.item_unknown));
+        if(slot1 + slot2 + slot3 + slot4 + slot5>14)
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.lotus3_desc),R.drawable.lotus4_gallery));
+        else
+            mGalleryList.add(new GalleryItem(getResources().getString(R.string.lotus3_desc),R.drawable.item_unknown));
     }
 
     @Override
