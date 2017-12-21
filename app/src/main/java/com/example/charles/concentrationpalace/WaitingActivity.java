@@ -647,20 +647,47 @@ public class WaitingActivity extends AppCompatActivity {
         @Override
         public void onFinish() {
 
-            if(building_slot == 0) {
-                my_coin = my_coin + coin_gain;
-                coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                editor.putInt("my_coin", my_coin);
-                editor.apply();
-                countdown.setText(String.format(getResources().getString(R.string.gain_coin_success_hint),coin_gain));
+            switch(building_slot) {
+
+                case 0:
+                    my_coin = my_coin + coin_gain;
+                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                    editor.putInt("my_coin", my_coin);
+                    editor.apply();
+                    countdown.setText(String.format(getResources().getString(R.string.gain_coin_success_hint), coin_gain));
+                case 1:
+                    flower_slot1++;
+                    editor.putInt("slot1", flower_slot1);
+                    editor.apply();
+                    break;
+                case 2:
+                    tree_slot2++;
+                    editor.putInt("slot2", tree_slot2);
+                    editor.apply();
+                    break;
+                case 3:
+                    stone_slot3++;
+                    editor.putInt("slot3", stone_slot3);
+                    editor.apply();
+                    break;
+                case 4:
+                    house_slot4++;
+                    editor.putInt("slot4", house_slot4);
+                    editor.apply();
+                    break;
+                case 5:
+                    luwei_slot5++;
+                    editor.putInt("slot5", luwei_slot5);
+                    editor.apply();
+                    break;
             }
-            else {
+            if(building_slot > 0)  {
                 Waiting.setVisibility(View.GONE);
                 Finish.setVisibility(View.VISIBLE);
                 Finish.startAnimation(animation1);
                 crush_button.setText(R.string.OK_button);
                 countdown.setText(R.string.finish_hint);
-            }
+             }
             item_desc.setText(string_ID);
             item_desc.startAnimation(animation1);
             mc.cancel();
