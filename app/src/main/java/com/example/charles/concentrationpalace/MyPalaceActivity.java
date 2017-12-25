@@ -298,7 +298,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     Uri u = FileProvider.getUriForFile(MyPalaceActivity.this, getPackageName() + ".fileprovider", f);
                     intent.putExtra(Intent.EXTRA_STREAM, u);
                     intent.putExtra(Intent.EXTRA_SUBJECT, "专注禅院");
-                    intent.putExtra(Intent.EXTRA_TEXT, "我在专注禅院保持了专注");
+                    intent.putExtra("Kdescription", "我在专注禅院保持了专注");
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(Intent.createChooser(intent, "请选择分享方式："));
                 }
