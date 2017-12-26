@@ -47,17 +47,13 @@
         android:background="@drawable/lotus1"/>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp">
 
         <ImageView
+            android:id="@+id/coin_icon"
             android:contentDescription="@string/app_name"
             android:src="@drawable/coin"
             android:layout_marginStart="15dp"
@@ -95,6 +91,15 @@
             android:layout_marginEnd="20dp" />
     </LinearLayout>
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/share_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/title_activity_my_palace"
+        android:textSize="40sp"
+        android:textColor="@color/whitesmoke"
+        android:layout_marginTop="40dp"
+        android:visibility="invisible"/>
 
 </FrameLayout>

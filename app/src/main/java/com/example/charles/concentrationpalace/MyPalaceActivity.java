@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
@@ -33,6 +34,8 @@ import java.io.File;
 public class MyPalaceActivity extends AppCompatActivity implements OnClickListener {
 
     private TextView coin_display;
+    private TextView share_title;
+    private ImageView share_icon;
 
     private FindSelectedItem flowerImage;
     private FindSelectedItem treeImage;
@@ -48,17 +51,17 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     int luwei_slot5 = 0;
     int lotus_slot = 0;
 
-    int slot1_build_time[] = {15000, 25000, 25000, 25000};
+    int slot1_build_time[] = {1800000, 3600000, 7200000, 10800000};
 
-    int slot2_build_time[] = {15000, 25000, 35000, 25000};
+    int slot2_build_time[] = {2700000, 3600000, 7200000, 10800000};
 
-    int slot3_build_time[] = {10000, 15000, 20000, 25000};
+    int slot3_build_time[] = {1200000, 3600000, 720000, 108000};
 
-    int slot4_build_time[] = {5000, 10000, 15000, 25000};
+    int slot4_build_time[] = {3600000, 7200000, 10800000, 144000};
 
-    int slot5_build_time[] = {5000, 10000, 15000, 25000};
+    int slot5_build_time[] = {600000, 1800000, 3600000, 7200000};
 
-    int next_building_time = 84000;
+    int next_building_time = 3600000;
 
     boolean slot1_crash = false;
     boolean slot2_crash = false;
@@ -68,7 +71,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
     int origin_coin = 200;
     int my_coin;
-    int price_matrix[][] = {{50,100,150},{100,200,300},{150,250,350},{200,350,500},{200,350,500}};
+    int price_matrix[][] = {{200,500,1000},{300,600,1200},{200,500,1000},{500,800,1500},{150,300,800}};
 
     SharedPreferences data;
     SharedPreferences.Editor editor;
@@ -245,6 +248,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
 
         coin_display = findViewById(R.id.coin_bar);
+        share_title = findViewById(R.id.share_title);
+        share_icon = findViewById(R.id.coin_icon);
 
         initMapItems();
 
@@ -269,7 +274,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
         editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 
-        Button share_button = findViewById(R.id.share_button);
+        final Button share_button = findViewById(R.id.share_button);
 
         share_button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -287,8 +292,18 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                         }
                     }
                 }
+                share_title.setVisibility(View.VISIBLE);
+                coin_display.setVisibility(View.INVISIBLE);
+                share_button.setVisibility(View.INVISIBLE);
+                share_icon.setVisibility(View.INVISIBLE);
                 ScreenShot.shoot(MyPalaceActivity.this);
+
                 File f = new File(Environment.getExternalStorageDirectory().getPath(),"Share.png");
+
+                coin_display.setVisibility(View.VISIBLE);
+                share_button.setVisibility(View.VISIBLE);
+                share_icon.setVisibility(View.VISIBLE);
+                share_title.setVisibility(View.GONE);
 
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
@@ -666,9 +681,9 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     builder1.setTitle(R.string.time_title);
 
                     final String[] items={getResources().getString(R.string.lotus_opt1),getResources().getString(R.string.lotus_opt2),getResources().getString(R.string.lotus_opt3)};
-                    final int[] time_num = {1,10,30};
-                    final int[] coin_gain = {100,200,500};
-                    final String[] times={String.format(getResources().getString(R.string.time_opt), time_num[0],coin_gain[0]),String.format(getResources().getString(R.string.time_opt), time_num[1],coin_gain[1]),String.format(getResources().getString(R.string.time_opt), time_num[2],coin_gain[2])};
+                    final int[] time_num = {10,30,60,120};
+                    final int[] coin_gain = {10,40,100,250};
+                    final String[] times={String.format(getResources().getString(R.string.time_opt), time_num[0],coin_gain[0]),String.format(getResources().getString(R.string.time_opt), time_num[1],coin_gain[1]),String.format(getResources().getString(R.string.time_opt), time_num[2],coin_gain[2]),String.format(getResources().getString(R.string.time_opt), time_num[3],coin_gain[3])};
                     builder.setItems(items, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
