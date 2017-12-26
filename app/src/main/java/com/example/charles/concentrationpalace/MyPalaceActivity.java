@@ -321,6 +321,13 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     Toast.makeText(MyPalaceActivity.this,"生成分享图失败",Toast.LENGTH_LONG).show();
             }
         });
+
+        Intent intent = getIntent();
+        int share_action = intent.getIntExtra("Share_Action",0);
+        if(share_action == 1){
+            share_button.performClick();
+        }
+
     }
 
 
@@ -670,88 +677,95 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     break;
                 case R.id.lotus1:
 
-                    final AlertDialog.Builder builder;
-                    final AlertDialog.Builder builder1;
-                    builder=new AlertDialog.Builder(this);
-                    builder1=new AlertDialog.Builder(this);
-                    builder.setIcon(lotus_slot);
-                    builder.setTitle(R.string.lotus_title);
-                    //builder.setMessage(R.string.lotus_msg);
-                    builder1.setIcon(R.drawable.coin);
-                    builder1.setTitle(R.string.time_title);
+                    Intent intent = new Intent(MyPalaceActivity.this, OptionActivity.class);
+                    startActivity(intent);
+                    int version = Build.VERSION.SDK_INT;
+                    if (version > 5) {
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    }
 
-                    final String[] items={getResources().getString(R.string.lotus_opt1),getResources().getString(R.string.lotus_opt2),getResources().getString(R.string.lotus_opt3)};
-                    final int[] time_num = {10,30,60,120};
-                    final int[] coin_gain = {10,40,100,250};
-                    final String[] times={String.format(getResources().getString(R.string.time_opt), time_num[0],coin_gain[0]),String.format(getResources().getString(R.string.time_opt), time_num[1],coin_gain[1]),String.format(getResources().getString(R.string.time_opt), time_num[2],coin_gain[2]),String.format(getResources().getString(R.string.time_opt), time_num[3],coin_gain[3])};
-                    builder.setItems(items, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            switch (i) {
-                                case 0:
-                                    builder1.setItems(times, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int j) {
-                                            Intent intent = new Intent(MyPalaceActivity.this, WaitingActivity.class);
-                                            intent.putExtra("building_slot", 0);
-                                            intent.putExtra("building_time", time_num[j] * 60 * 1000);
-                                            intent.putExtra("building_coin", coin_gain[j]);
-                                            startActivity(intent);
-                                            int version = Build.VERSION.SDK_INT;
-                                            if (version > 5) {
-                                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                                            }
-                                        }
-                                    });
-                                    builder1.setCancelable(true);
-                                    AlertDialog dialog=builder1.create();
-                                    dialog.show();
-                                    break;
-                                case 1:
-                                    //* 动态获取权限，Android 6.0 新特性，一些保护权限，除了要在AndroidManifest中声明权限，还要使用如下代码动态获取
-                                    if (Build.VERSION.SDK_INT >= 23) {
-                                        int REQUEST_CODE_CONTACT = 101;
-                                        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                                        //验证是否许可权限
-                                        for (String str : permissions) {
-                                            if (MyPalaceActivity.this.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
-                                                //申请权限
-                                                MyPalaceActivity.this.requestPermissions(permissions, REQUEST_CODE_CONTACT);
-                                                return;
-                                            }
-                                        }
-                                    }
-                                    ScreenShot.shoot(MyPalaceActivity.this);
-                                    File f = new File(Environment.getExternalStorageDirectory().getPath(), "Share.png");
-
-                                    Intent intent = new Intent();
-                                    intent.setAction(Intent.ACTION_SEND);
-                                    if (f.exists() && f.isFile()) {
-                                        intent.setType("image/*");
-                                        //Uri u = Uri.fromFile(f);
-                                        Uri u = FileProvider.getUriForFile(MyPalaceActivity.this, getPackageName() + ".fileprovider", f);
-                                        intent.putExtra(Intent.EXTRA_STREAM, u);
-                                        intent.putExtra(Intent.EXTRA_SUBJECT, "专注禅院");
-                                        intent.putExtra(Intent.EXTRA_TEXT, "我在专注禅院保持了专注");
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(Intent.createChooser(intent, "请选择分享方式："));
-                                    } else
-                                        Toast.makeText(MyPalaceActivity.this, "生成分享图失败", Toast.LENGTH_LONG).show();
-                                    break;
-                                case 2:
-                                    my_coin = my_coin + 10;
-                                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                                    editor.putInt("my_coin", my_coin);
-                                    editor.apply();
-                                    Toast.makeText(MyPalaceActivity.this, "假设你看完了广告，金币+" + 10, Toast.LENGTH_LONG).show();
-                                    break;
-                            }
-                        }
-                    });
-
-                    builder.setCancelable(true);
-                    AlertDialog dialog=builder.create();
-                    dialog.show();
+//                    final AlertDialog.Builder builder;
+//                    final AlertDialog.Builder builder1;
+//                    builder=new AlertDialog.Builder(this);
+//                    builder1=new AlertDialog.Builder(this);
+//                    builder.setIcon(lotus_slot);
+//                    builder.setTitle(R.string.lotus_title);
+//                    //builder.setMessage(R.string.lotus_msg);
+//                    builder1.setIcon(R.drawable.coin);
+//                    builder1.setTitle(R.string.time_title);
+//
+//                    final String[] items={getResources().getString(R.string.lotus_opt1),getResources().getString(R.string.lotus_opt2),getResources().getString(R.string.lotus_opt3)};
+//                    final int[] time_num = {10,30,60,120};
+//                    final int[] coin_gain = {10,40,100,250};
+//                    final String[] times={String.format(getResources().getString(R.string.time_opt), time_num[0],coin_gain[0]),String.format(getResources().getString(R.string.time_opt), time_num[1],coin_gain[1]),String.format(getResources().getString(R.string.time_opt), time_num[2],coin_gain[2]),String.format(getResources().getString(R.string.time_opt), time_num[3],coin_gain[3])};
+//                    builder.setItems(items, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            switch (i) {
+//                                case 0:
+//                                    builder1.setItems(times, new DialogInterface.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(DialogInterface dialogInterface, int j) {
+//                                            Intent intent = new Intent(MyPalaceActivity.this, WaitingActivity.class);
+//                                            intent.putExtra("building_slot", 0);
+//                                            intent.putExtra("building_time", time_num[j] * 60 * 1000);
+//                                            intent.putExtra("building_coin", coin_gain[j]);
+//                                            startActivity(intent);
+//                                            int version = Build.VERSION.SDK_INT;
+//                                            if (version > 5) {
+//                                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//                                            }
+//                                        }
+//                                    });
+//                                    builder1.setCancelable(true);
+//                                    AlertDialog dialog=builder1.create();
+//                                    dialog.show();
+//                                    break;
+//                                case 1:
+//                                    //* 动态获取权限，Android 6.0 新特性，一些保护权限，除了要在AndroidManifest中声明权限，还要使用如下代码动态获取
+//                                    if (Build.VERSION.SDK_INT >= 23) {
+//                                        int REQUEST_CODE_CONTACT = 101;
+//                                        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//                                        //验证是否许可权限
+//                                        for (String str : permissions) {
+//                                            if (MyPalaceActivity.this.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+//                                                //申请权限
+//                                                MyPalaceActivity.this.requestPermissions(permissions, REQUEST_CODE_CONTACT);
+//                                                return;
+//                                            }
+//                                        }
+//                                    }
+//                                    ScreenShot.shoot(MyPalaceActivity.this);
+//                                    File f = new File(Environment.getExternalStorageDirectory().getPath(), "Share.png");
+//
+//                                    Intent intent = new Intent();
+//                                    intent.setAction(Intent.ACTION_SEND);
+//                                    if (f.exists() && f.isFile()) {
+//                                        intent.setType("image/*");
+//                                        //Uri u = Uri.fromFile(f);
+//                                        Uri u = FileProvider.getUriForFile(MyPalaceActivity.this, getPackageName() + ".fileprovider", f);
+//                                        intent.putExtra(Intent.EXTRA_STREAM, u);
+//                                        intent.putExtra(Intent.EXTRA_SUBJECT, "专注禅院");
+//                                        intent.putExtra(Intent.EXTRA_TEXT, "我在专注禅院保持了专注");
+//                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                        startActivity(Intent.createChooser(intent, "请选择分享方式："));
+//                                    } else
+//                                        Toast.makeText(MyPalaceActivity.this, "生成分享图失败", Toast.LENGTH_LONG).show();
+//                                    break;
+//                                case 2:
+//                                    my_coin = my_coin + 10;
+//                                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+//                                    editor.putInt("my_coin", my_coin);
+//                                    editor.apply();
+//                                    Toast.makeText(MyPalaceActivity.this, "假设你看完了广告，金币+" + 10, Toast.LENGTH_LONG).show();
+//                                    break;
+//                            }
+//                        }
+//                    });
+//
+//                    builder.setCancelable(true);
+//                    AlertDialog dialog=builder.create();
+//                    dialog.show();
             }
             initMapItems();
         }

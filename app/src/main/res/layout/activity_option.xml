@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/option_background2">
+
+    <ImageView
+        android:id="@+id/black_cover"
+        android:contentDescription="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:alpha="0.6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/coin_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/coin_bar"
+            android:layout_marginStart="5dp"
+            android:textAlignment="textStart"
+            android:textSize="20sp"
+            android:textColor="@color/whitesmoke"
+            android:drawableStart="@drawable/coin" />
+
+        <TextView
+            android:id="@+id/option_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/lotus_title"
+            android:textColor="@color/whitesmoke"
+            android:textSize="40sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/option_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/lotus_msg"
+            android:textColor="@color/whitesmoke"
+            android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/option_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical">
+
+
+        <ImageView
+            android:id="@+id/Finish_item"
+            android:contentDescription="@string/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:src="@drawable/item_unknown" />
+
+
+        <TextView
+            android:id="@+id/Item_Process"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/gallery_process"
+            android:textColor="@color/whitesmoke"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"/>
+
+        <Button
+            android:id="@+id/opt1_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/button_style"
+            android:textColor="@color/whitesmoke"
+            android:gravity="center"
+            android:text="@string/lotus_opt1"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <Button
+            android:id="@+id/opt2_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/button_style"
+            android:textColor="@color/whitesmoke"
+            android:gravity="center"
+            android:text="@string/lotus_opt2"
+            android:textSize="20sp"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/opt2_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/lotus_opt2_desc"
+            android:textColor="@color/whitesmoke"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/time_select_page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/button_style"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/concentration_points1"
+                    android:contentDescription="@string/app_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/coin"
+                    android:layout_marginEnd="20dp"/>
+
+                <Button
+                    android:id="@+id/time1_button"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_style"
+                    android:textColor="@color/whitesmoke"
+                    android:gravity="center"
+                    android:text="@string/time_opt"
+                    android:textSize="20sp"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/concentration_points2"
+                    android:contentDescription="@string/app_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/coin"
+                    android:layout_marginEnd="20dp"/>
+
+                <Button
+                    android:id="@+id/time2_button"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_style"
+                    android:textColor="@color/whitesmoke"
+                    android:gravity="center"
+                    android:text="@string/time_opt"
+                    android:textSize="20sp"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/concentration_points3"
+                    android:contentDescription="@string/app_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/coin"
+                    android:layout_marginEnd="20dp"/>
+
+                <Button
+                    android:id="@+id/time3_button"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_style"
+                    android:textColor="@color/whitesmoke"
+                    android:gravity="center"
+                    android:text="@string/time_opt"
+                    android:textSize="20sp"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/concentration_points4"
+                    android:contentDescription="@string/app_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/coin"
+                    android:layout_marginEnd="20dp"/>
+
+                <Button
+                    android:id="@+id/time4_button"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_style"
+                    android:textColor="@color/whitesmoke"
+                    android:gravity="center"
+                    android:text="@string/time_opt"
+                    android:textSize="20sp"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</FrameLayout>
