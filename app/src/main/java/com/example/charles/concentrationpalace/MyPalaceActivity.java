@@ -11,6 +11,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 import java.io.File;
+import java.net.URL;
+import java.net.URLConnection;
 
 
 /**
@@ -78,12 +82,34 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     //DataCleanManager clean = new DataCleanManager();
     MediaPlayer mpMediaPlayer;
 
+    boolean share_price = false;
+
     private void initMapItems(){
 
         data = getSharedPreferences("data", MODE_PRIVATE);
 
-
         my_coin = data.getInt("my_coin", origin_coin);
+        editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+
+        if(share_price) {
+            my_coin = my_coin + 50;
+            coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+            editor.putInt("my_coin", my_coin);
+            long this_share_time = data.getLong("this_share_time", 0);
+            editor.putLong("last_share_time", this_share_time);
+            editor.apply();
+            share_price = false;
+                    AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                    BuildAlert.setTitle("您已获得今日首次分享奖励");
+                    BuildAlert.setMessage("专注度+50");
+                    BuildAlert.setCancelable(false);
+                    BuildAlert.setPositiveButton("好的", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface BuildAlert, int i) {
+                            BuildAlert.cancel();
+                        }
+                    });
+        }
 
         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
 
@@ -296,7 +322,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 coin_display.setVisibility(View.INVISIBLE);
                 share_button.setVisibility(View.INVISIBLE);
                 share_icon.setVisibility(View.INVISIBLE);
-                ScreenShot.shoot(MyPalaceActivity.this);
+                ScreenShot.shoot(MyPalaceActivity.this,"Share.png");
 
                 File f = new File(Environment.getExternalStorageDirectory().getPath(),"Share.png");
 
@@ -308,6 +334,16 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
                 if (f.exists() && f.isFile()) {
+
+                    // Android 4.0 之后不能在主线程中请求HTTP请求
+                    new Thread() {
+                        public void run() {
+                            Looper.prepare();
+                            new Handler().post(runnable);//在子线程中直接去new 一个handler
+                            Looper.loop();//这种情况下，Runnable对象是运行在子线程中的，可以进行联网操作，但是不能更新UI
+                        }
+                    }.start();
+
                     intent.setType("image/*");
                     //Uri u = Uri.fromFile(f);
                     Uri u = FileProvider.getUriForFile(MyPalaceActivity.this, getPackageName() + ".fileprovider", f);
@@ -315,6 +351,12 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     intent.putExtra(Intent.EXTRA_SUBJECT, "专注禅院");
                     intent.putExtra("Kdescription", "我在专注禅院保持了专注");
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    long last_share_time = data.getLong("last_share_time", 0);
+                    long this_share_time = data.getLong("this_share_time", 0);
+                    if((Math.abs(this_share_time-last_share_time) > 10)) {
+                        share_price = true;
+                        Toast.makeText(MyPalaceActivity.this,"分享有效",Toast.LENGTH_LONG).show();
+                    }
                     startActivity(Intent.createChooser(intent, "请选择分享方式："));
                 }
                 else
@@ -325,11 +367,34 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         Intent intent = getIntent();
         int share_action = intent.getIntExtra("Share_Action",0);
         if(share_action == 1){
-            share_button.performClick();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    share_button.performClick();
+                }
+            },500);
         }
 
     }
 
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            URL url;//取得资源对象
+            try {
+                url = new URL("http://www.baidu.com");
+                URLConnection uc = url.openConnection();//生成连接对象
+                uc.connect(); //发出连接
+                data = getSharedPreferences("data", MODE_PRIVATE);
+                editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                editor.putLong("this_share_time", uc.getDate());
+                editor.apply();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(MyPalaceActivity.this,"获取网络日期失败，请检查网络连接",Toast.LENGTH_LONG).show();
+            }
+        }
+    };
 
     @Override
     public void onClick(View v) {
@@ -391,7 +456,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                         startActivity(intent);
                                         int version = Build.VERSION.SDK_INT;
                                         if(version > 5 ){
-                                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                            overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
                                         }
                                     }
                                 }
@@ -458,7 +523,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                         startActivity(intent);
                                         int version = Build.VERSION.SDK_INT;
                                         if(version > 5 ){
-                                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                            overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
                                         }
                                     }
                                 }
@@ -525,7 +590,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                         startActivity(intent);
                                         int version = Build.VERSION.SDK_INT;
                                         if(version > 5 ){
-                                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                            overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
                                         }
                                     }
                                 }
@@ -592,7 +657,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                         startActivity(intent);
                                         int version = Build.VERSION.SDK_INT;
                                         if(version > 5 ){
-                                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                            overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
                                         }
                                     }
                                 }
@@ -660,7 +725,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                         startActivity(intent);
                                         int version = Build.VERSION.SDK_INT;
                                         if(version > 5 ){
-                                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                            overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
                                         }
                                     }
                                 }
@@ -681,7 +746,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     startActivity(intent);
                     int version = Build.VERSION.SDK_INT;
                     if (version > 5) {
-                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
                     }
 
 //                    final AlertDialog.Builder builder;
@@ -806,7 +871,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             startActivity(intent);
             int version = Build.VERSION.SDK_INT;
             if(version > 5 ){
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
             }
             finish();
     }
@@ -844,4 +909,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         //clean.cleanExternalCache(MyPalaceActivity.this);
         ActivityCollector.removeActivity(this);
     }
+
+
 }

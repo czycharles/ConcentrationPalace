@@ -16,7 +16,7 @@ import android.util.Log;
 import android.view.View;
 
 
-public class ScreenShot {
+class ScreenShot {
 
     /**
      * 获取指定Activity的截屏，保存到png文件。
@@ -32,7 +32,7 @@ public class ScreenShot {
         Rect frame = new Rect();
         activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
         int statusBarHeight = frame.top;
-        Log.i("TAG", "" + statusBarHeight);
+        Log.d("TAG", "图片：" + b1);
         // 获取屏幕长和高
         DisplayMetrics dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -52,11 +52,9 @@ public class ScreenShot {
         FileOutputStream fos;
         try {
             fos = new FileOutputStream(file);
-            if (null != fos) {
-                b.compress(Bitmap.CompressFormat.PNG, 90, fos);
-                fos.flush();
-                fos.close();
-            }
+            b.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            fos.flush();
+            fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             Log.d("savePic","success1");
@@ -66,15 +64,11 @@ public class ScreenShot {
         }
     }
     // 程序入口
-    public static void shoot(Activity a) {
+    static void shoot(Activity a,String fileName) {
         File directory = new File(Environment.getExternalStorageDirectory().getPath());
         if(!directory.exists()){
             directory.mkdir();//没有目录先创建目录
         }
-        ScreenShot.savePic(ScreenShot.takeScreenShot(a), Environment.getExternalStorageDirectory().getPath(),"Share.png");
-    }
-    // 程序入口
-    public static Bitmap ReturnShoot(Activity a) {
-        return ScreenShot.takeScreenShot(a);
+        ScreenShot.savePic(ScreenShot.takeScreenShot(a), Environment.getExternalStorageDirectory().getPath(),fileName);
     }
 }

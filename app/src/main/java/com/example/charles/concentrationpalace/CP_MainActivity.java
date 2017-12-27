@@ -56,7 +56,7 @@ public class CP_MainActivity extends AppCompatActivity {
         file= new File(this.getApplication().getFilesDir().getParentFile().getPath()+"/shared_prefs","data.xml");
         //file= new File("data/data/com.example.charles.concentrationpalace/shared_prefs","data.xml");
 
-        Animation animation1 = AnimationUtils.loadAnimation(CP_MainActivity.this, R.anim.fade_in);
+        Animation animation1 = AnimationUtils.loadAnimation(CP_MainActivity.this, R.anim.fade_in_fast);
         LinearLayout title = findViewById(R.id.title);
         LinearLayout btn1 = findViewById(R.id.btn1);
         LinearLayout btn2 = findViewById(R.id.btn2);
@@ -72,7 +72,7 @@ public class CP_MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(CP_MainActivity.this, InfoActivity.class);
                 startActivity(intent);
                 if(version > 5 ){
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
                 }
             }
         });
@@ -92,7 +92,7 @@ public class CP_MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(CP_MainActivity.this, MyPalaceActivity.class);
                     startActivity(intent);
                     if (version > 5) {
-                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
                     }
                 } else {
                     SharedPreferences.Editor editor;
@@ -122,7 +122,7 @@ public class CP_MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(CP_MainActivity.this, CoverActivity.class);
                     startActivity(intent);
                     if (version > 5) {
-                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
                     }
                 }
             }
@@ -135,7 +135,7 @@ public class CP_MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(CP_MainActivity.this, GalleryActivity.class);
                 startActivity(intent);
                 if(version > 5 ){
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
                 }
             }
         });
