@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -115,6 +116,9 @@ public class OptionActivity extends AppCompatActivity {
         coin_display = findViewById(R.id.coin_bar);
         my_coin = data.getInt("my_coin", origin_coin);
         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+        Drawable coin_icon = getResources().getDrawable(R.drawable.coin);
+        coin_icon.setBounds(0, 0, 100, 100);
+        coin_display.setCompoundDrawables(coin_icon, null, null, null);
         option_msg = findViewById(R.id.option_msg);
 
         Button concentration_btn = findViewById(R.id.opt1_button);

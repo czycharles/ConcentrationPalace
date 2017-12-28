@@ -40,7 +40,8 @@
                 android:textAlignment="textStart"
                 android:textSize="20sp"
                 android:textColor="@color/whitesmoke"
-                android:drawableStart="@drawable/coin" />
+                android:drawableStart="@drawable/coin"
+                android:drawablePadding="5dp"/>
 
     </LinearLayout>
 

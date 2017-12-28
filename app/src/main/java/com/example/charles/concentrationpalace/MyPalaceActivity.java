@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -112,6 +113,9 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         }
 
         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+        Drawable coin_icon = getResources().getDrawable(R.drawable.coin);
+        coin_icon.setBounds(0, 0, 100, 100);
+        coin_display.setCompoundDrawables(coin_icon, null, null, null);
 
         flower_slot1 = data.getInt("slot1", 0);
         slot1_crash = data.getBoolean("slot1_crash", false);
@@ -275,7 +279,6 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
         coin_display = findViewById(R.id.coin_bar);
         share_title = findViewById(R.id.share_title);
-        share_icon = findViewById(R.id.coin_icon);
 
         initMapItems();
 

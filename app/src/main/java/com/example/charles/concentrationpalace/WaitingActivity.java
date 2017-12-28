@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -126,6 +127,9 @@ public class WaitingActivity extends AppCompatActivity {
         coin_display = findViewById(R.id.coin_bar);
         my_coin = data.getInt("my_coin", origin_coin);
         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+        Drawable coin_icon = getResources().getDrawable(R.drawable.coin);
+        coin_icon.setBounds(0, 0, 100, 100);
+        coin_display.setCompoundDrawables(coin_icon, null, null, null);
 
         item_desc.setText(R.string.waiting_hint);
 

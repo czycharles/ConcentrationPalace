@@ -27,7 +27,8 @@
             android:textAlignment="textStart"
             android:textSize="20sp"
             android:textColor="@color/whitesmoke"
-            android:drawableStart="@drawable/coin" />
+            android:drawableStart="@drawable/coin"
+            android:drawablePadding="5dp"/>
 
         <TextView
             android:id="@+id/option_title"
@@ -126,9 +127,9 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="40dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:background="@drawable/button_style"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/background_style"
             android:visibility="gone">
 
             <LinearLayout
