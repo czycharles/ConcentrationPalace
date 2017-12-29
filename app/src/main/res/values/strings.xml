@@ -14,7 +14,7 @@
     <string name="AD_button">加速</string>
 	<string name="OK_button">好的</string>
 	<string name="finish_hint">成功</string>
-    <string name="gain_coin_success_hint">你已获得%1$d专注度\n自从树叶落在某个伟人的额头上后，就成了专注的象征。</string>
+    <string name="gain_coin_success_hint">你已获得%1$d专注度。\n自从树叶落在某个伟人的额头上后，就成了专注的象征。</string>
 	<string name="fail_hint">失败</string>
 	<string name="waiting_hint">保持专注\n升级将在倒计时结束后完成</string>
     <string name="gain_coin_hint">保持专注\n倒计时结束后你会获得%1$d专注度</string>

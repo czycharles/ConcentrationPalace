@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -394,6 +395,15 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         }
     };
 
+    public final float[] BT_SELECTED = new float[] {1,0,0,0,99,0,1,0,0,99,0,0,1,0,99,0,0,0,1,0};
+    public final float[] BT_NOT_SELECTED = new float[]  {1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0};;
+    public final static float[] BT_SELECTED1 = new float[] {
+            1,0,0,0,-50,
+            0,1,0,0,-50,
+            0,0,1,0,-50,
+            0,0,0,1,0
+    };
+
     @Override
     public void onClick(View v) {
 
@@ -401,6 +411,15 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 
         if(Until.isFastClick()) {
+
+            final FindSelectedItem current_pic = findViewById(v.getId());
+            current_pic.ReturnDrawable().setColorFilter(new ColorMatrixColorFilter(BT_SELECTED1));
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    current_pic.ReturnDrawable().clearColorFilter();
+                }
+            },100);
             switch (v.getId()) {
 
                 case R.id.flower1:

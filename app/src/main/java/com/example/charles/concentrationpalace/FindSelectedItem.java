@@ -113,4 +113,10 @@ public class FindSelectedItem extends FrameLayout {
 
     }
 
+    public Drawable ReturnDrawable() {
+
+        return getBackground().getCurrent();
+
+    }
+
 }

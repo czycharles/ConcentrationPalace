@@ -146,6 +146,7 @@ public class WaitingActivity extends AppCompatActivity {
                         item_pic.setImageResource(R.drawable.item_unknown);
                         finish_item.setImageResource(R.drawable.item_unknown);
                         pre_item_pic.setImageResource(R.drawable.item_unknown);
+                        string_ID = R.string.flower0_desc;
                         break;
                     case 1:
                         item_pic.setImageResource(R.drawable.flower1_gallery);
@@ -174,6 +175,7 @@ public class WaitingActivity extends AppCompatActivity {
                         item_pic.setImageResource(R.drawable.item_unknown);
                         finish_item.setImageResource(R.drawable.item_unknown);
                         pre_item_pic.setImageResource(R.drawable.item_unknown);
+                        string_ID = R.string.tree0_desc;
                         break;
                     case 1:
                         item_pic.setImageResource(R.drawable.tree1_gallery);
@@ -202,6 +204,7 @@ public class WaitingActivity extends AppCompatActivity {
                         item_pic.setImageResource(R.drawable.item_unknown);
                         finish_item.setImageResource(R.drawable.item_unknown);
                         pre_item_pic.setImageResource(R.drawable.item_unknown);
+                        string_ID = R.string.stone0_desc;
                         break;
                     case 1:
                         item_pic.setImageResource(R.drawable.stone1_gallery);
@@ -229,6 +232,7 @@ public class WaitingActivity extends AppCompatActivity {
                         item_pic.setImageResource(R.drawable.item_unknown);
                         finish_item.setImageResource(R.drawable.item_unknown);
                         pre_item_pic.setImageResource(R.drawable.item_unknown);
+                        string_ID = R.string.house0_desc;
                         break;
                     case 1:
                         item_pic.setImageResource(R.drawable.house1_gallery);
@@ -256,6 +260,7 @@ public class WaitingActivity extends AppCompatActivity {
                         item_pic.setImageResource(R.drawable.item_unknown);
                         finish_item.setImageResource(R.drawable.item_unknown);
                         pre_item_pic.setImageResource(R.drawable.item_unknown);
+                        string_ID = R.string.luwei0_desc;
                         break;
                     case 1:
                         item_pic.setImageResource(R.drawable.luwei1_gallery);
@@ -658,7 +663,7 @@ public class WaitingActivity extends AppCompatActivity {
                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                     editor.putInt("my_coin", my_coin);
                     editor.apply();
-                    countdown.setText(String.format(getResources().getString(R.string.gain_coin_success_hint), coin_gain));
+                    item_desc.setText(String.format(getResources().getString(R.string.gain_coin_success_hint), coin_gain));
                 case 1:
                     flower_slot1++;
                     editor.putInt("slot1", flower_slot1);
@@ -689,10 +694,10 @@ public class WaitingActivity extends AppCompatActivity {
                 Waiting.setVisibility(View.GONE);
                 Finish.setVisibility(View.VISIBLE);
                 Finish.startAnimation(animation1);
-                crush_button.setText(R.string.OK_button);
-                countdown.setText(R.string.finish_hint);
+                item_desc.setText(string_ID);
              }
-            item_desc.setText(string_ID);
+            crush_button.setText(R.string.OK_button);
+            countdown.setText(R.string.finish_hint);
             item_desc.startAnimation(animation1);
             mc.cancel();
             building_slot = -1;
