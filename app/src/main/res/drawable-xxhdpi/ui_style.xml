@@ -8,9 +8,9 @@
             <!--<solid android:color="@android:color/transparent" />-->
             <!-- 设置按钮的四个角为弧形 -->
             <!-- android:radius 弧形的半径 -->
-            <corners android:radius="5dip" />
+            <corners android:radius="10dip" />
             <!--边框的宽度及颜色-->
-            <stroke android:width="5px" android:color="@color/whitesmoke" />
+            <stroke android:width="2px" android:color="@color/whitesmoke" />
             <solid android:color="@color/halfblack" />
         </shape>
     </item>

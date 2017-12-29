@@ -10,7 +10,7 @@
             <!-- android:radius 弧形的半径 -->
             <corners android:radius="5dip" />
             <!--边框的宽度及颜色-->
-            <stroke android:width="5px" android:color="@color/halfwhitesmoke" />
+            <stroke android:width="3px" android:color="@color/halfwhitesmoke" />
             <gradient
                 android:startColor="@color/halfwhitesmoke"
                 android:endColor="@color/halfgray"
@@ -26,7 +26,7 @@
             <!-- android:radius 弧形的半径 -->
             <corners android:radius="5dip" />
             <!--边框的宽度及颜色-->
-            <stroke android:width="5px" android:color="@color/halfwhitesmoke" />
+            <stroke android:width="3px" android:color="@color/halfwhitesmoke" />
         </shape>
     </item>
     <!--<item android:state_focused="true">-->

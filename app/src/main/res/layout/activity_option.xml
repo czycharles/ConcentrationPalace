@@ -88,7 +88,7 @@
             android:textColor="@color/whitesmoke"
             android:gravity="center"
             android:text="@string/lotus_opt1"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:textSize="20sp"
             android:clickable="true"
             android:focusable="true"/>
@@ -106,16 +106,16 @@
             android:clickable="true"
             android:focusable="true" />
 
-        <TextView
-            android:id="@+id/opt2_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/lotus_opt2_desc"
-            android:textColor="@color/whitesmoke"
-            android:textSize="15sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"/>
+        <!--<TextView-->
+            <!--android:id="@+id/opt2_desc"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/lotus_opt2_desc"-->
+            <!--android:textColor="@color/whitesmoke"-->
+            <!--android:textSize="15sp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_marginBottom="10dp"/>-->
 
         </LinearLayout>
 
@@ -129,7 +129,7 @@
             android:layout_marginBottom="40dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/background_style"
+            android:background="@drawable/ui_style"
             android:visibility="gone">
 
             <LinearLayout
@@ -146,9 +146,9 @@
                     android:contentDescription="@string/app_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/coin"
+                    android:src="@drawable/coin_10"
                     android:layout_marginEnd="20dp"/>
 
                 <Button
@@ -181,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/coin"
+                    android:src="@drawable/coin_40"
                     android:layout_marginEnd="20dp"/>
 
                 <Button
@@ -214,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/coin"
+                    android:src="@drawable/coin_100"
                     android:layout_marginEnd="20dp"/>
 
                 <Button
@@ -247,7 +247,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/coin"
+                    android:src="@drawable/coin_250"
                     android:layout_marginEnd="20dp"/>
 
                 <Button

@@ -18,10 +18,13 @@
 	<string name="fail_hint">失败</string>
 	<string name="waiting_hint">保持专注\n升级将在倒计时结束后完成</string>
     <string name="gain_coin_hint">保持专注\n倒计时结束后你会获得%1$d专注度</string>
-	<string name="countdown_timer">%1$d%2$d:%3$d%4$d</string>
-	<string name="coin_bar">%1$d</string>
+	<string name="countdown_timer">%1$d%2$d:%3$d%4$d:%5$d%6$d</string>
+	<string name="number">%1$d</string>
+	<string name="coin_bar">%1$d&#160;</string>
     <string name="lotus_title">获取专注度</string>
+	<string name="finish_title">恭喜！</string>
     <string name="lotus_msg">使用专注度升级其他位置的物品，\n荷花会逐渐开放。</string>
+	<string name="finish_msg">你已经完成了专注禅院的建设，\n点击发光的荷花观看结局。</string>
     <string name="lotus_opt1">远离手机</string>
     <string name="lotus_opt2">分享</string>
     <string name="lotus_opt2_desc">每日首次分享 +10专注度</string>
@@ -31,7 +34,7 @@
 	<string name="prologue_1">人们从过往的废墟中铭记历史，</string>
 	<string name="prologue_2">然后从过往的历史中学会专注。</string>
 	<string name="end_1">废墟已被清除，历史仍会铭记，</string>
-	<string name="end_2">感谢你的专注，未来还会再见。</string>
+	<string name="end_2">感谢你的专注，未来还会相遇。</string>
 	<string name="flower0_desc">千树扫作一番黄</string>
 	<string name="flower1_desc">小萍加泛泛 初蒲正离离</string>
 	<string name="flower2_desc">筑室兮水中 葺之兮荷盖</string>

@@ -92,7 +92,7 @@ public class CP_MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(CP_MainActivity.this, MyPalaceActivity.class);
                     startActivity(intent);
                     if (version > 5) {
-                        overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     }
                 } else {
                     SharedPreferences.Editor editor;

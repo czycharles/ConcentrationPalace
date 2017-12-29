@@ -49,6 +49,7 @@ public class OptionActivity extends AppCompatActivity {
     int origin_coin = 200;
 
     TextView coin_display;
+    TextView option_title;
     TextView option_msg;
 
     Animation animation1;
@@ -80,6 +81,10 @@ public class OptionActivity extends AppCompatActivity {
 
         Option_select_page = findViewById(R.id.option_page);
         Time_select_page = findViewById(R.id.time_select_page);
+        option_title = findViewById(R.id.option_title);
+        option_msg = findViewById(R.id.option_msg);
+        coin_display = findViewById(R.id.coin_bar);
+        process = findViewById(R.id.Item_Process);
 
         data = getSharedPreferences("data", MODE_PRIVATE);
 
@@ -102,8 +107,21 @@ public class OptionActivity extends AppCompatActivity {
             case 10:case 11:case 12:case 13:case 14:
                 item_pic.setImageResource(R.drawable.lotus3_gallery);
                 break;
-            case 15:
+            case 15:case 16:case 17:case 18:case 19:
                 item_pic.setImageResource(R.drawable.lotus4_gallery);
+                option_msg.setText(R.string.finish_msg);
+                option_title.setText(R.string.finish_title);
+                item_pic.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(OptionActivity.this, EndActivity.class);
+                        startActivity(intent);
+                        int version = Build.VERSION.SDK_INT;
+                        if(version > 5 ){
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        }
+                    }
+                });
                 break;
             default:
                 item_pic.setBackgroundResource(R.drawable.lotus1_gallery);
@@ -111,15 +129,12 @@ public class OptionActivity extends AppCompatActivity {
 
         animation1 = AnimationUtils.loadAnimation(OptionActivity.this, R.anim.fade_in);
 
-        process = findViewById(R.id.Item_Process);
         process.setText(String.format(getResources().getString(R.string.gallery_process),flower_slot1 + tree_slot2 + stone_slot3 + house_slot4 + luwei_slot5 + 5,20));
-        coin_display = findViewById(R.id.coin_bar);
         my_coin = data.getInt("my_coin", origin_coin);
         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
         Drawable coin_icon = getResources().getDrawable(R.drawable.coin);
-        coin_icon.setBounds(0, 0, 100, 100);
+        coin_icon.setBounds(0, 0, coin_icon.getMinimumWidth(), coin_icon.getMinimumHeight());
         coin_display.setCompoundDrawables(coin_icon, null, null, null);
-        option_msg = findViewById(R.id.option_msg);
 
         Button concentration_btn = findViewById(R.id.opt1_button);
         Button time1_btn = findViewById(R.id.time1_button);
@@ -132,6 +147,7 @@ public class OptionActivity extends AppCompatActivity {
             public void onClick (View v) {
                 Option_select_page.setVisibility(View.GONE);
                 Time_select_page.setVisibility(View.VISIBLE);
+                option_title.setText(R.string.lotus_title);
                 option_msg.setText(R.string.time_title);
 
             }
@@ -220,7 +236,7 @@ public class OptionActivity extends AppCompatActivity {
         startActivity(intent);
         int version = Build.VERSION.SDK_INT;
         if(version > 5 ){
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
         }
         finish();
     }

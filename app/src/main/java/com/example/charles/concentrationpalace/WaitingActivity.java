@@ -123,12 +123,12 @@ public class WaitingActivity extends AppCompatActivity {
         finish_item = findViewById(R.id.Finish_item);
 
         countdown = findViewById(R.id.Countdown_hint);
-        countdown.setText(String.format(getResources().getString(R.string.countdown_timer),0,0,0,0));
+        countdown.setText(String.format(getResources().getString(R.string.countdown_timer),0,0,0,0,0,0));
         coin_display = findViewById(R.id.coin_bar);
         my_coin = data.getInt("my_coin", origin_coin);
         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
         Drawable coin_icon = getResources().getDrawable(R.drawable.coin);
-        coin_icon.setBounds(0, 0, 100, 100);
+        coin_icon.setBounds(0, 0, coin_icon.getMinimumWidth(), coin_icon.getMinimumHeight());
         coin_display.setCompoundDrawables(coin_icon, null, null, null);
 
         item_desc.setText(R.string.waiting_hint);
@@ -137,7 +137,7 @@ public class WaitingActivity extends AppCompatActivity {
             case 0:
                 Waiting.setVisibility(View.GONE);
                 Finish.setVisibility(View.VISIBLE);
-                finish_item.setImageResource(R.drawable.coin);
+                finish_item.setImageResource(R.drawable.coin_gallery);
                 item_desc.setText(String.format(getResources().getString(R.string.gain_coin_hint),coin_gain));
                 break;
             case 1:
@@ -700,7 +700,7 @@ public class WaitingActivity extends AppCompatActivity {
         @Override
         public void onTick(long millisUntilFinished) {
 
-            countdown.setText(String.format(getResources().getString(R.string.countdown_timer),millisUntilFinished / 1000 / 60 /10 , millisUntilFinished / 1000 / 60 %10 ,millisUntilFinished / 1000 % 60 / 10 , millisUntilFinished / 1000 %60 %10 ));
+            countdown.setText(String.format(getResources().getString(R.string.countdown_timer),millisUntilFinished / 1000 / 60 / 60 / 10, millisUntilFinished / 1000 / 60 / 60 % 10, millisUntilFinished / 1000 / 60 % 60 / 10 , millisUntilFinished / 1000 / 60 % 10 , millisUntilFinished / 1000 % 60 / 10 , millisUntilFinished / 1000 % 10 ));
         }
 
     }
