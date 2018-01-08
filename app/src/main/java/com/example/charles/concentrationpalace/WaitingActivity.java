@@ -664,6 +664,7 @@ public class WaitingActivity extends AppCompatActivity {
                     editor.putInt("my_coin", my_coin);
                     editor.apply();
                     item_desc.setText(String.format(getResources().getString(R.string.gain_coin_success_hint), coin_gain));
+                    break;
                 case 1:
                     flower_slot1++;
                     editor.putInt("slot1", flower_slot1);

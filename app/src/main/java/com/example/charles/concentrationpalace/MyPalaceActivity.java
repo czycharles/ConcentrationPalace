@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
@@ -137,6 +136,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     break;
                 default:
                     flowerImage.setBackgroundResource(R.drawable.flower_crush);
+                    flower_slot1 = 0;
             }
         }
         tree_slot2 = data.getInt("slot2", 0);
@@ -159,6 +159,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     break;
                 default:
                     treeImage.setBackgroundResource(R.drawable.tree_crush);
+                    tree_slot2 = 0;
             }
         }
         stone_slot3 = data.getInt("slot3", 0);
@@ -181,6 +182,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     break;
                 default:
                     stoneImage.setBackgroundResource(R.drawable.stone_crush);
+                    stone_slot3 = 0;
             }
         }
         house_slot4 = data.getInt("slot4", 0);
@@ -203,6 +205,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     break;
                 default:
                     houseImage.setBackgroundResource(R.drawable.house_crush);
+                    house_slot4 = 0;
             }
         }
         luwei_slot5 = data.getInt("slot5", 0);
@@ -225,6 +228,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     break;
                 default:
                     luweiImage.setBackgroundResource(R.drawable.luwei_crush);
+                    luwei_slot5 = 0;
             }
         }
 
@@ -395,8 +399,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         }
     };
 
-    public final float[] BT_SELECTED = new float[] {1,0,0,0,99,0,1,0,0,99,0,0,1,0,99,0,0,0,1,0};
-    public final float[] BT_NOT_SELECTED = new float[]  {1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0};;
+//    public final float[] BT_SELECTED = new float[] {1,0,0,0,99,0,1,0,0,99,0,0,1,0,99,0,0,0,1,0};
+//    public final float[] BT_NOT_SELECTED = new float[]  {1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0};;
     public final static float[] BT_SELECTED1 = new float[] {
             1,0,0,0,-50,
             0,1,0,0,-50,
@@ -761,6 +765,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 case R.id.lotus1:
 
                     Intent intent = new Intent(MyPalaceActivity.this, OptionActivity.class);
+                    intent.putExtra("building_slot",0);
                     startActivity(intent);
                     int version = Build.VERSION.SDK_INT;
                     if (version > 5) {

@@ -104,7 +104,7 @@ public class CoverActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v){
                                 int version = Build.VERSION.SDK_INT;
-                                Intent intent = new Intent(CoverActivity.this, MyPalaceActivity.class);
+                                Intent intent = new Intent(CoverActivity.this, TutorialActivity.class);
                                 startActivity(intent);
                                 if(version > 5 ){
                                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

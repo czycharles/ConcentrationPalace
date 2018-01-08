@@ -65,8 +65,11 @@
 	<string name="lotus2_desc">萍间日彩乱 荷处香风举</string>
 	<string name="lotus3_desc">月华当户白 何处递荷香</string>
 	<string name="info0">设置与信息</string>
-	<string name="info1">重置游戏</string>
-	<string name="info2_1">音乐：魔王魂</string>
-	<string name="info3_1">联系我们：</string>
-	<string name="info3_2">1234567@163.com</string>
+	<string name="info1">新手教学</string>
+	<string name="info2">重置游戏</string>
+	<string name="info3">音乐：魔王魂</string>
+	<string name="info4_1">联系我们：</string>
+	<string name="info4_2">1234567@163.com</string>
+    <string name="exit">退出游戏？</string>
+    <string name="cancel">取消</string>
 </resources>

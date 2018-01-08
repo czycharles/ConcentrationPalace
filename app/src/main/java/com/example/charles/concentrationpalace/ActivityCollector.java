@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by charles on 8/7/2017.
+ * Activities collector class.
  */
 
 public class ActivityCollector {
-    public static List<Activity> activities = new ArrayList<>();
+    private static List<Activity> activities = new ArrayList<>();
     public static void addActivity(Activity activity){
         activities.add(activity);
     }
     public static void removeActivity(Activity activity){
         activities.remove(activity);
     }
-    public static void finishAll(){
+    static void finishAll(){
         for(Activity activity:activities){
             if(!activity.isFinishing()){
                 activity.finish();

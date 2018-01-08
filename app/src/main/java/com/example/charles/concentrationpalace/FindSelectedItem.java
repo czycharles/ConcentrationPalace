@@ -52,6 +52,7 @@ public class FindSelectedItem extends FrameLayout {
 
         int action = event.getAction();
 
+        Drawable drawable = getBackground().getCurrent();
 
         if(action != MotionEvent.ACTION_DOWN) {
 
@@ -64,8 +65,6 @@ public class FindSelectedItem extends FrameLayout {
         int y = (int)event.getY();
 
         if(width == -1 || height == -1) {
-
-            Drawable drawable = getBackground().getCurrent();
 
             bitmap = ((BitmapDrawable)drawable).getBitmap();
 
@@ -102,14 +101,9 @@ public class FindSelectedItem extends FrameLayout {
         Log.d("special", x + " and " + y +" clicked. Pixel is " + rgb[0] + ","
                 + rgb[1] + "," + rgb[2] + " w and H is " + bitmap.getWidth() + "," + bitmap.getHeight());
 
-//        if(Color.TRANSPARENT == pixel) {
-//
-//            return false;
-//
-//        }
+        if(Color.TRANSPARENT !=pixel)
+            performClick();
         return (Color.TRANSPARENT != pixel) && (super.onTouchEvent(event));
-
-        //return super.onTouchEvent( event);
 
     }
 
@@ -119,4 +113,8 @@ public class FindSelectedItem extends FrameLayout {
 
     }
 
+    @Override
+    public boolean performClick() {
+        return super.performClick();
+    }
 }

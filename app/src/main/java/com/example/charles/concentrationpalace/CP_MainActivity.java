@@ -9,7 +9,6 @@ import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -146,12 +145,12 @@ public class CP_MainActivity extends AppCompatActivity {
         if(mpMediaPlayer!=null) {
             try{
                 mpMediaPlayer.stop();
-                Log.d("Media","stop success");
+                //Log.d("Media","stop success");
             }catch(IllegalStateException e) {
                 mpMediaPlayer.release();
-                Log.d("Media", "release success");
+                //Log.d("Media", "release success");
                 mpMediaPlayer = null;
-                Log.d("Media", "null success");
+                //Log.d("Media", "null success");
             }
         }
         super.onStop();
@@ -172,12 +171,12 @@ public class CP_MainActivity extends AppCompatActivity {
         if(mpMediaPlayer!=null) {
             try{
                 mpMediaPlayer.stop();
-                Log.d("Media","stop success");
+                //Log.d("Media","stop success");
             }catch(IllegalStateException e) {
                 mpMediaPlayer.release();
-                Log.d("Media", "release success");
+                //Log.d("Media", "release success");
                 mpMediaPlayer = null;
-                Log.d("Media", "null success");
+                //Log.d("Media", "null success");
             }
         }
         super.onDestroy();
@@ -187,27 +186,27 @@ public class CP_MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         AlertDialog.Builder exitAlert = new AlertDialog.Builder(CP_MainActivity.this);
-        exitAlert.setTitle("退出游戏？");
+        exitAlert.setTitle(R.string.exit);
         exitAlert.setCancelable(false);
-        exitAlert.setPositiveButton("退出", new DialogInterface.OnClickListener() {
+        exitAlert.setPositiveButton(R.string.exit_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface exitAlert, int i) {
                 if(mpMediaPlayer!=null) {
                     try{
                         mpMediaPlayer.stop();
-                        Log.d("Media","stop success");
+                        //Log.d("Media","stop success");
                     }catch(IllegalStateException e) {
                         mpMediaPlayer.release();
-                        Log.d("Media", "release success");
+                        //Log.d("Media", "release success");
                         mpMediaPlayer = null;
-                        Log.d("Media", "null success");
+                        //Log.d("Media", "null success");
                     }
                 }
                 ActivityCollector.finishAll();
                 android.os.Process.killProcess(android.os.Process.myPid());
             }
         });
-        exitAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        exitAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface exitAlert, int i) {
                 exitAlert.cancel();

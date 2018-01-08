@@ -61,8 +61,9 @@ public class InfoActivity extends AppCompatActivity {
 
         mInfoList.add(getResources().getString(R.string.info0));
         mInfoList.add(getResources().getString(R.string.info1));
-        mInfoList.add(getResources().getString(R.string.info2_1));
-        mInfoList.add(getResources().getString(R.string.info3_1)+getResources().getString(R.string.info3_2));
+        mInfoList.add(getResources().getString(R.string.info2));
+        mInfoList.add(getResources().getString(R.string.info3));
+        mInfoList.add(getResources().getString(R.string.info4_1)+getResources().getString(R.string.info4_2));
 
         RecyclerView recyclerView = findViewById(R.id.info_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
