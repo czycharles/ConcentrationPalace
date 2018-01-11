@@ -4,7 +4,20 @@
     <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color><!--白色 -->
+    
+		<color name="design_red">#F24439</color><!--设计红 -->
+		<color name="design_blue">#2B93FF</color><!--设计蓝 -->
+		<color name="design_yellow">#FF973A</color><!--设计黄 -->
+		<color name="design_blue">#56D176</color><!--设计绿 -->
+		<color name="design_blue">#FF8080</color><!--设计粉 -->
+		<color name="design_blue">#EFEFF4</color><!--设计白 -->
 
+		<color name="title_balck">#333333</color><!--标题黑色 -->
+		<color name="content_black">#666666</color><!--内文文字 -->
+		<color name="info_black">#999999</color><!--注释文字 -->
+		<color name="desc_black">#CCCCCC</color><!--辅助文字 -->
+		<color name="line_color">#E5E5E5</color><!--辅助线颜色 -->
+		
     <color name="ivory">#FFFFF0</color><!--象牙色 -->
 
     <color name="lightyellow">#FFFFE0</color><!--亮黄色 -->
