@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
@@ -36,10 +37,11 @@ import java.net.URLConnection;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
+
 public class MyPalaceActivity extends AppCompatActivity implements OnClickListener {
 
     private TextView coin_display;
-    private TextView share_title;
+    private ImageView share_cover;
 
     private FindSelectedItem flowerImage;
     private FindSelectedItem treeImage;
@@ -76,6 +78,8 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     int origin_coin = 200;
     int my_coin;
     int price_matrix[][] = {{200,500,1000},{300,600,1200},{200,500,1000},{500,800,1500},{150,300,800}};
+
+    int fix_price = 50;
 
     SharedPreferences data;
     SharedPreferences.Editor editor;
@@ -282,7 +286,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
 
         coin_display = findViewById(R.id.coin_bar);
-        share_title = findViewById(R.id.share_title);
+        share_cover = findViewById(R.id.share_cover);
 
         initMapItems();
 
@@ -323,7 +327,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                         }
                     }
                 }
-                share_title.setVisibility(View.VISIBLE);
+                share_cover.setVisibility(View.VISIBLE);
                 coin_display.setVisibility(View.INVISIBLE);
                 share_button.setVisibility(View.INVISIBLE);
                 ScreenShot.shoot(MyPalaceActivity.this,"Share.png");
@@ -332,7 +336,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
                 coin_display.setVisibility(View.VISIBLE);
                 share_button.setVisibility(View.VISIBLE);
-                share_title.setVisibility(View.GONE);
+                share_cover.setVisibility(View.GONE);
 
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
@@ -432,23 +436,24 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
                     if (slot1_crash) {
                         AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        ADAlert.setTitle("花费" + price_matrix[0][flower_slot1] + "专注度，并观看一段广告来清除掉废墟？");
+                        ADAlert.setTitle("花费" + fix_price + "专注度，并观看一段广告来清除掉废墟？");
                         ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
                         ADAlert.setCancelable(true);
                         ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface ADAlert, int i) {
-                                if (my_coin < price_matrix[0][flower_slot1]) {
+                                if (my_coin < fix_price) {
                                     Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
                                 } else {
                                     //开始播放广告
                                     slot1_crash = false;
                                     editor.putBoolean("slot1_crash", false);
                                     editor.apply();
-                                    my_coin = my_coin - price_matrix[0][flower_slot1];
+                                    my_coin = my_coin - fix_price;
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
+                                    initMapItems();
                                 }
                             }
                         });
@@ -492,6 +497,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                             BuildAlert.show();
                         }
                     }
+                    initMapItems();
                     break;
                 case R.id.house1:
 
@@ -499,23 +505,24 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
                     if (slot4_crash) {
                         AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        ADAlert.setTitle("花费" + price_matrix[3][house_slot4] + "专注度，并观看一段广告来清除掉废墟？");
+                        ADAlert.setTitle("花费" + fix_price + "专注度，并观看一段广告来清除掉废墟？");
                         ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
                         ADAlert.setCancelable(true);
                         ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface ADAlert, int i) {
-                                if (my_coin < price_matrix[3][house_slot4]) {
+                                if (my_coin < fix_price) {
                                     Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
                                 } else {
                                     //开始播放广告
                                     slot4_crash = false;
                                     editor.putBoolean("slot4_crash", false);
                                     editor.apply();
-                                    my_coin = my_coin - price_matrix[3][house_slot4];
+                                    my_coin = my_coin - fix_price;
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
+                                    initMapItems();
                                 }
                             }
                         });
@@ -559,6 +566,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                             BuildAlert.show();
                         }
                     }
+                    initMapItems();
                     break;
                 case R.id.stone1:
 
@@ -566,23 +574,24 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
                     if (slot3_crash) {
                         AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        ADAlert.setTitle("花费" + price_matrix[2][stone_slot3] + "专注度，并观看一段广告来清除掉废墟？");
+                        ADAlert.setTitle("花费" + fix_price + "专注度，并观看一段广告来清除掉废墟？");
                         ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
                         ADAlert.setCancelable(true);
                         ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface ADAlert, int i) {
-                                if (my_coin < price_matrix[2][stone_slot3]) {
+                                if (my_coin < fix_price) {
                                     Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
                                 } else {
                                     //开始播放广告
                                     slot3_crash = false;
                                     editor.putBoolean("slot3_crash", false);
                                     editor.apply();
-                                    my_coin = my_coin - price_matrix[2][stone_slot3];
+                                    my_coin = my_coin - fix_price;
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
+                                    initMapItems();
                                 }
                             }
                         });
@@ -626,6 +635,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                             BuildAlert.show();
                         }
                     }
+                    initMapItems();
                     break;
                 case R.id.tree1:
 
@@ -633,23 +643,24 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
                     if (slot2_crash) {
                         AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        ADAlert.setTitle("花费" + price_matrix[1][tree_slot2] + "专注度，并观看一段广告来清除掉废墟？");
+                        ADAlert.setTitle("花费" + fix_price + "专注度，并观看一段广告来清除掉废墟？");
                         ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
                         ADAlert.setCancelable(true);
                         ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface ADAlert, int i) {
-                                if (my_coin < price_matrix[1][tree_slot2]) {
+                                if (my_coin < fix_price) {
                                     Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
                                 } else {
                                     //开始播放广告
                                     slot2_crash = false;
                                     editor.putBoolean("slot2_crash", false);
                                     editor.apply();
-                                    my_coin = my_coin - price_matrix[1][tree_slot2];
+                                    my_coin = my_coin - fix_price;
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
+                                    initMapItems();
                                 }
                             }
                         });
@@ -693,6 +704,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                             BuildAlert.show();
                         }
                     }
+                    initMapItems();
                     break;
                 case R.id.luwei1:
 
@@ -700,13 +712,13 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
                     if (slot5_crash) {
                         AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        ADAlert.setTitle("花费" + price_matrix[4][luwei_slot5] + "专注度，并观看一段广告来清除掉废墟？");
+                        ADAlert.setTitle("花费" + fix_price + "专注度，并观看一段广告来清除掉废墟？");
                         ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
                         ADAlert.setCancelable(true);
                         ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface ADAlert, int i) {
-                                if (my_coin < price_matrix[4][luwei_slot5]) {
+                                if (my_coin < fix_price) {
                                     Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
                                 }
                                 else {
@@ -714,10 +726,11 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     slot5_crash = false;
                                     editor.putBoolean("slot5_crash", false);
                                     editor.apply();
-                                    my_coin = my_coin - price_matrix[4][luwei_slot5];
+                                    my_coin = my_coin - fix_price;
                                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                     editor.putInt("my_coin", my_coin);
                                     editor.apply();
+                                    initMapItems();
                                 }
                             }
                         });
@@ -761,6 +774,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                             BuildAlert.show();
                         }
                     }
+                    initMapItems();
                     break;
                 case R.id.lotus1:
 
@@ -771,8 +785,9 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     if (version > 5) {
                         overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
                     }
+                    initMapItems();
+                    break;
             }
-            initMapItems();
         }
     }
     @Override

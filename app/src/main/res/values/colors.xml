@@ -8,9 +8,9 @@
 		<color name="design_red">#F24439</color><!--设计红 -->
 		<color name="design_blue">#2B93FF</color><!--设计蓝 -->
 		<color name="design_yellow">#FF973A</color><!--设计黄 -->
-		<color name="design_blue">#56D176</color><!--设计绿 -->
-		<color name="design_blue">#FF8080</color><!--设计粉 -->
-		<color name="design_blue">#EFEFF4</color><!--设计白 -->
+		<color name="design_green">#56D176</color><!--设计绿 -->
+		<color name="design_pink">#FF8080</color><!--设计粉 -->
+		<color name="design_white">#EFEFF4</color><!--设计白 -->
 
 		<color name="title_balck">#333333</color><!--标题黑色 -->
 		<color name="content_black">#666666</color><!--内文文字 -->
@@ -314,7 +314,7 @@
 
     <color name="black">#000000</color><!--黑色 -->
 
-    <color name="halfblack">#33000000</color><!--半黑色 -->
+    <color name="halfblack">#33666666</color><!--半黑色 -->
 
     <color name="black_overlay">#66000000</color>
 </resources>

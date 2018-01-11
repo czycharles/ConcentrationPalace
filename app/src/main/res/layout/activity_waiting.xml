@@ -144,24 +144,10 @@
             android:textColor="@color/whitesmoke"
             android:gravity="center"
             android:text="@string/AD_button"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="40dp"
             android:textSize="20sp"
             android:clickable="true"
             android:focusable="true"/>
-
-        <Button
-            android:id="@+id/Crush_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/button_style"
-            android:textColor="@color/whitesmoke"
-            android:gravity="center"
-            android:text="@string/crush_button"
-            android:layout_marginBottom="20dp"
-            android:textSize="20sp"
-            android:clickable="true"
-            android:focusable="true" />
 
     </LinearLayout>
 

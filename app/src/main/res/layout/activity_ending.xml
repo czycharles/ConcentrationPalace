@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <ImageView
+        android:contentDescription="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.5"/>
+
+    <TextView
+        android:id="@+id/prologue_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/end_1"
+        android:textColor="@color/lightgrey"
+        android:textSize="20sp"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/prologue_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/end_2"
+        android:textColor="@color/lightgrey"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/prologue_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/end_3"
+        android:textColor="@color/lightgrey"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/prologue_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/end_4"
+        android:textColor="@color/lightgrey"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/prologue_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/end_5"
+        android:textColor="@color/lightgrey"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/prologue_6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/end_6"
+        android:textColor="@color/lightgrey"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/prologue_7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/end_7"
+        android:textColor="@color/lightgrey"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:contentDescription="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.5"/>
+
+</LinearLayout>

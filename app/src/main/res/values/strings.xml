@@ -15,9 +15,10 @@
 	<string name="OK_button">好的</string>
 	<string name="finish_hint">成功</string>
 	<string name="focus_hint">一旦开始保持专注，任何返回桌面、打开其他应用的行为都可能会导致当前的收集或建造行为失败。</string>
-	<string name="gain_coin_success_hint">你已获得%1$d专注度。\n自从树叶落在某个伟人的额头上后，就成了专注的象征。</string>
+	<string name="gain_coin_success_hint">恭喜！你已获得%1$d专注度。</string>
 	<string name="fail_hint">失败</string>
 	<string name="waiting_hint">保持专注\n升级将在倒计时结束后完成</string>
+	<string name="waiting_hint1">自从树叶落在某个伟人的额头上后，\n就成为了专注的象征。</string>
 	<string name="gain_coin_hint">保持专注\n倒计时结束后你会获得%1$d专注度</string>
 	<string name="countdown_timer">%1$d%2$d:%3$d%4$d:%5$d%6$d</string>
 	<string name="number">%1$d</string>
@@ -40,7 +41,7 @@
 	<string name="end_4">终于完成了禅院的全部建造。</string>
 	<string name="end_5">相信在真实的生活之中，</string>
 	<string name="end_6">你也必定会取得丰硕的果实。</string>
-	<string name="end_7">希望我们有缘，还能再见~</string>
+	<string name="end_7">有缘再见~</string>
 	<string name="flower0_desc">千树扫作一番黄</string>
 	<string name="flower1_desc">小萍加泛泛 初蒲正离离</string>
 	<string name="flower2_desc">筑室兮水中 葺之兮荷盖</string>

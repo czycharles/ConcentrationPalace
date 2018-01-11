@@ -60,7 +60,7 @@
             android:layout_marginStart="5dp"
             android:textAlignment="textStart"
             android:textSize="20sp"
-            android:textColor="@color/whitesmoke"
+            android:textColor="@color/design_white"
             android:background="@drawable/ui_style"
             android:drawableStart="@drawable/coin"
             android:drawablePadding="5dp"/>
@@ -86,15 +86,13 @@
             android:layout_marginEnd="20dp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/share_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/share_cover"
+        android:contentDescription="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:text="@string/title_activity_my_palace"
-        android:textSize="40sp"
-        android:textColor="@color/whitesmoke"
-        android:layout_marginTop="40dp"
+        android:background="@drawable/share_background"
         android:visibility="invisible"/>
 
 </FrameLayout>

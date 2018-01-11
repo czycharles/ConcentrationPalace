@@ -30,6 +30,7 @@ import android.widget.Toast;
 public class WaitingActivity extends AppCompatActivity {
 
     MediaPlayer mpMediaPlayer;
+    Button AD_button;
 
     TextView countdown;
 
@@ -58,14 +59,14 @@ public class WaitingActivity extends AppCompatActivity {
 
     TextView coin_display;
 
-    Button crush_button;
-
     int string_ID;
     Animation animation1;
     LinearLayout Waiting;
     LinearLayout Finish;
     ImageView finish_item;
     TextView item_desc;
+
+    int hint[] = {R.string.waiting_hint1};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,16 +90,16 @@ public class WaitingActivity extends AppCompatActivity {
         editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 
         Intent intent = getIntent();
-        building_slot = intent.getIntExtra("building_slot",0);
-        int building_time = intent.getIntExtra("building_time",0);
-        coin_gain = intent.getIntExtra("building_coin",100);
+        building_slot = intent.getIntExtra("building_slot", 0);
+        int building_time = intent.getIntExtra("building_time", 0);
+        coin_gain = intent.getIntExtra("building_coin", 100);
         mc = new MyCount(building_time, 1000);
         mc.start();
-        mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_piano41);
+        mpMediaPlayer = MediaPlayer.create(this, R.raw.bgm_maoudamashii_piano41);
         try {
             mpMediaPlayer.setLooping(true);
             mpMediaPlayer.start();
-        } catch (IllegalArgumentException|IllegalStateException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -111,7 +112,7 @@ public class WaitingActivity extends AppCompatActivity {
         tree_slot2 = data.getInt("slot2", 0);
         stone_slot3 = data.getInt("slot3", 0);
         house_slot4 = data.getInt("slot4", 0);
-        luwei_slot5 = data.getInt("slot5",0);
+        luwei_slot5 = data.getInt("slot5", 0);
 
         animation1 = AnimationUtils.loadAnimation(WaitingActivity.this, R.anim.fade_in);
         Waiting = findViewById(R.id.Waiting_ui);
@@ -123,7 +124,7 @@ public class WaitingActivity extends AppCompatActivity {
         finish_item = findViewById(R.id.Finish_item);
 
         countdown = findViewById(R.id.Countdown_hint);
-        countdown.setText(String.format(getResources().getString(R.string.countdown_timer),0,0,0,0,0,0));
+        countdown.setText(String.format(getResources().getString(R.string.countdown_timer), 0, 0, 0, 0, 0, 0));
         coin_display = findViewById(R.id.coin_bar);
         my_coin = data.getInt("my_coin", origin_coin);
         coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
@@ -133,15 +134,15 @@ public class WaitingActivity extends AppCompatActivity {
 
         item_desc.setText(R.string.waiting_hint);
 
-        switch(building_slot){
+        switch (building_slot) {
             case 0:
                 Waiting.setVisibility(View.GONE);
                 Finish.setVisibility(View.VISIBLE);
                 finish_item.setImageResource(R.drawable.coin_gallery);
-                item_desc.setText(String.format(getResources().getString(R.string.gain_coin_hint),coin_gain));
+                item_desc.setText(String.format(getResources().getString(R.string.gain_coin_hint), coin_gain));
                 break;
             case 1:
-                switch(flower_slot1+1) {
+                switch (flower_slot1 + 1) {
                     case 0:
                         item_pic.setImageResource(R.drawable.item_unknown);
                         finish_item.setImageResource(R.drawable.item_unknown);
@@ -170,7 +171,7 @@ public class WaitingActivity extends AppCompatActivity {
 
                 break;
             case 2:
-                switch(tree_slot2+1) {
+                switch (tree_slot2 + 1) {
                     case 0:
                         item_pic.setImageResource(R.drawable.item_unknown);
                         finish_item.setImageResource(R.drawable.item_unknown);
@@ -199,7 +200,7 @@ public class WaitingActivity extends AppCompatActivity {
 
                 break;
             case 3:
-                switch(stone_slot3+1) {
+                switch (stone_slot3 + 1) {
                     case 0:
                         item_pic.setImageResource(R.drawable.item_unknown);
                         finish_item.setImageResource(R.drawable.item_unknown);
@@ -227,7 +228,7 @@ public class WaitingActivity extends AppCompatActivity {
                 }
                 break;
             case 4:
-                switch(house_slot4+1) {
+                switch (house_slot4 + 1) {
                     case 0:
                         item_pic.setImageResource(R.drawable.item_unknown);
                         finish_item.setImageResource(R.drawable.item_unknown);
@@ -255,7 +256,7 @@ public class WaitingActivity extends AppCompatActivity {
                 }
                 break;
             case 5:
-                switch(luwei_slot5+1) {
+                switch (luwei_slot5 + 1) {
                     case 0:
                         item_pic.setImageResource(R.drawable.item_unknown);
                         finish_item.setImageResource(R.drawable.item_unknown);
@@ -284,147 +285,18 @@ public class WaitingActivity extends AppCompatActivity {
                 break;
         }
 
-        Button AD_button = findViewById(R.id.AD_button);
+        AD_button = findViewById(R.id.AD_button);
         coin_display = findViewById(R.id.coin_bar);
 
         AD_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View v) {
-                my_coin=my_coin+200;
-                coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                editor.putInt("my_coin", my_coin);
-                editor.apply();
-                Toast.makeText(WaitingActivity.this,"假设你看完了广告，金币+200",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        crush_button = findViewById(R.id.Crush_button);
-
-        crush_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View v) {
-                if(building_slot > 0) {
-                    AlertDialog.Builder failAlert = new AlertDialog.Builder(WaitingActivity.this);
-                    failAlert.setTitle("坚持就是胜利！");
-                    failAlert.setMessage("如果现在退出，正在建造的部分就会坍塌。");
-                    failAlert.setCancelable(false);
-                    failAlert.setPositiveButton("退出", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface failAlert, int i) {
-                            Toast.makeText(WaitingActivity.this, "抱歉，你使用了手机，位置" + building_slot + "已经坍塌。", Toast.LENGTH_LONG).show();
-                            mc.cancel();
-                            switch (building_slot) {
-                                case 1:
-                                    slot1_crash = true;
-                                    editor.putBoolean("slot1_crash", true);
-                                    editor.apply();
-                                    break;
-                                case 2:
-                                    slot2_crash = true;
-                                    editor.putBoolean("slot2_crash", true);
-                                    editor.apply();
-                                    break;
-                                case 3:
-                                    slot3_crash = true;
-                                    editor.putBoolean("slot3_crash", true);
-                                    editor.apply();
-                                    break;
-                                case 4:
-                                    slot4_crash = true;
-                                    editor.putBoolean("slot4_crash", true);
-                                    editor.apply();
-                                    break;
-                                case 5:
-                                    slot5_crash = true;
-                                    editor.putBoolean("slot5_crash", true);
-                                    editor.apply();
-                                    break;
-                            }
-                            if(mpMediaPlayer!=null) {
-                                try{
-                                    mpMediaPlayer.stop();
-                                    Log.d("Media","stop success");
-                                }catch(IllegalStateException e) {
-                                    mpMediaPlayer.release();
-                                    Log.d("Media", "release success");
-                                    mpMediaPlayer = null;
-                                    Log.d("Media", "null success");
-                                }
-                            }
-                            Intent intent = new Intent(WaitingActivity.this, MyPalaceActivity.class);
-                            startActivity(intent);
-                            int version = Build.VERSION.SDK_INT;
-                            if(version > 5 ){
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                            }
-                            finish();
-                        }
-                    });
-                    failAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface failAlert, int i) {
-                            failAlert.cancel();
-                        }
-                    });
-                    failAlert.show();
-                }
-                else if (building_slot == 0) {
-                    AlertDialog.Builder failAlert = new AlertDialog.Builder(WaitingActivity.this);
-                    failAlert.setTitle("坚持就是胜利！");
-                    failAlert.setMessage("如果现在退出，就无法获得对应的专注度。");
-                    failAlert.setCancelable(false);
-                    failAlert.setPositiveButton("退出", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface failAlert, int i) {
-                            Toast.makeText(WaitingActivity.this, "抱歉，你使用了手机，本次未获得专注度。", Toast.LENGTH_LONG).show();
-                            mc.cancel();
-                            if(mpMediaPlayer!=null) {
-                                try{
-                                    mpMediaPlayer.stop();
-                                    Log.d("Media","stop success");
-                                }catch(IllegalStateException e) {
-                                    mpMediaPlayer.release();
-                                    Log.d("Media", "release success");
-                                    mpMediaPlayer = null;
-                                    Log.d("Media", "null success");
-                                }
-                            }
-                            Intent intent = new Intent(WaitingActivity.this, MyPalaceActivity.class);
-                            startActivity(intent);
-                            int version = Build.VERSION.SDK_INT;
-                            if(version > 5 ){
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                            }
-                            finish();
-                        }
-                    });
-                    failAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface failAlert, int i) {
-                            failAlert.cancel();
-                        }
-                    });
-                    failAlert.show();
-                }
-                else{
-                    if(mpMediaPlayer!=null) {
-                        try{
-                            mpMediaPlayer.stop();
-                            Log.d("Media","stop success");
-                        }catch(IllegalStateException e) {
-                            mpMediaPlayer.release();
-                            Log.d("Media", "release success");
-                            mpMediaPlayer = null;
-                            Log.d("Media", "null success");
-                        }
-                    }
-                    Intent intent = new Intent(WaitingActivity.this, MyPalaceActivity.class);
-                    startActivity(intent);
-                    int version = Build.VERSION.SDK_INT;
-                    if(version > 5 ){
-                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    }
-                    finish();
+            public void onClick(View v) {
+                if (building_slot >= 0) {
+                    my_coin = my_coin + 200;
+                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                    editor.putInt("my_coin", my_coin);
+                    editor.apply();
+                    Toast.makeText(WaitingActivity.this, "假设你看完了广告，金币+200", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -647,6 +519,8 @@ public class WaitingActivity extends AppCompatActivity {
     private class MyCount extends CountDownTimer {
 
         long totalTime = 0;
+        int random = 0;
+        int hint_seq = 0;
 
         private MyCount(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
@@ -697,7 +571,7 @@ public class WaitingActivity extends AppCompatActivity {
                 Finish.startAnimation(animation1);
                 item_desc.setText(string_ID);
              }
-            crush_button.setText(R.string.OK_button);
+            AD_button.setText(R.string.OK_button);
             countdown.setText(R.string.finish_hint);
             item_desc.startAnimation(animation1);
             mc.cancel();
@@ -707,6 +581,13 @@ public class WaitingActivity extends AppCompatActivity {
         public void onTick(long millisUntilFinished) {
 
             countdown.setText(String.format(getResources().getString(R.string.countdown_timer),millisUntilFinished / 1000 / 60 / 60 / 10, millisUntilFinished / 1000 / 60 / 60 % 10, millisUntilFinished / 1000 / 60 % 60 / 10 , millisUntilFinished / 1000 / 60 % 10 , millisUntilFinished / 1000 % 60 / 10 , millisUntilFinished / 1000 % 10 ));
+            random++;
+            if( random % 6 == 0 ) {
+                item_desc.setText(hint[hint_seq++ % 1]);
+                Animation animation = AnimationUtils.loadAnimation(WaitingActivity.this, R.anim.fade_in_fast);
+                item_desc.startAnimation(animation);
+            }
+
         }
 
     }
