@@ -66,7 +66,17 @@ public class WaitingActivity extends AppCompatActivity {
     ImageView finish_item;
     TextView item_desc;
 
-    int hint[] = {R.string.waiting_hint1};
+    int hint[] = {  R.string.waiting_hint1,R.string.waiting_hint2,
+                    R.string.waiting_hint3,R.string.waiting_hint4,
+                    R.string.waiting_hint5,R.string.waiting_hint6,
+                    R.string.waiting_hint7,R.string.waiting_hint8,
+                    R.string.waiting_hint9,R.string.waiting_hint10,
+                    R.string.waiting_hint11,R.string.waiting_hint12,
+                    R.string.waiting_hint13,R.string.waiting_hint14,
+                    R.string.waiting_hint15,R.string.waiting_hint16,
+                    R.string.waiting_hint17,R.string.waiting_hint18,
+                    R.string.waiting_hint19,R.string.waiting_hint20,
+                    R.string.waiting_hint21,R.string.waiting_hint22,  };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -298,6 +308,15 @@ public class WaitingActivity extends AppCompatActivity {
                     editor.apply();
                     Toast.makeText(WaitingActivity.this, "假设你看完了广告，金币+200", Toast.LENGTH_LONG).show();
                 }
+                else{
+                    Intent intent = new Intent(WaitingActivity.this, MyPalaceActivity.class);
+                    startActivity(intent);
+                    int version = Build.VERSION.SDK_INT;
+                    if(version > 5 ){
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    }
+                    finish();
+                }
             }
         });
     }
@@ -520,7 +539,6 @@ public class WaitingActivity extends AppCompatActivity {
 
         long totalTime = 0;
         int random = 0;
-        int hint_seq = 0;
 
         private MyCount(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
@@ -582,8 +600,8 @@ public class WaitingActivity extends AppCompatActivity {
 
             countdown.setText(String.format(getResources().getString(R.string.countdown_timer),millisUntilFinished / 1000 / 60 / 60 / 10, millisUntilFinished / 1000 / 60 / 60 % 10, millisUntilFinished / 1000 / 60 % 60 / 10 , millisUntilFinished / 1000 / 60 % 10 , millisUntilFinished / 1000 % 60 / 10 , millisUntilFinished / 1000 % 10 ));
             random++;
-            if( random % 6 == 0 ) {
-                item_desc.setText(hint[hint_seq++ % 1]);
+            if( random % 8 == 0 ) {
+                item_desc.setText(hint[(int)(Math.random()*100) % 22]);
                 Animation animation = AnimationUtils.loadAnimation(WaitingActivity.this, R.anim.fade_in_fast);
                 item_desc.startAnimation(animation);
             }

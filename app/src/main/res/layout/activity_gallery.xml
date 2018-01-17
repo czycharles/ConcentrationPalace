@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/gallery_title"
-            android:textColor="@color/whitesmoke"
+            android:textColor="@color/design_white"
             android:textSize="45sp"
             android:layout_marginTop="30dp"/>
 

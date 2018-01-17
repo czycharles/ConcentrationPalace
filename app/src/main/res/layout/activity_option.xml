@@ -48,7 +48,8 @@
             android:gravity="center"
             android:text="@string/lotus_msg"
             android:textColor="@color/whitesmoke"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_marginBottom="10dp"/>
 
     <LinearLayout
         android:id="@+id/option_page"

@@ -11,11 +11,15 @@
 		<color name="design_green">#56D176</color><!--设计绿 -->
 		<color name="design_pink">#FF8080</color><!--设计粉 -->
 		<color name="design_white">#EFEFF4</color><!--设计白 -->
+        <color name="light_white">#33EFEFF4</color><!--浅白 -->
+        <color name="zero_white">#11EFEFF4</color><!--设计白 -->
 
-		<color name="title_balck">#333333</color><!--标题黑色 -->
+		<color name="title_black">#333333</color><!--标题黑色 -->
 		<color name="content_black">#666666</color><!--内文文字 -->
+        <color name="half_content_black">#66666666</color><!--内文文字 -->
 		<color name="info_black">#999999</color><!--注释文字 -->
 		<color name="desc_black">#CCCCCC</color><!--辅助文字 -->
+        <color name="half_desc_black">#66999999</color><!--辅助文字 -->
 		<color name="line_color">#E5E5E5</color><!--辅助线颜色 -->
 		
     <color name="ivory">#FFFFF0</color><!--象牙色 -->
@@ -144,7 +148,8 @@
 
     <color name="lightgrey">#D3D3D3</color><!--亮灰色 -->
 
-    <color name="tan">#D2B48C</color><!--茶色 -->
+    <color name="tan">#CCFAE9BF</color><!--茶色 -->
+    <color name="half_tan">#CCF3CBAC</color><!--茶色 -->
 
     <color name="chocolate">#D2691E</color><!--巧可力色 -->
 
