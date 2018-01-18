@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:background="@drawable/button_style2"
+            android:background="@drawable/button_style"
             android:textColor="@color/whitesmoke"
             android:text="@string/start_button"
             android:textSize="20sp"
@@ -52,22 +52,13 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"/>
 
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/btn2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/title_background_style">
-
         <Button
             android:id="@+id/gallery_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:background="@drawable/button_style2"
+            android:background="@drawable/button_style"
             android:textColor="@color/whitesmoke"
             android:text="@string/gallery_button"
             android:textSize="20sp"

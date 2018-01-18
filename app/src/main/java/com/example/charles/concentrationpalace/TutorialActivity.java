@@ -17,9 +17,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -31,6 +33,8 @@ public class TutorialActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private ArrayList<View> viewPagerItems;
     private Button btnStart;
+    private ArrayList<ImageView> mDots;//定义一个集合存储三个dot
+    private int last_pos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +73,43 @@ public class TutorialActivity extends AppCompatActivity {
         viewPagerItems.add(view2);
         viewPagerItems.add(view3);
         viewPagerItems.add(view4);
+
+        mDots = new ArrayList<>();
+        ImageView dot1 = findViewById(R.id.dot_1);
+        ImageView dot2 = findViewById(R.id.dot_2);
+        ImageView dot3 = findViewById(R.id.dot_3);
+        ImageView dot4 = findViewById(R.id.dot_4);
+        mDots.add(dot1);
+        mDots.add(dot2);
+        mDots.add(dot3);
+        mDots.add(dot4);
     }
 
     private void initData() {
         ViewPagerAdapter vpAdapter = new ViewPagerAdapter(viewPagerItems);
         viewPager.setAdapter(vpAdapter);
+
+        mDots.get(0).setImageResource(R.drawable.dot_focused);
+
+        final ViewPager.OnPageChangeListener mInternalPageChangeListener = new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override public void onPageSelected(int position) {//这里是动画的核心
+                mDots.get(last_pos).setImageResource(R.drawable.dot_normal);
+                mDots.get(position).setImageResource(R.drawable.dot_focused);
+                last_pos = position;
+            }
+
+            @Override public void onPageScrollStateChanged(int state) {
+            }
+        };
+
+        viewPager.removeOnPageChangeListener(mInternalPageChangeListener);
+        viewPager.addOnPageChangeListener(mInternalPageChangeListener);//绑定上内部实现的PageChangeListener
+        mInternalPageChangeListener.onPageSelected(viewPager.getCurrentItem());
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +120,7 @@ public class TutorialActivity extends AppCompatActivity {
                 finish();
                 int version = Build.VERSION.SDK_INT;
                 if(version > 5 ){
-                    overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
             }
         });

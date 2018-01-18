@@ -1,11 +1,13 @@
 package com.example.charles.concentrationpalace;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -147,60 +149,124 @@ public class OptionActivity extends AppCompatActivity {
         time1_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                Intent intent = new Intent(OptionActivity.this, WaitingActivity.class);
-                intent.putExtra("building_slot", 0);
-                intent.putExtra("building_time", time_num[0] * 60 * 1000);
-                intent.putExtra("building_coin", coin_gain[0]);
-                startActivity(intent);
-                int version = Build.VERSION.SDK_INT;
-                if (version > 5) {
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                }
+                AlertDialog.Builder WarnAlert = new AlertDialog.Builder(OptionActivity.this);
+                WarnAlert.setTitle(R.string.focus_title);
+                WarnAlert.setMessage(R.string.focus_hint);
+                WarnAlert.setCancelable(false);
+                WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface WarnAlert, int i) {
+                        Intent intent = new Intent(OptionActivity.this, WaitingActivity.class);
+                        intent.putExtra("building_slot", 0);
+                        intent.putExtra("building_time", time_num[0] * 60 * 1000);
+                        intent.putExtra("building_coin", coin_gain[0]);
+                        startActivity(intent);
+                        int version = Build.VERSION.SDK_INT;
+                        if (version > 5) {
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        }
+                    }
+                });
+                WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface WarnAlert, int i) {
+                        WarnAlert.cancel();
+                    }
+                });
+                WarnAlert.show();
             }
         });
 
         time2_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                Intent intent = new Intent(OptionActivity.this, WaitingActivity.class);
-                intent.putExtra("building_slot", 0);
-                intent.putExtra("building_time", time_num[1] * 60 * 1000);
-                intent.putExtra("building_coin", coin_gain[1]);
-                startActivity(intent);
-                int version = Build.VERSION.SDK_INT;
-                if (version > 5) {
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                }
+                AlertDialog.Builder WarnAlert = new AlertDialog.Builder(OptionActivity.this);
+                WarnAlert.setTitle(R.string.focus_title);
+                WarnAlert.setMessage(R.string.focus_hint);
+                WarnAlert.setCancelable(false);
+                WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface WarnAlert, int i) {
+                        Intent intent = new Intent(OptionActivity.this, WaitingActivity.class);
+                        intent.putExtra("building_slot", 0);
+                        intent.putExtra("building_time", time_num[1] * 60 * 1000);
+                        intent.putExtra("building_coin", coin_gain[1]);
+                        startActivity(intent);
+                        int version = Build.VERSION.SDK_INT;
+                        if (version > 5) {
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        }
+                    }
+                });
+                WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface WarnAlert, int i) {
+                        WarnAlert.cancel();
+                    }
+                });
+                WarnAlert.show();
             }
         });
 
         time3_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                Intent intent = new Intent(OptionActivity.this, WaitingActivity.class);
-                intent.putExtra("building_slot", 0);
-                intent.putExtra("building_time", time_num[2] * 60 * 1000);
-                intent.putExtra("building_coin", coin_gain[2]);
-                startActivity(intent);
-                int version = Build.VERSION.SDK_INT;
-                if (version > 5) {
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                }
+                AlertDialog.Builder WarnAlert = new AlertDialog.Builder(OptionActivity.this);
+                WarnAlert.setTitle(R.string.focus_title);
+                WarnAlert.setMessage(R.string.focus_hint);
+                WarnAlert.setCancelable(false);
+                WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface WarnAlert, int i) {
+                        Intent intent = new Intent(OptionActivity.this, WaitingActivity.class);
+                        intent.putExtra("building_slot", 0);
+                        intent.putExtra("building_time", time_num[2] * 60 * 1000);
+                        intent.putExtra("building_coin", coin_gain[2]);
+                        startActivity(intent);
+                        int version = Build.VERSION.SDK_INT;
+                        if (version > 5) {
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        }
+                    }
+                });
+                WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface WarnAlert, int i) {
+                        WarnAlert.cancel();
+                    }
+                });
+                WarnAlert.show();
             }
         });
 
         time4_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                Intent intent = new Intent(OptionActivity.this, WaitingActivity.class);
-                intent.putExtra("building_slot", 0);
-                intent.putExtra("building_time", time_num[3] * 60 * 1000);
-                intent.putExtra("building_coin", coin_gain[3]);
-                startActivity(intent);
-                int version = Build.VERSION.SDK_INT;
-                if (version > 5) {
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                }
+                AlertDialog.Builder WarnAlert = new AlertDialog.Builder(OptionActivity.this);
+                WarnAlert.setTitle(R.string.focus_title);
+                WarnAlert.setMessage(R.string.focus_hint);
+                WarnAlert.setCancelable(false);
+                WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface WarnAlert, int i) {
+                        Intent intent = new Intent(OptionActivity.this, WaitingActivity.class);
+                        intent.putExtra("building_slot", 0);
+                        intent.putExtra("building_time", time_num[3] * 60 * 1000);
+                        intent.putExtra("building_coin", coin_gain[3]);
+                        startActivity(intent);
+                        int version = Build.VERSION.SDK_INT;
+                        if (version > 5) {
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        }
+                    }
+                });
+                WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface WarnAlert, int i) {
+                        WarnAlert.cancel();
+                    }
+                });
+                WarnAlert.show();
             }
         });
 

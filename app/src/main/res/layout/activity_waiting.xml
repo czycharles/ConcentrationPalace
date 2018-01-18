@@ -126,6 +126,15 @@
     </LinearLayout>
 
         <TextView
+            android:id="@+id/Item_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/flower"
+            android:textColor="@color/whitesmoke"
+            android:textSize="30sp" />
+
+        <TextView
             android:id="@+id/Item_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -144,7 +153,7 @@
             android:textColor="@color/whitesmoke"
             android:gravity="center"
             android:text="@string/AD_button"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="20dp"
             android:textSize="20sp"
             android:clickable="true"
             android:focusable="true"/>

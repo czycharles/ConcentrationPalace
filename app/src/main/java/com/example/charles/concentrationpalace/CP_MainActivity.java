@@ -58,11 +58,9 @@ public class CP_MainActivity extends AppCompatActivity {
         Animation animation1 = AnimationUtils.loadAnimation(CP_MainActivity.this, R.anim.fade_in_fast);
         LinearLayout title = findViewById(R.id.title);
         LinearLayout btn1 = findViewById(R.id.btn1);
-        LinearLayout btn2 = findViewById(R.id.btn2);
 
         title.startAnimation(animation1);
         btn1.startAnimation(animation1);
-        btn2.startAnimation(animation1);
 
         Button info_button = findViewById(R.id.info_button);
         info_button.setOnClickListener(new View.OnClickListener() {

@@ -18,6 +18,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/button_style"
         android:text="@string/start_button"
+        android:textSize="20sp"
         android:layout_marginBottom="50dp"
         android:layout_weight="0"/>
 

@@ -65,6 +65,7 @@ public class WaitingActivity extends AppCompatActivity {
     LinearLayout Finish;
     ImageView finish_item;
     TextView item_desc;
+    TextView item_info;
 
     int hint[] = {  R.string.waiting_hint1,R.string.waiting_hint2,
                     R.string.waiting_hint3,R.string.waiting_hint4,
@@ -131,6 +132,7 @@ public class WaitingActivity extends AppCompatActivity {
         item_pic = findViewById(R.id.Item_pic);
         pre_item_pic = findViewById(R.id.Pre_Item_pic);
         item_desc = findViewById(R.id.Item_desc);
+        item_info = findViewById(R.id.Item_info);
         finish_item = findViewById(R.id.Finish_item);
 
         countdown = findViewById(R.id.Countdown_hint);
@@ -150,6 +152,7 @@ public class WaitingActivity extends AppCompatActivity {
                 Finish.setVisibility(View.VISIBLE);
                 finish_item.setImageResource(R.drawable.coin_gallery);
                 item_desc.setText(String.format(getResources().getString(R.string.gain_coin_hint), coin_gain));
+                item_info.setText(String.format(getResources().getString(R.string.number),coin_gain));
                 break;
             case 1:
                 switch (flower_slot1 + 1) {
@@ -178,7 +181,7 @@ public class WaitingActivity extends AppCompatActivity {
                         string_ID = R.string.flower3_desc;
                         break;
                 }
-
+                item_info.setText(R.string.flower);
                 break;
             case 2:
                 switch (tree_slot2 + 1) {
@@ -207,7 +210,7 @@ public class WaitingActivity extends AppCompatActivity {
                         string_ID = R.string.tree3_desc;
                         break;
                 }
-
+                item_info.setText(R.string.tree);
                 break;
             case 3:
                 switch (stone_slot3 + 1) {
@@ -236,6 +239,7 @@ public class WaitingActivity extends AppCompatActivity {
                         string_ID = R.string.stone3_desc;
                         break;
                 }
+                item_info.setText(R.string.stone);
                 break;
             case 4:
                 switch (house_slot4 + 1) {
@@ -264,6 +268,7 @@ public class WaitingActivity extends AppCompatActivity {
                         string_ID = R.string.house3_desc;
                         break;
                 }
+                item_info.setText(R.string.house);
                 break;
             case 5:
                 switch (luwei_slot5 + 1) {
@@ -292,6 +297,7 @@ public class WaitingActivity extends AppCompatActivity {
                         string_ID = R.string.luwei3_desc;
                         break;
                 }
+                item_info.setText(R.string.luwei);
                 break;
         }
 
@@ -600,7 +606,7 @@ public class WaitingActivity extends AppCompatActivity {
 
             countdown.setText(String.format(getResources().getString(R.string.countdown_timer),millisUntilFinished / 1000 / 60 / 60 / 10, millisUntilFinished / 1000 / 60 / 60 % 10, millisUntilFinished / 1000 / 60 % 60 / 10 , millisUntilFinished / 1000 / 60 % 10 , millisUntilFinished / 1000 % 60 / 10 , millisUntilFinished / 1000 % 10 ));
             random++;
-            if( random % 8 == 0 ) {
+            if( random % 10 == 0 ) {
                 item_desc.setText(hint[(int)(Math.random()*100) % 22]);
                 Animation animation = AnimationUtils.loadAnimation(WaitingActivity.this, R.anim.fade_in_fast);
                 item_desc.startAnimation(animation);

@@ -355,8 +355,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     //Uri u = Uri.fromFile(f);
                     Uri u = FileProvider.getUriForFile(MyPalaceActivity.this, getPackageName() + ".fileprovider", f);
                     intent.putExtra(Intent.EXTRA_STREAM, u);
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "专注禅院");
-                    intent.putExtra("Kdescription", "我在专注禅院保持了专注");
+                    intent.putExtra("Kdescription", R.string.share_message);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                    long last_share_time = data.getLong("last_share_time", 0);
 //                    long this_share_time = data.getLong("this_share_time", 0);
@@ -364,10 +363,10 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 //                        share_price = true;
 //                        Toast.makeText(MyPalaceActivity.this,"分享有效",Toast.LENGTH_LONG).show();
 //                    }
-                    startActivity(Intent.createChooser(intent, "请选择分享方式："));
+                    startActivity(Intent.createChooser(intent, getResources().getString(R.string.share_chooser_title)));
                 }
                 else
-                    Toast.makeText(MyPalaceActivity.this,"生成分享图失败",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyPalaceActivity.this,R.string.share_fail,Toast.LENGTH_LONG).show();
             }
         });
 
@@ -398,7 +397,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 editor.apply();
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(MyPalaceActivity.this,"获取网络日期失败，请检查网络连接",Toast.LENGTH_LONG).show();
+                Toast.makeText(MyPalaceActivity.this,R.string.network_time_fail,Toast.LENGTH_LONG).show();
             }
         }
     };
@@ -472,19 +471,35 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     if (my_coin < price_matrix[0][flower_slot1]) {
                                         Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
                                     } else {
-                                        my_coin = my_coin - price_matrix[0][flower_slot1];
-                                        coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                                        editor.putInt("my_coin", my_coin);
-                                        editor.apply();
-                                        Toast.makeText(MyPalaceActivity.this, "位置1已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
-                                        intent.putExtra("building_slot",1);
-                                        intent.putExtra("building_time",next_building_time);
-                                        startActivity(intent);
-                                        int version = Build.VERSION.SDK_INT;
-                                        if(version > 5 ){
-                                            overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
-                                        }
+                                        AlertDialog.Builder WarnAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                                        WarnAlert.setTitle(R.string.build_title);
+                                        WarnAlert.setMessage(R.string.focus_hint);
+                                        WarnAlert.setCancelable(false);
+                                        WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface WarnAlert, int i) {
+                                                my_coin = my_coin - price_matrix[0][flower_slot1];
+                                                coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                                editor.putInt("my_coin", my_coin);
+                                                editor.apply();
+                                                Toast.makeText(MyPalaceActivity.this, "位置1已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                                Intent intent = new Intent(MyPalaceActivity.this, WaitingActivity.class);
+                                                intent.putExtra("building_slot", 1);
+                                                intent.putExtra("building_time", next_building_time);
+                                                startActivity(intent);
+                                                int version = Build.VERSION.SDK_INT;
+                                                if (version > 5) {
+                                                    overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
+                                                }
+                                            }
+                                        });
+                                        WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface WarnAlert, int i) {
+                                                WarnAlert.cancel();
+                                            }
+                                        });
+                                        WarnAlert.show();
                                     }
                                 }
                             });
@@ -541,19 +556,35 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     if (my_coin < price_matrix[3][house_slot4]) {
                                         Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
                                     } else {
-                                        my_coin = my_coin - price_matrix[3][house_slot4];
-                                        coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                                        editor.putInt("my_coin", my_coin);
-                                        editor.apply();
-                                        Toast.makeText(MyPalaceActivity.this, "位置4已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
-                                        intent.putExtra("building_slot",4);
-                                        intent.putExtra("building_time",next_building_time);
-                                        startActivity(intent);
-                                        int version = Build.VERSION.SDK_INT;
-                                        if(version > 5 ){
-                                            overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
-                                        }
+                                        AlertDialog.Builder WarnAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                                        WarnAlert.setTitle(R.string.build_title);
+                                        WarnAlert.setMessage(R.string.focus_hint);
+                                        WarnAlert.setCancelable(false);
+                                        WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface WarnAlert, int i) {
+                                                my_coin = my_coin - price_matrix[3][house_slot4];
+                                                coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                                editor.putInt("my_coin", my_coin);
+                                                editor.apply();
+                                                Toast.makeText(MyPalaceActivity.this, "位置4已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                                Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
+                                                intent.putExtra("building_slot",4);
+                                                intent.putExtra("building_time",next_building_time);
+                                                startActivity(intent);
+                                                int version = Build.VERSION.SDK_INT;
+                                                if(version > 5 ){
+                                                    overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
+                                                }
+                                            }
+                                        });
+                                        WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface WarnAlert, int i) {
+                                                WarnAlert.cancel();
+                                            }
+                                        });
+                                        WarnAlert.show();
                                     }
                                 }
                             });
@@ -610,19 +641,35 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     if (my_coin < price_matrix[2][stone_slot3]) {
                                         Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
                                     } else {
-                                        my_coin = my_coin - price_matrix[2][stone_slot3];
-                                        coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                                        editor.putInt("my_coin", my_coin);
-                                        editor.apply();
-                                        Toast.makeText(MyPalaceActivity.this, "位置3已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
-                                        intent.putExtra("building_slot",3);
-                                        intent.putExtra("building_time",next_building_time);
-                                        startActivity(intent);
-                                        int version = Build.VERSION.SDK_INT;
-                                        if(version > 5 ){
-                                            overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
-                                        }
+                                        AlertDialog.Builder WarnAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                                        WarnAlert.setTitle(R.string.build_title);
+                                        WarnAlert.setMessage(R.string.focus_hint);
+                                        WarnAlert.setCancelable(false);
+                                        WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface WarnAlert, int i) {
+                                                my_coin = my_coin - price_matrix[2][stone_slot3];
+                                                coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                                editor.putInt("my_coin", my_coin);
+                                                editor.apply();
+                                                Toast.makeText(MyPalaceActivity.this, "位置3已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                                Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
+                                                intent.putExtra("building_slot",3);
+                                                intent.putExtra("building_time",next_building_time);
+                                                startActivity(intent);
+                                                int version = Build.VERSION.SDK_INT;
+                                                if(version > 5 ){
+                                                    overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
+                                                }
+                                            }
+                                         });
+                                        WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface WarnAlert, int i) {
+                                                WarnAlert.cancel();
+                                            }
+                                        });
+                                        WarnAlert.show();
                                     }
                                 }
                             });
@@ -679,19 +726,35 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     if (my_coin < price_matrix[1][tree_slot2]) {
                                         Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
                                     } else {
-                                        my_coin = my_coin - price_matrix[1][tree_slot2];
-                                        coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                                        editor.putInt("my_coin", my_coin);
-                                        editor.apply();
-                                        Toast.makeText(MyPalaceActivity.this, "位置2已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
-                                        intent.putExtra("building_slot",2);
-                                        intent.putExtra("building_time",next_building_time);
-                                        startActivity(intent);
-                                        int version = Build.VERSION.SDK_INT;
-                                        if(version > 5 ){
-                                            overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
-                                        }
+                                        AlertDialog.Builder WarnAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                                        WarnAlert.setTitle(R.string.build_title);
+                                        WarnAlert.setMessage(R.string.focus_hint);
+                                        WarnAlert.setCancelable(false);
+                                        WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface WarnAlert, int i) {
+                                                my_coin = my_coin - price_matrix[1][tree_slot2];
+                                                coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                                editor.putInt("my_coin", my_coin);
+                                                editor.apply();
+                                                Toast.makeText(MyPalaceActivity.this, "位置2已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                                Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
+                                                intent.putExtra("building_slot",2);
+                                                intent.putExtra("building_time",next_building_time);
+                                                startActivity(intent);
+                                                int version = Build.VERSION.SDK_INT;
+                                                if(version > 5 ){
+                                                    overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
+                                                }
+                                            }
+                                        });
+                                        WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface WarnAlert, int i) {
+                                                WarnAlert.cancel();
+                                            }
+                                        });
+                                        WarnAlert.show();
                                     }
                                 }
                             });
@@ -749,19 +812,35 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     if (my_coin < price_matrix[4][luwei_slot5]) {
                                         Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
                                     } else {
-                                        my_coin = my_coin - price_matrix[4][luwei_slot5];
-                                        coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                                        editor.putInt("my_coin", my_coin);
-                                        editor.apply();
-                                        Toast.makeText(MyPalaceActivity.this, "位置5已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
-                                        intent.putExtra("building_slot",5);
-                                        intent.putExtra("building_time",next_building_time);
-                                        startActivity(intent);
-                                        int version = Build.VERSION.SDK_INT;
-                                        if(version > 5 ){
-                                            overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
-                                        }
+                                        AlertDialog.Builder WarnAlert = new AlertDialog.Builder(MyPalaceActivity.this);
+                                        WarnAlert.setTitle(R.string.build_title);
+                                        WarnAlert.setMessage(R.string.focus_hint);
+                                        WarnAlert.setCancelable(false);
+                                        WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface WarnAlert, int i) {
+                                                my_coin = my_coin - price_matrix[4][luwei_slot5];
+                                                coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                                                editor.putInt("my_coin", my_coin);
+                                                editor.apply();
+                                                Toast.makeText(MyPalaceActivity.this, "位置5已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                                Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
+                                                intent.putExtra("building_slot",5);
+                                                intent.putExtra("building_time",next_building_time);
+                                                startActivity(intent);
+                                                int version = Build.VERSION.SDK_INT;
+                                                if(version > 5 ){
+                                                    overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
+                                                }
+                                            }
+                                        });
+                                        WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface WarnAlert, int i) {
+                                                WarnAlert.cancel();
+                                            }
+                                        });
+                                        WarnAlert.show();
                                     }
                                 }
                             });
