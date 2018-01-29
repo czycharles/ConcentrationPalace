@@ -71,9 +71,10 @@
 	<string name="end_4">终于完成了禅院的全部建造。</string>
 	<string name="end_5">相信在真实的生活之中，</string>
 	<string name="end_6">你也会取得丰硕的果实。</string>
-	<string name="end_7">有缘再见~</string>
+	<string name="end_7">有缘再会。</string>
 
     <string name="flower">睡莲</string>
+	<string name="flower_title">睡莲&#160;%1$d</string>
 	<string name="flower0_desc">千树扫作一番黄</string>
 	<string name="flower1_desc">小萍加泛泛 初蒲正离离</string>
 	<string name="flower2_desc">筑室兮水中 葺之兮荷盖</string>
@@ -81,13 +82,15 @@
 	<string name="flower4_desc">兴尽晚回舟 误入藕花深处</string>
 
     <string name="tree">树</string>
+	<string name="tree_title">树&#160;%1$d</string>
 	<string name="tree0_desc">树木何萧瑟 北风声正悲</string>
 	<string name="tree1_desc">一日春光一日深\n眼看芳树绿成阴</string>
 	<string name="tree2_desc">岸头树子直如筠\n谁遣相招住水滨</string>
 	<string name="tree3_desc">庭有枇杷树 亭亭如盖矣</string>
 	<string name="tree4_desc">攀条折其荣 将以遗所思</string>
 
-    <string name="stone">雕塑</string>
+    <string name="stone">佛像</string>
+	<string name="stone_title">佛像&#160;%1$d</string>
 	<string name="stone0_desc">荣枯盛衰一瞬梦</string>
 	<string name="stone1_desc">爱此一拳石 玲珑出自然</string>
 	<string name="stone2_desc">本是后山人 偶坐前堂客</string>
@@ -95,6 +98,7 @@
 	<string name="stone4_desc">石虽不能言 许我为三友</string>
 
     <string name="house">禅院</string>
+    <string name="house_title">禅院&#160;%1$d</string>
 	<string name="house0_desc">床头屋漏无干处\n雨脚如麻未断绝</string>
 	<string name="house1_desc">斯是陋室 惟吾德馨</string>
 	<string name="house2_desc">户庭无尘杂 虚室有余闲</string>
@@ -102,6 +106,7 @@
 	<string name="house4_desc">忆我故居室 浮光动南轩</string>
 
     <string name="luwei">鹿威</string>
+    <string name="luwei_title">鹿威&#160;%1$d</string>
 	<string name="luwei0_desc">落花不语空辞树\n流水无情自入池</string>
 	<string name="luwei1_desc">屋下半流水 屋上几青山</string>
 	<string name="luwei2_desc">水自竹来兮绿非假借\n风从华过兮香有因缘</string>
@@ -109,6 +114,7 @@
 	<string name="luwei4_desc">诗成流水上 梦尽落花间</string>
 
     <string name="lotus">荷花</string>
+    <string name="lotus_gallery_title">荷花&#160;%1$d</string>
 	<string name="lotus0_desc">溪上新荷初出水\n花房半弄微红</string>
 	<string name="lotus1_desc">出淤泥而不染\n濯清涟而不妖</string>
 	<string name="lotus2_desc">萍间日彩乱 荷处香风举</string>

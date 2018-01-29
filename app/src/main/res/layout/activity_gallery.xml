@@ -51,17 +51,35 @@
         android:alpha="0.6"
         android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/big_image"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/gallery_title"
-        android:textColor="@color/whitesmoke"
-        android:textSize="25sp"
-        android:layout_marginTop="100dp"
-        android:drawableTop="@drawable/item_background"
-        android:drawablePadding="20dp"
-        android:visibility="gone"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/gallery_title"
+            android:textColor="@color/design_white"
+            android:textSize="45sp"
+            android:layout_marginTop="80dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/big_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/gallery_title"
+            android:textColor="@color/whitesmoke"
+            android:textSize="25sp"
+            android:layout_marginTop="50dp"
+            android:drawableTop="@drawable/item_background"
+            android:drawablePadding="20dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
 
 </FrameLayout>

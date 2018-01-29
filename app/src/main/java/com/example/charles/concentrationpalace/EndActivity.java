@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -29,6 +30,7 @@ public class EndActivity extends AppCompatActivity {
     TextView prologue_5;
     TextView prologue_6;
     TextView prologue_7;
+    ImageView final_pic;
 
     View view;
 
@@ -68,6 +70,7 @@ public class EndActivity extends AppCompatActivity {
         prologue_5.setText(R.string.end_5);
         prologue_6.setText(R.string.end_6);
         prologue_7.setText(R.string.end_7);
+        final_pic = findViewById(R.id.Final_Pic);
 
         CountDownTimer mc1;
         CountDownTimer mc2;
@@ -260,16 +263,12 @@ public class EndActivity extends AppCompatActivity {
                     @Override
                     public void onAnimationEnd(Animation arg0) {
                         prologue_7.setVisibility(View.VISIBLE);
-                        cover_page.setOnClickListener(new View.OnClickListener(){
+                        cover_page.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View v){
-                                int version = Build.VERSION.SDK_INT;
-                                Intent intent = new Intent(EndActivity.this, CP_MainActivity.class);
-                                startActivity(intent);
-                                if(version > 5 ){
-                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                                }
-                                finish();
+                            public void onClick(View v) {
+                                final_pic.setVisibility(View.VISIBLE);
+                                Animation animation8= AnimationUtils.loadAnimation(EndActivity.this, R.anim.fade_in);
+                                final_pic.startAnimation(animation8);
                             }
                         });
                     }
@@ -278,7 +277,22 @@ public class EndActivity extends AppCompatActivity {
             }
         };
         mc7.start();
+
+
+        final_pic.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                int version = Build.VERSION.SDK_INT;
+                Intent intent = new Intent(EndActivity.this, CP_MainActivity.class);
+                startActivity(intent);
+                if(version > 5 ){
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+                finish();
+            }
+        });
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

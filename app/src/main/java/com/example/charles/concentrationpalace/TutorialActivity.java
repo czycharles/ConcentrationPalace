@@ -115,7 +115,7 @@ public class TutorialActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(TutorialActivity.this,MyPalaceActivity.class);
+                intent.setClass(TutorialActivity.this,CoverActivity.class);
                 startActivity(intent);
                 finish();
                 int version = Build.VERSION.SDK_INT;

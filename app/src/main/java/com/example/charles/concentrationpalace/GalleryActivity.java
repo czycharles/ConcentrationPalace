@@ -80,15 +80,30 @@ public class GalleryActivity extends AppCompatActivity {
                 GalleryItem currentItem = mGalleryList.get(position);
 
                 final TextView big_image = findViewById(R.id.big_image);
-                Animation animation1 = AnimationUtils.loadAnimation(GalleryActivity.this, R.anim.fade_in_fast);
+                final Animation animation1 = AnimationUtils.loadAnimation(GalleryActivity.this, R.anim.fade_in_fast);
                 final ImageView dark_cover = findViewById(R.id.dark_cover);
                 final ImageView dark_background = findViewById(R.id.dark_background);
+                final TextView item_title = findViewById(R.id.item_title);
 
                 if (currentItem.getImageId() == R.drawable.item_unknown)
                     Toast.makeText(GalleryActivity.this, "该物品尚未解锁", Toast.LENGTH_SHORT).show();
                 else {
+                    if(position<4)
+                        item_title.setText(String.format(getResources().getString(R.string.flower_title),(position+1)));
+                    else if(position<8)
+                        item_title.setText(String.format(getResources().getString(R.string.tree_title),(position-3)));
+                    else if(position<12)
+                        item_title.setText(String.format(getResources().getString(R.string.stone_title),(position-7)));
+                    else if(position<16)
+                        item_title.setText(String.format(getResources().getString(R.string.house_title),(position-11)));
+                    else if(position<20)
+                        item_title.setText(String.format(getResources().getString(R.string.luwei_title),(position-15)));
+                    else if(position<24)
+                        item_title.setText(String.format(getResources().getString(R.string.lotus_gallery_title),(position-19)));
+
                     big_image.setText(currentItem.getDesc());
                     big_image.setVisibility(View.VISIBLE);
+                    item_title.setVisibility(View.VISIBLE);
                     Drawable drawable = getResources().getDrawable(currentItem.getImageId());
                     drawable.setBounds(0, 0, drawable.getIntrinsicWidth()*3/2, drawable.getMinimumHeight()*3/2);
                     big_image.setCompoundDrawables(null, drawable, null, null);
@@ -98,6 +113,7 @@ public class GalleryActivity extends AppCompatActivity {
                     big_image.startAnimation(animation1);
                     dark_cover.startAnimation(animation1);
                     dark_background.startAnimation(animation1);
+                    item_title.startAnimation(animation1);
                     big_image.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -105,10 +121,12 @@ public class GalleryActivity extends AppCompatActivity {
                                 big_image.setVisibility(View.GONE);
                                 dark_cover.setVisibility(View.GONE);
                                 dark_background.setVisibility(View.GONE);
+                                item_title.setVisibility(View.GONE);
                                 Animation animation2 = AnimationUtils.loadAnimation(GalleryActivity.this, R.anim.fade_out_fast);
                                 big_image.startAnimation(animation2);
                                 dark_cover.startAnimation(animation2);
                                 dark_background.startAnimation(animation2);
+                                item_title.startAnimation(animation2);
                             }
                         }
                     });
@@ -119,10 +137,12 @@ public class GalleryActivity extends AppCompatActivity {
                                 big_image.setVisibility(View.GONE);
                                 dark_cover.setVisibility(View.GONE);
                                 dark_background.setVisibility(View.GONE);
+                                item_title.setVisibility(View.GONE);
                                 Animation animation2 = AnimationUtils.loadAnimation(GalleryActivity.this, R.anim.fade_out_fast);
                                 big_image.startAnimation(animation2);
                                 dark_cover.startAnimation(animation2);
                                 dark_background.startAnimation(animation2);
+                                item_title.startAnimation(animation2);
                             }
                         }
                     });

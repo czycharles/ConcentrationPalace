@@ -115,6 +115,18 @@ public class OptionActivity extends AppCompatActivity {
                 item_pic.setBackgroundResource(R.drawable.lotus1_gallery);
         }
 
+        item_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OptionActivity.this, EndActivity.class);
+                startActivity(intent);
+                int version = Build.VERSION.SDK_INT;
+                if(version > 5 ){
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        });
+
         animation1 = AnimationUtils.loadAnimation(OptionActivity.this, R.anim.fade_in);
 
         process.setText(String.format(getResources().getString(R.string.gallery_process),flower_slot1 + tree_slot2 + stone_slot3 + house_slot4 + luwei_slot5 + 5,20));

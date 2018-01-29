@@ -116,7 +116,7 @@ public class CP_MainActivity extends AppCompatActivity {
                     editor.apply();
                     editor.putBoolean("slot5_crash", false);
                     editor.apply();
-                    Intent intent = new Intent(CP_MainActivity.this, CoverActivity.class);
+                    Intent intent = new Intent(CP_MainActivity.this, TutorialActivity.class);
                     startActivity(intent);
                     if (version > 5) {
                         overridePendingTransition(R.anim.fade_in_fast, R.anim.fade_out_fast);
