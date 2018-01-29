@@ -19,7 +19,6 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -80,6 +79,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
     int price_matrix[][] = {{200,500,1000},{300,600,1200},{200,500,1000},{500,800,1500},{150,300,800}};
 
     int fix_price = 50;
+    String share_file_name = "My_Temple.png";
 
     SharedPreferences data;
     SharedPreferences.Editor editor;
@@ -330,9 +330,21 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                 share_cover.setVisibility(View.VISIBLE);
                 coin_display.setVisibility(View.INVISIBLE);
                 share_button.setVisibility(View.INVISIBLE);
-                ScreenShot.shoot(MyPalaceActivity.this,"Share.png");
+                ScreenShot.shoot(MyPalaceActivity.this,share_file_name);
 
-                File f = new File(Environment.getExternalStorageDirectory().getPath(),"Share.png");
+                File f = new File(Environment.getExternalStorageDirectory().getPath(),share_file_name);
+
+                int hint[] = {  R.string.waiting_hint1,R.string.waiting_hint2,
+                        R.string.waiting_hint3,R.string.waiting_hint4,
+                        R.string.waiting_hint5,R.string.waiting_hint6,
+                        R.string.waiting_hint7,R.string.waiting_hint8,
+                        R.string.waiting_hint9,R.string.waiting_hint10,
+                        R.string.waiting_hint11,R.string.waiting_hint12,
+                        R.string.waiting_hint13,R.string.waiting_hint14,
+                        R.string.waiting_hint15,R.string.waiting_hint16,
+                        R.string.waiting_hint17,R.string.waiting_hint18,
+                        R.string.waiting_hint19,R.string.waiting_hint20,
+                        R.string.waiting_hint21,R.string.waiting_hint22,  };
 
                 coin_display.setVisibility(View.VISIBLE);
                 share_button.setVisibility(View.VISIBLE);
@@ -355,7 +367,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     //Uri u = Uri.fromFile(f);
                     Uri u = FileProvider.getUriForFile(MyPalaceActivity.this, getPackageName() + ".fileprovider", f);
                     intent.putExtra(Intent.EXTRA_STREAM, u);
-                    intent.putExtra("Kdescription", R.string.share_message);
+                    intent.putExtra("Kdescription", hint[(int)(Math.random()*100) % 22]);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                    long last_share_time = data.getLong("last_share_time", 0);
 //                    long this_share_time = data.getLong("this_share_time", 0);
@@ -435,14 +447,14 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
                     if (slot1_crash) {
                         AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        ADAlert.setTitle("花费" + fix_price + "专注度，并观看一段广告来清除掉废墟？");
-                        ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                        ADAlert.setTitle(String.format(getResources().getString(R.string.clean_crush_title),fix_price));
+                        ADAlert.setMessage(R.string.clean_crush_hint);
                         ADAlert.setCancelable(true);
-                        ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
+                        ADAlert.setPositiveButton(R.string.OK_button, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface ADAlert, int i) {
                                 if (my_coin < fix_price) {
-                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MyPalaceActivity.this, R.string.focus_point_not_enough, Toast.LENGTH_LONG).show();
                                 } else {
                                     //开始播放广告
                                     slot1_crash = false;
@@ -459,30 +471,30 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                         ADAlert.show();
                     } else {
                         if (flower_slot1 == 3) {
-                            Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MyPalaceActivity.this, R.string.max_level_hint, Toast.LENGTH_LONG).show();
                         } else {
                             AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                            BuildAlert.setTitle("升级禅院的荷花？");
-                            BuildAlert.setMessage("建造花费" + price_matrix[0][flower_slot1] + "专注度，需要保持" + next_building_time / 1000 /60 + "分钟的专注。");
+                            BuildAlert.setTitle(R.string.upgrade_flower_title);
+                            BuildAlert.setMessage(String.format(getResources().getString(R.string.upgrade_msg), price_matrix[0][flower_slot1], (next_building_time / 1000 /60) ));
                             BuildAlert.setCancelable(false);
-                            BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            BuildAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface BuildAlert, int i) {
                                     if (my_coin < price_matrix[0][flower_slot1]) {
-                                        Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(MyPalaceActivity.this, R.string.focus_point_not_enough, Toast.LENGTH_LONG).show();
                                     } else {
                                         AlertDialog.Builder WarnAlert = new AlertDialog.Builder(MyPalaceActivity.this);
                                         WarnAlert.setTitle(R.string.build_title);
                                         WarnAlert.setMessage(R.string.focus_hint);
                                         WarnAlert.setCancelable(false);
-                                        WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        WarnAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface WarnAlert, int i) {
                                                 my_coin = my_coin - price_matrix[0][flower_slot1];
                                                 coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                                 editor.putInt("my_coin", my_coin);
                                                 editor.apply();
-                                                Toast.makeText(MyPalaceActivity.this, "位置1已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(MyPalaceActivity.this, R.string.build_begin_hint, Toast.LENGTH_LONG).show();
                                                 Intent intent = new Intent(MyPalaceActivity.this, WaitingActivity.class);
                                                 intent.putExtra("building_slot", 1);
                                                 intent.putExtra("building_time", next_building_time);
@@ -493,7 +505,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                                 }
                                             }
                                         });
-                                        WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                        WarnAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface WarnAlert, int i) {
                                                 WarnAlert.cancel();
@@ -503,7 +515,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     }
                                 }
                             });
-                            BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            BuildAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface BuildAlert, int i) {
                                     BuildAlert.cancel();
@@ -520,14 +532,14 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
                     if (slot4_crash) {
                         AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        ADAlert.setTitle("花费" + fix_price + "专注度，并观看一段广告来清除掉废墟？");
-                        ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                        ADAlert.setTitle(String.format(getResources().getString(R.string.clean_crush_title),fix_price));
+                        ADAlert.setMessage(R.string.clean_crush_hint);
                         ADAlert.setCancelable(true);
-                        ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
+                        ADAlert.setPositiveButton(R.string.OK_button, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface ADAlert, int i) {
                                 if (my_coin < fix_price) {
-                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MyPalaceActivity.this, R.string.focus_point_not_enough, Toast.LENGTH_LONG).show();
                                 } else {
                                     //开始播放广告
                                     slot4_crash = false;
@@ -544,30 +556,30 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                         ADAlert.show();
                     } else {
                         if (house_slot4 == 3) {
-                            Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MyPalaceActivity.this, R.string.max_level_hint, Toast.LENGTH_LONG).show();
                         } else {
                             AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                            BuildAlert.setTitle("升级建造禅院？");
-                            BuildAlert.setMessage("建造花费" + price_matrix[3][house_slot4] + "专注度，需要保持" + next_building_time / 1000 /60 + "分钟的专注。");
+                            BuildAlert.setTitle(R.string.upgrade_house_title);
+                            BuildAlert.setMessage(String.format(getResources().getString(R.string.upgrade_msg),price_matrix[3][house_slot4], (next_building_time / 1000 /60) ));
                             BuildAlert.setCancelable(false);
-                            BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            BuildAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface BuildAlert, int i) {
                                     if (my_coin < price_matrix[3][house_slot4]) {
-                                        Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(MyPalaceActivity.this, R.string.focus_point_not_enough, Toast.LENGTH_LONG).show();
                                     } else {
                                         AlertDialog.Builder WarnAlert = new AlertDialog.Builder(MyPalaceActivity.this);
                                         WarnAlert.setTitle(R.string.build_title);
                                         WarnAlert.setMessage(R.string.focus_hint);
                                         WarnAlert.setCancelable(false);
-                                        WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        WarnAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface WarnAlert, int i) {
                                                 my_coin = my_coin - price_matrix[3][house_slot4];
                                                 coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                                 editor.putInt("my_coin", my_coin);
                                                 editor.apply();
-                                                Toast.makeText(MyPalaceActivity.this, "位置4已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(MyPalaceActivity.this, R.string.build_begin_hint, Toast.LENGTH_LONG).show();
                                                 Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                                 intent.putExtra("building_slot",4);
                                                 intent.putExtra("building_time",next_building_time);
@@ -578,7 +590,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                                 }
                                             }
                                         });
-                                        WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                        WarnAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface WarnAlert, int i) {
                                                 WarnAlert.cancel();
@@ -588,7 +600,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     }
                                 }
                             });
-                            BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            BuildAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface BuildAlert, int i) {
                                     BuildAlert.cancel();
@@ -605,14 +617,14 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
                     if (slot3_crash) {
                         AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        ADAlert.setTitle("花费" + fix_price + "专注度，并观看一段广告来清除掉废墟？");
-                        ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                        ADAlert.setTitle(String.format(getResources().getString(R.string.clean_crush_title),fix_price));
+                        ADAlert.setMessage(R.string.clean_crush_hint);
                         ADAlert.setCancelable(true);
-                        ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
+                        ADAlert.setPositiveButton(R.string.OK_button, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface ADAlert, int i) {
                                 if (my_coin < fix_price) {
-                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MyPalaceActivity.this, R.string.focus_point_not_enough, Toast.LENGTH_LONG).show();
                                 } else {
                                     //开始播放广告
                                     slot3_crash = false;
@@ -629,30 +641,30 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                         ADAlert.show();
                     } else {
                         if (stone_slot3 == 3) {
-                            Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MyPalaceActivity.this, R.string.max_level_hint, Toast.LENGTH_LONG).show();
                         } else {
                             AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                            BuildAlert.setTitle("升级建造禅院的岩石？");
-                            BuildAlert.setMessage("建造花费" + price_matrix[2][stone_slot3] + "专注度，需要保持" + next_building_time / 1000 /60 + "分钟的专注。");
+                            BuildAlert.setTitle(R.string.upgrade_stone_title);
+                            BuildAlert.setMessage(String.format(getResources().getString(R.string.upgrade_msg),price_matrix[2][stone_slot3], (next_building_time / 1000 /60) ));
                             BuildAlert.setCancelable(false);
-                            BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            BuildAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface BuildAlert, int i) {
                                     if (my_coin < price_matrix[2][stone_slot3]) {
-                                        Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(MyPalaceActivity.this, R.string.focus_point_not_enough, Toast.LENGTH_LONG).show();
                                     } else {
                                         AlertDialog.Builder WarnAlert = new AlertDialog.Builder(MyPalaceActivity.this);
                                         WarnAlert.setTitle(R.string.build_title);
                                         WarnAlert.setMessage(R.string.focus_hint);
                                         WarnAlert.setCancelable(false);
-                                        WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        WarnAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface WarnAlert, int i) {
                                                 my_coin = my_coin - price_matrix[2][stone_slot3];
                                                 coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                                 editor.putInt("my_coin", my_coin);
                                                 editor.apply();
-                                                Toast.makeText(MyPalaceActivity.this, "位置3已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(MyPalaceActivity.this, R.string.build_begin_hint, Toast.LENGTH_LONG).show();
                                                 Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                                 intent.putExtra("building_slot",3);
                                                 intent.putExtra("building_time",next_building_time);
@@ -663,7 +675,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                                 }
                                             }
                                          });
-                                        WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                        WarnAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface WarnAlert, int i) {
                                                 WarnAlert.cancel();
@@ -673,7 +685,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     }
                                 }
                             });
-                            BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            BuildAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface BuildAlert, int i) {
                                     BuildAlert.cancel();
@@ -690,14 +702,14 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
                     if (slot2_crash) {
                         AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        ADAlert.setTitle("花费" + fix_price + "专注度，并观看一段广告来清除掉废墟？");
-                        ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                        ADAlert.setTitle(String.format(getResources().getString(R.string.clean_crush_title),fix_price));
+                        ADAlert.setMessage(R.string.clean_crush_hint);
                         ADAlert.setCancelable(true);
-                        ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
+                        ADAlert.setPositiveButton(R.string.OK_button, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface ADAlert, int i) {
                                 if (my_coin < fix_price) {
-                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MyPalaceActivity.this, R.string.focus_point_not_enough, Toast.LENGTH_LONG).show();
                                 } else {
                                     //开始播放广告
                                     slot2_crash = false;
@@ -714,30 +726,30 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                         ADAlert.show();
                     } else {
                         if (tree_slot2 == 3) {
-                            Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MyPalaceActivity.this, R.string.max_level_hint, Toast.LENGTH_LONG).show();
                         } else {
                             AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                            BuildAlert.setTitle("升级禅院的树？");
-                            BuildAlert.setMessage("建造花费" + price_matrix[1][tree_slot2] + "专注度，需要保持" + next_building_time / 1000 /60 + "分钟的专注。");
+                            BuildAlert.setTitle(R.string.upgrade_tree_title);
+                            BuildAlert.setMessage(String.format(getResources().getString(R.string.upgrade_msg),price_matrix[1][tree_slot2], (next_building_time / 1000 /60) ));
                             BuildAlert.setCancelable(false);
-                            BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            BuildAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface BuildAlert, int i) {
                                     if (my_coin < price_matrix[1][tree_slot2]) {
-                                        Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(MyPalaceActivity.this, R.string.focus_point_not_enough, Toast.LENGTH_LONG).show();
                                     } else {
                                         AlertDialog.Builder WarnAlert = new AlertDialog.Builder(MyPalaceActivity.this);
                                         WarnAlert.setTitle(R.string.build_title);
                                         WarnAlert.setMessage(R.string.focus_hint);
                                         WarnAlert.setCancelable(false);
-                                        WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        WarnAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface WarnAlert, int i) {
                                                 my_coin = my_coin - price_matrix[1][tree_slot2];
                                                 coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                                 editor.putInt("my_coin", my_coin);
                                                 editor.apply();
-                                                Toast.makeText(MyPalaceActivity.this, "位置2已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(MyPalaceActivity.this, R.string.build_begin_hint, Toast.LENGTH_LONG).show();
                                                 Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                                 intent.putExtra("building_slot",2);
                                                 intent.putExtra("building_time",next_building_time);
@@ -748,7 +760,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                                 }
                                             }
                                         });
-                                        WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                        WarnAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface WarnAlert, int i) {
                                                 WarnAlert.cancel();
@@ -758,7 +770,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     }
                                 }
                             });
-                            BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            BuildAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface BuildAlert, int i) {
                                     BuildAlert.cancel();
@@ -775,14 +787,14 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
                     if (slot5_crash) {
                         AlertDialog.Builder ADAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                        ADAlert.setTitle("花费" + fix_price + "专注度，并观看一段广告来清除掉废墟？");
-                        ADAlert.setMessage("废墟清除后会恢复你原先的建造等级");
+                        ADAlert.setTitle(String.format(getResources().getString(R.string.clean_crush_title),fix_price));
+                        ADAlert.setMessage(R.string.clean_crush_hint);
                         ADAlert.setCancelable(true);
-                        ADAlert.setPositiveButton("好的！", new DialogInterface.OnClickListener() {
+                        ADAlert.setPositiveButton(R.string.OK_button, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface ADAlert, int i) {
                                 if (my_coin < fix_price) {
-                                    Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MyPalaceActivity.this, R.string.focus_point_not_enough, Toast.LENGTH_LONG).show();
                                 }
                                 else {
                                     //开始播放广告
@@ -800,30 +812,30 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                         ADAlert.show();
                     } else {
                         if (luwei_slot5 == 3) {
-                            Toast.makeText(MyPalaceActivity.this, "这个部分已经建造到最高等级了。", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MyPalaceActivity.this, R.string.max_level_hint, Toast.LENGTH_LONG).show();
                         } else {
                             AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
-                            BuildAlert.setTitle("升级禅院的鹿威？");
-                            BuildAlert.setMessage("建造花费" + price_matrix[4][luwei_slot5] + "专注度，需要保持" + next_building_time / 1000 /60 + "分钟的专注。");
+                            BuildAlert.setTitle(R.string.upgrade_luwei_title);
+                            BuildAlert.setMessage(String.format(getResources().getString(R.string.upgrade_msg),price_matrix[4][luwei_slot5], (next_building_time / 1000 /60) ));
                             BuildAlert.setCancelable(false);
-                            BuildAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            BuildAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface BuildAlert, int i) {
                                     if (my_coin < price_matrix[4][luwei_slot5]) {
-                                        Toast.makeText(MyPalaceActivity.this, "抱歉，您的专注度不足，每天登录或观看广告可以获得新的专注度。", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(MyPalaceActivity.this, R.string.focus_point_not_enough, Toast.LENGTH_LONG).show();
                                     } else {
                                         AlertDialog.Builder WarnAlert = new AlertDialog.Builder(MyPalaceActivity.this);
                                         WarnAlert.setTitle(R.string.build_title);
                                         WarnAlert.setMessage(R.string.focus_hint);
                                         WarnAlert.setCancelable(false);
-                                        WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        WarnAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface WarnAlert, int i) {
                                                 my_coin = my_coin - price_matrix[4][luwei_slot5];
                                                 coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                                                 editor.putInt("my_coin", my_coin);
                                                 editor.apply();
-                                                Toast.makeText(MyPalaceActivity.this, "位置5已开始建造，请离开手机一段时间，直到倒计时结束", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(MyPalaceActivity.this, R.string.build_begin_hint, Toast.LENGTH_LONG).show();
                                                 Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                                 intent.putExtra("building_slot",5);
                                                 intent.putExtra("building_time",next_building_time);
@@ -834,7 +846,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                                 }
                                             }
                                         });
-                                        WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                        WarnAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface WarnAlert, int i) {
                                                 WarnAlert.cancel();
@@ -844,7 +856,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                     }
                                 }
                             });
-                            BuildAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            BuildAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface BuildAlert, int i) {
                                     BuildAlert.cancel();
@@ -876,9 +888,9 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         initMapItems();
 
         if((flower_slot1+tree_slot2+stone_slot3+house_slot4+luwei_slot5)>=5)
-            mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing17);
-        else
             mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing08);
+        else
+            mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_healing17);
         try {
             mpMediaPlayer.setLooping(true);
             mpMediaPlayer.start();
@@ -893,12 +905,12 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
             if(mpMediaPlayer!=null) {
                 try{
                     mpMediaPlayer.stop();
-                    Log.d("Media","stop success");
+                    //Log.d("Media","stop success");
                 }catch(IllegalStateException e) {
                     mpMediaPlayer.release();
-                    Log.d("Media", "release success");
+                    //Log.d("Media", "release success");
                     mpMediaPlayer = null;
-                    Log.d("Media", "null success");
+                    //Log.d("Media", "null success");
                 }
             }
             Intent intent = new Intent(MyPalaceActivity.this, CP_MainActivity.class);
@@ -915,12 +927,12 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         if(mpMediaPlayer!=null) {
             try{
                 mpMediaPlayer.stop();
-                Log.d("Media","stop success");
+                //Log.d("Media","stop success");
             }catch(IllegalStateException e) {
                 mpMediaPlayer.release();
-                Log.d("Media", "release success");
+                //Log.d("Media", "release success");
                 mpMediaPlayer = null;
-                Log.d("Media", "null success");
+                //Log.d("Media", "null success");
             }
         }
         super.onStop();
@@ -931,12 +943,12 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
         if(mpMediaPlayer!=null) {
             try{
                 mpMediaPlayer.stop();
-                Log.d("Media","stop success");
+                //Log.d("Media","stop success");
             }catch(IllegalStateException e) {
                 mpMediaPlayer.release();
-                Log.d("Media", "release success");
+                //Log.d("Media", "release success");
                 mpMediaPlayer = null;
-                Log.d("Media", "null success");
+                //Log.d("Media", "null success");
             }
         }
         super.onDestroy();

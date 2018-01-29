@@ -1,19 +1,15 @@
 package com.example.charles.concentrationpalace;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import android.Manifest;
 import android.app.Activity;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Environment;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 
 class ScreenShot {
@@ -32,7 +28,7 @@ class ScreenShot {
         Rect frame = new Rect();
         activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
         int statusBarHeight = frame.top;
-        Log.d("TAG", "图片：" + b1);
+        //Log.d("TAG", "图片：" + b1);
         // 获取屏幕长和高
         DisplayMetrics dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -55,19 +51,17 @@ class ScreenShot {
             b.compress(Bitmap.CompressFormat.PNG, 90, fos);
             fos.flush();
             fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Log.d("savePic","success1");
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("savePic","success");
+            //Log.d("savePic","success1");
         }
     }
     // 程序入口
     static void shoot(Activity a,String fileName) {
         File directory = new File(Environment.getExternalStorageDirectory().getPath());
         if(!directory.exists()){
-            directory.mkdir();//没有目录先创建目录
+            if(!directory.mkdir())
+                Toast.makeText(a,R.string.share_path_fail,Toast.LENGTH_LONG).show();//没有目录先创建目录
         }
         ScreenShot.savePic(ScreenShot.takeScreenShot(a), Environment.getExternalStorageDirectory().getPath(),fileName);
     }
