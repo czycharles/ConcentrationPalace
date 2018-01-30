@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,15 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -61,10 +56,11 @@ public class TutorialActivity extends AppCompatActivity {
 
     private void initView() {
         LayoutInflater inflater = LayoutInflater.from(this);
-        View view1 = inflater.inflate(R.layout.tutorial1, null);
-        View view2 = inflater.inflate(R.layout.tutorial2, null);
-        View view3 = inflater.inflate(R.layout.tutorial3, null);
-        View view4 = inflater.inflate(R.layout.tutorial4, null);
+        FrameLayout root = findViewById(R.id.guide);
+        View view1 = inflater.inflate(R.layout.tutorial1, root, false);
+        View view2 = inflater.inflate(R.layout.tutorial2, root, false);
+        View view3 = inflater.inflate(R.layout.tutorial3, root, false);
+        View view4 = inflater.inflate(R.layout.tutorial4, root, false);
         btnStart = view4.findViewById(R.id.startBtn);
 
         viewPager = findViewById(R.id.viewpager);

@@ -37,6 +37,8 @@
     <string name="build_begin_hint">已开始建造，请离开手机一段时间，直到倒计时结束。</string>
     <string name="gain_coin_success_hint">恭喜！你已获得%1$d专注度。</string>
 	<string name="fail_hint">失败</string>
+	<string name="point_fail_hint">抱歉，你使用了手机，本次未获得专注度。</string>
+    <string name="build_fail_hint">抱歉，你使用了手机，该位置已坍塌，需要花费专注度恢复原有进度。</string>
 
 	<string name="waiting_hint">保持专注\n升级将在倒计时结束后完成</string>
 	<string name="waiting_hint1">自从树叶落在某个伟人的额头上后，\n就成为了专注的象征。</string>
@@ -57,7 +59,7 @@
 	<string name="waiting_hint16">永不放弃！</string>
 	<string name="waiting_hint17">专注、热爱、 全心贯注于你所期望的事物上，必有收获。</string>
 	<string name="waiting_hint18">成大事不在于力量的大小，而在于能坚持多久。</string>
-	<string name="waiting_hint19">蟹六跪而二螯，非蛇之穴无可寄托者，用心躁也。</string>
+	<string name="waiting_hint19">蟹六跪而二螯，非蛇鳝之穴无可寄托者，用心躁也。</string>
 	<string name="waiting_hint20">要从容地着手去做一件事，但一开始，就要坚持到底。</string>
 	<string name="waiting_hint21">取得成就时坚持不懈，要比遭到失败时顽强不屈更重要。</string>
 	<string name="waiting_hint22">凝聚起来的意志，足以击穿顽石。</string>
@@ -67,7 +69,9 @@
 	<string name="number">%1$d</string>
 	<string name="coin_bar">%1$d&#160;</string>
 	<string name="lotus_title">获取专注度</string>
-	<string name="finish_title">恭喜！</string>
+    <string name="finish_title">恭喜！</string>
+	<string name="alert_title">坚持就是胜利！</string>
+    <string name="alert_msg">如果现在退出，正在建造的部分就会坍塌。</string>
 	<string name="lotus_msg">使用专注度升级其他位置的物品，\n荷花会逐渐开放。</string>
 	<string name="finish_msg">你已经完成了专注禅院的建设，\n点击发光的荷花观看结局。</string>
 	<string name="lotus_opt1">远离手机</string>

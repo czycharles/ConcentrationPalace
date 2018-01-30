@@ -312,7 +312,6 @@ public class WaitingActivity extends AppCompatActivity {
                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                     editor.putInt("my_coin", my_coin);
                     editor.apply();
-                    Toast.makeText(WaitingActivity.this, "假设你看完了广告，金币+200", Toast.LENGTH_LONG).show();
                 }
                 else{
                     Intent intent = new Intent(WaitingActivity.this, MyPalaceActivity.class);
@@ -333,9 +332,9 @@ public class WaitingActivity extends AppCompatActivity {
             countdown.setText(R.string.fail_hint);
             mc.cancel();
             if (building_slot == 0)
-                Toast.makeText(WaitingActivity.this, "抱歉，你使用了手机，本次未获得专注度。", Toast.LENGTH_LONG).show();
+                Toast.makeText(WaitingActivity.this, R.string.point_fail_hint, Toast.LENGTH_LONG).show();
             else
-                Toast.makeText(WaitingActivity.this, "抱歉，你使用了手机，位置" + building_slot + "已经坍塌。", Toast.LENGTH_LONG).show();
+                Toast.makeText(WaitingActivity.this, R.string.build_fail_hint, Toast.LENGTH_LONG).show();
             switch (building_slot) {
                 case 1:
                     slot1_crash = true;
@@ -400,13 +399,13 @@ public class WaitingActivity extends AppCompatActivity {
     public void onBackPressed(){
         if(building_slot > 0) {
             AlertDialog.Builder failAlert = new AlertDialog.Builder(WaitingActivity.this);
-            failAlert.setTitle("坚持就是胜利！");
-            failAlert.setMessage("如果现在退出，正在建造的部分就会坍塌。");
+            failAlert.setTitle(R.string.alert_title);
+            failAlert.setMessage(R.string.alert_msg);
             failAlert.setCancelable(false);
-            failAlert.setPositiveButton("退出", new DialogInterface.OnClickListener() {
+            failAlert.setPositiveButton(R.string.exit_button, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface failAlert, int i) {
-                    Toast.makeText(WaitingActivity.this, "抱歉，你使用了手机，位置" + building_slot + "已经坍塌。", Toast.LENGTH_LONG).show();
+                    Toast.makeText(WaitingActivity.this, R.string.build_fail_hint, Toast.LENGTH_LONG).show();
                     mc.cancel();
                     switch (building_slot) {
                         case 1:
@@ -455,7 +454,7 @@ public class WaitingActivity extends AppCompatActivity {
                     finish();
                 }
             });
-            failAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            failAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface failAlert, int i) {
                     failAlert.cancel();
@@ -465,13 +464,13 @@ public class WaitingActivity extends AppCompatActivity {
         }
         else if (building_slot == 0) {
             AlertDialog.Builder failAlert = new AlertDialog.Builder(WaitingActivity.this);
-            failAlert.setTitle("坚持就是胜利！");
-            failAlert.setMessage("如果现在退出，就无法获得对应的专注度。");
+            failAlert.setTitle(R.string.alert_title);
+            failAlert.setMessage(R.string.alert_msg);
             failAlert.setCancelable(false);
-            failAlert.setPositiveButton("退出", new DialogInterface.OnClickListener() {
+            failAlert.setPositiveButton(R.string.exit_button, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface failAlert, int i) {
-                    Toast.makeText(WaitingActivity.this, "抱歉，你使用了手机，本次未获得专注度。", Toast.LENGTH_LONG).show();
+                    Toast.makeText(WaitingActivity.this, R.string.build_fail_hint, Toast.LENGTH_LONG).show();
                     mc.cancel();
                     if(mpMediaPlayer!=null) {
                         try{
@@ -493,7 +492,7 @@ public class WaitingActivity extends AppCompatActivity {
                     finish();
                 }
             });
-            failAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            failAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface failAlert, int i) {
                     failAlert.cancel();

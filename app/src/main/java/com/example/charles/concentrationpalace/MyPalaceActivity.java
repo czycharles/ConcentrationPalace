@@ -367,7 +367,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                     //Uri u = Uri.fromFile(f);
                     Uri u = FileProvider.getUriForFile(MyPalaceActivity.this, getPackageName() + ".fileprovider", f);
                     intent.putExtra(Intent.EXTRA_STREAM, u);
-                    intent.putExtra("Kdescription", hint[(int)(Math.random()*100) % 22]);
+                    intent.putExtra("Kdescription", getResources().getString((hint[(int)(Math.random()*100) % 22])));
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                    long last_share_time = data.getLong("last_share_time", 0);
 //                    long this_share_time = data.getLong("this_share_time", 0);
