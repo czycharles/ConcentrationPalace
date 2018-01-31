@@ -60,9 +60,9 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
 
     int slot2_build_time[] = {2700000, 3600000, 7200000, 10800000};
 
-    int slot3_build_time[] = {1200000, 3600000, 720000, 108000};
+    int slot3_build_time[] = {1200000, 3600000, 7200000, 10800000};
 
-    int slot4_build_time[] = {3600000, 7200000, 10800000, 144000};
+    int slot4_build_time[] = {3600000, 7200000, 10800000, 14400000};
 
     int slot5_build_time[] = {600000, 1800000, 3600000, 7200000};
 
@@ -471,7 +471,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                         ADAlert.show();
                     } else {
                         if (flower_slot1 == 3) {
-                            Toast.makeText(MyPalaceActivity.this, R.string.max_level_hint, Toast.LENGTH_LONG).show();
+                            Toast.makeText(MyPalaceActivity.this, R.string.max_level_hint, Toast.LENGTH_SHORT).show();
                         } else {
                             AlertDialog.Builder BuildAlert = new AlertDialog.Builder(MyPalaceActivity.this);
                             BuildAlert.setTitle(R.string.upgrade_flower_title);

@@ -2,6 +2,7 @@ package com.example.charles.concentrationpalace;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -32,6 +33,8 @@ public class EndActivity extends AppCompatActivity {
     TextView prologue_7;
     ImageView final_pic;
 
+    MediaPlayer mpMediaPlayer;
+
     View view;
 
     @Override
@@ -52,6 +55,15 @@ public class EndActivity extends AppCompatActivity {
         }
         view=View.inflate(this, R.layout.activity_ending, null);
         setContentView(view);
+
+        mpMediaPlayer = MediaPlayer.create(this, R.raw.bgm_maoudamashii_piano34);
+        try {
+            mpMediaPlayer.setLooping(true);
+            mpMediaPlayer.start();
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         cover_page = findViewById(android.R.id.content);
         cover_page.setClickable(true);
@@ -294,7 +306,41 @@ public class EndActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart(){
+        super.onRestart();
+        mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_piano34);
+        mpMediaPlayer.start();
+        mpMediaPlayer.setLooping(true);
+    }
+
+    @Override
+    protected void onStop() {
+        if(mpMediaPlayer!=null) {
+            try{
+                mpMediaPlayer.stop();
+                //Log.d("Media","stop success");
+            }catch(IllegalStateException e) {
+                mpMediaPlayer.release();
+                //Log.d("Media", "release success");
+                mpMediaPlayer = null;
+                //Log.d("Media", "null success");
+            }
+        }
+        super.onStop();
+    }
+    @Override
     protected void onDestroy() {
+        if(mpMediaPlayer!=null) {
+            try{
+                mpMediaPlayer.stop();
+                //Log.d("Media","stop success");
+            }catch(IllegalStateException e) {
+                mpMediaPlayer.release();
+                //Log.d("Media", "release success");
+                mpMediaPlayer = null;
+                //Log.d("Media", "null success");
+            }
+        }
         super.onDestroy();
         ActivityCollector.removeActivity(this);
     }

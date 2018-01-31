@@ -119,6 +119,7 @@ public class CoverActivity extends AppCompatActivity {
         };
         mc2.start();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

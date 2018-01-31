@@ -8,7 +8,6 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
@@ -94,12 +93,12 @@ public class FindSelectedItem extends FrameLayout {
 
         int pixel = bitmap.getPixel( x, y);
 
-        int[] rgb = new int[3];
-        rgb[0] = (pixel & 0xff0000) >> 16;
-        rgb[1] = (pixel & 0xff00) >> 8;
-        rgb[2] = (pixel & 0xff);
-        Log.d("special", x + " and " + y +" clicked. Pixel is " + rgb[0] + ","
-                + rgb[1] + "," + rgb[2] + " w and H is " + bitmap.getWidth() + "," + bitmap.getHeight());
+//        int[] rgb = new int[3];
+//        rgb[0] = (pixel & 0xff0000) >> 16;
+//        rgb[1] = (pixel & 0xff00) >> 8;
+//        rgb[2] = (pixel & 0xff);
+//        Log.d("special", x + " and " + y +" clicked. Pixel is " + rgb[0] + ","
+//                + rgb[1] + "," + rgb[2] + " w and H is " + bitmap.getWidth() + "," + bitmap.getHeight());
 
         if(Color.TRANSPARENT !=pixel)
             performClick();

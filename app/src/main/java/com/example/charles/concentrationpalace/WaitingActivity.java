@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -98,7 +97,6 @@ public class WaitingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_waiting);
 
         data = getSharedPreferences("data", MODE_PRIVATE);
-        editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 
         Intent intent = getIntent();
         building_slot = intent.getIntExtra("building_slot", 0);
@@ -304,26 +302,11 @@ public class WaitingActivity extends AppCompatActivity {
         AD_button = findViewById(R.id.AD_button);
         coin_display = findViewById(R.id.coin_bar);
 
-        AD_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (building_slot >= 0) {
-                    my_coin = my_coin + 200;
-                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
-                    editor.putInt("my_coin", my_coin);
-                    editor.apply();
-                }
-                else{
-                    Intent intent = new Intent(WaitingActivity.this, MyPalaceActivity.class);
-                    startActivity(intent);
-                    int version = Build.VERSION.SDK_INT;
-                    if(version > 5 ){
-                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    }
-                    finish();
-                }
-            }
-        });
+        if (building_slot >= 0)
+            AD_button.setVisibility(View.INVISIBLE);
+        else {
+            AD_button.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -335,6 +318,7 @@ public class WaitingActivity extends AppCompatActivity {
                 Toast.makeText(WaitingActivity.this, R.string.point_fail_hint, Toast.LENGTH_LONG).show();
             else
                 Toast.makeText(WaitingActivity.this, R.string.build_fail_hint, Toast.LENGTH_LONG).show();
+            editor = getSharedPreferences("data", MODE_PRIVATE).edit();
             switch (building_slot) {
                 case 1:
                     slot1_crash = true;
@@ -366,12 +350,12 @@ public class WaitingActivity extends AppCompatActivity {
             if(mpMediaPlayer!=null) {
                 try{
                     mpMediaPlayer.stop();
-                    Log.d("Media","stop success");
+                    //Log.d("Media","stop success");
                 }catch(IllegalStateException e) {
                     mpMediaPlayer.release();
-                    Log.d("Media", "release success");
+                    //Log.d("Media", "release success");
                     mpMediaPlayer = null;
-                    Log.d("Media", "null success");
+                    //Log.d("Media", "null success");
                 }
             }
             finish();
@@ -380,16 +364,24 @@ public class WaitingActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart(){
+        super.onRestart();
+        mpMediaPlayer = MediaPlayer.create(this,R.raw.bgm_maoudamashii_piano41);
+        mpMediaPlayer.start();
+        mpMediaPlayer.setLooping(true);
+    }
+
+    @Override
     protected void onStop() {
         if(mpMediaPlayer!=null) {
             try{
                 mpMediaPlayer.stop();
-                Log.d("Media","stop success");
+                //Log.d("Media","stop success");
             }catch(IllegalStateException e) {
                 mpMediaPlayer.release();
-                Log.d("Media", "release success");
+                //Log.d("Media", "release success");
                 mpMediaPlayer = null;
-                Log.d("Media", "null success");
+                //Log.d("Media", "null success");
             }
         }
         super.onStop();
@@ -407,6 +399,7 @@ public class WaitingActivity extends AppCompatActivity {
                 public void onClick(DialogInterface failAlert, int i) {
                     Toast.makeText(WaitingActivity.this, R.string.build_fail_hint, Toast.LENGTH_LONG).show();
                     mc.cancel();
+                    editor = getSharedPreferences("data", MODE_PRIVATE).edit();
                     switch (building_slot) {
                         case 1:
                             slot1_crash = true;
@@ -437,12 +430,12 @@ public class WaitingActivity extends AppCompatActivity {
                     if(mpMediaPlayer!=null) {
                         try{
                             mpMediaPlayer.stop();
-                            Log.d("Media","stop success");
+                            //Log.d("Media","stop success");
                         }catch(IllegalStateException e) {
                             mpMediaPlayer.release();
-                            Log.d("Media", "release success");
+                            //Log.d("Media", "release success");
                             mpMediaPlayer = null;
-                            Log.d("Media", "null success");
+                            //Log.d("Media", "null success");
                         }
                     }
                     Intent intent = new Intent(WaitingActivity.this, MyPalaceActivity.class);
@@ -475,12 +468,12 @@ public class WaitingActivity extends AppCompatActivity {
                     if(mpMediaPlayer!=null) {
                         try{
                             mpMediaPlayer.stop();
-                            Log.d("Media","stop success");
+                            //Log.d("Media","stop success");
                         }catch(IllegalStateException e) {
                             mpMediaPlayer.release();
-                            Log.d("Media", "release success");
+                            //Log.d("Media", "release success");
                             mpMediaPlayer = null;
-                            Log.d("Media", "null success");
+                            //Log.d("Media", "null success");
                         }
                     }
                     Intent intent = new Intent(WaitingActivity.this, MyPalaceActivity.class);
@@ -504,12 +497,12 @@ public class WaitingActivity extends AppCompatActivity {
             if(mpMediaPlayer!=null) {
                 try{
                     mpMediaPlayer.stop();
-                    Log.d("Media","stop success");
+                    //Log.d("Media","stop success");
                 }catch(IllegalStateException e) {
                     mpMediaPlayer.release();
-                    Log.d("Media", "release success");
+                    //Log.d("Media", "release success");
                     mpMediaPlayer = null;
-                    Log.d("Media", "null success");
+                    //Log.d("Media", "null success");
                 }
             }
             Intent intent = new Intent(WaitingActivity.this, MyPalaceActivity.class);
@@ -527,12 +520,12 @@ public class WaitingActivity extends AppCompatActivity {
         if(mpMediaPlayer!=null) {
             try{
                 mpMediaPlayer.stop();
-                Log.d("Media","stop success");
+                //Log.d("Media","stop success");
             }catch(IllegalStateException e) {
                 mpMediaPlayer.release();
-                Log.d("Media", "release success");
+                //Log.d("Media", "release success");
                 mpMediaPlayer = null;
-                Log.d("Media", "null success");
+                //Log.d("Media", "null success");
             }
         }
         super.onDestroy();
@@ -552,6 +545,9 @@ public class WaitingActivity extends AppCompatActivity {
 
         @Override
         public void onFinish() {
+
+            editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+            AD_button.setVisibility(View.VISIBLE);
 
             switch(building_slot) {
 
@@ -595,6 +591,25 @@ public class WaitingActivity extends AppCompatActivity {
                 item_desc.setText(string_ID);
              }
             AD_button.setText(R.string.OK_button);
+            AD_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //                if (building_slot >= 0) {
+                    //                    my_coin = my_coin + 200;
+                    //                    coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                    //                    editor.putInt("my_coin", my_coin);
+                    //                    editor.apply();
+                    //                    AD_button.setVisibility(View.INVISIBLE);
+                    //                }
+                    Intent intent = new Intent(WaitingActivity.this, MyPalaceActivity.class);
+                    startActivity(intent);
+                    int version = Build.VERSION.SDK_INT;
+                    if (version > 5) {
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    }
+                    finish();
+                }
+            });
             countdown.setText(R.string.finish_hint);
             item_desc.startAnimation(animation1);
             mc.cancel();

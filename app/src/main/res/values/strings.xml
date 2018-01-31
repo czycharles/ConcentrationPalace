@@ -141,7 +141,7 @@
 	<string name="info1">新手教学</string>
 	<string name="info2">重置游戏</string>
 	<string name="info3">音乐：魔王魂</string>
-	<string name="info4_1">联系我们：</string>
+	<string name="info4_1">联系我们/Bug反馈：</string>
 	<string name="info4_2">ConcentrateTemple@163.com</string>
     <string name="clear_title">删除记录？</string>
     <string name="clear_message">你目前的进度会被清空</string>
