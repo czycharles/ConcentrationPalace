@@ -392,7 +392,10 @@ public class WaitingActivity extends AppCompatActivity {
         if(building_slot > 0) {
             AlertDialog.Builder failAlert = new AlertDialog.Builder(WaitingActivity.this);
             failAlert.setTitle(R.string.alert_title);
-            failAlert.setMessage(R.string.alert_msg);
+            if(building_slot == 0)
+                failAlert.setMessage(R.string.focus_alert_msg);
+            else
+                failAlert.setMessage(R.string.build_alert_msg);
             failAlert.setCancelable(false);
             failAlert.setPositiveButton(R.string.exit_button, new DialogInterface.OnClickListener() {
                 @Override
@@ -458,12 +461,18 @@ public class WaitingActivity extends AppCompatActivity {
         else if (building_slot == 0) {
             AlertDialog.Builder failAlert = new AlertDialog.Builder(WaitingActivity.this);
             failAlert.setTitle(R.string.alert_title);
-            failAlert.setMessage(R.string.alert_msg);
+            if(building_slot == 0)
+                failAlert.setMessage(R.string.focus_alert_msg);
+            else
+                failAlert.setMessage(R.string.build_alert_msg);
             failAlert.setCancelable(false);
             failAlert.setPositiveButton(R.string.exit_button, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface failAlert, int i) {
-                    Toast.makeText(WaitingActivity.this, R.string.build_fail_hint, Toast.LENGTH_LONG).show();
+                    if(building_slot == 0)
+                        Toast.makeText(WaitingActivity.this, R.string.point_fail_hint, Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(WaitingActivity.this, R.string.build_fail_hint, Toast.LENGTH_LONG).show();
                     mc.cancel();
                     if(mpMediaPlayer!=null) {
                         try{

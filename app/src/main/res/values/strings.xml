@@ -71,7 +71,8 @@
 	<string name="lotus_title">获取专注度</string>
     <string name="finish_title">恭喜！</string>
 	<string name="alert_title">坚持就是胜利！</string>
-    <string name="alert_msg">如果现在退出，正在建造的部分就会坍塌。</string>
+    <string name="build_alert_msg">如果现在退出，正在建造的部分就会坍塌。</string>
+	<string name="focus_alert_msg">如果现在退出，你将无法获得对应的专注度。</string>
 	<string name="lotus_msg">使用专注度升级其他位置的物品，\n荷花会逐渐开放。</string>
 	<string name="finish_msg">你已经完成了专注禅院的建设，\n点击发光的荷花观看结局。</string>
 	<string name="lotus_opt1">远离手机</string>
