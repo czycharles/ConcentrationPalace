@@ -94,18 +94,42 @@
             android:clickable="true"
             android:focusable="true"/>
 
-        <Button
-            android:id="@+id/opt2_button"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/button_style"
-            android:textColor="@color/whitesmoke"
-            android:gravity="center"
-            android:text="@string/lotus_opt2"
-            android:textSize="20sp"
-            android:clickable="true"
-            android:focusable="true" />
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/opt2_button"
+                style="?android:attr/buttonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/button_style"
+                android:textColor="@color/whitesmoke"
+                android:gravity="center"
+                android:text="@string/lotus_opt2"
+                android:textSize="20sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="20dp"/>
+
+            <Button
+                android:id="@+id/opt3_button"
+                style="?android:attr/buttonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/button_style"
+                android:textColor="@color/whitesmoke"
+                android:gravity="center"
+                android:text="@string/lotus_opt2"
+                android:textSize="20sp"
+                android:clickable="true"
+                android:focusable="true" />
+
+        </LinearLayout>
 
         <!--<TextView-->
             <!--android:id="@+id/opt2_desc"-->

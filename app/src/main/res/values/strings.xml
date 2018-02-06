@@ -11,6 +11,8 @@
     <string name="share_chooser_title">请选择分享方式：</string>
     <string name="share_fail">生成分享图失败</string>
     <string name="share_path_fail">生成分享路径失败</string>
+	<string name="permission_hint">您需要同意相应权限，以便获取专注度。</string>
+    <string name="AD_error">发生未知错误，请检查网络连接。</string>
     <string name="network_time_fail">获取网络日期失败，请检查网络连接</string>
 	<string name="palace_back_button">返回</string>
 	<string name="palace_content">禅院背景</string>

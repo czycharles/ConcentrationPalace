@@ -1,14 +1,20 @@
 package com.example.charles.concentrationpalace;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,6 +24,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.baidu.mobads.AdSettings;
+import com.baidu.mobads.InterstitialAd;
+import com.baidu.mobads.InterstitialAdListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Get coin option activity.
@@ -45,6 +59,9 @@ public class OptionActivity extends AppCompatActivity {
 
     LinearLayout Option_select_page;
     LinearLayout Time_select_page;
+
+    InterstitialAd interAd;
+    Button AD_btn;
 
     int[] time_num = {10,30,60,120};
     int[] coin_gain = {10,40,100,250};
@@ -84,6 +101,26 @@ public class OptionActivity extends AppCompatActivity {
         stone_slot3 = data.getInt("slot3", 0);
         house_slot4 = data.getInt("slot4", 0);
         luwei_slot5 = data.getInt("slot5",0);
+
+        AD_btn= findViewById(R.id.opt3_button);
+
+        List<String> permissionList = new ArrayList<>();
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+            permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED){
+            permissionList.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if(!permissionList.isEmpty()){
+            String [] permissions = permissionList.toArray(new String[permissionList.size()]);
+            ActivityCompat.requestPermissions(this, permissions,1);
+        }
+        else {
+            requestAds();
+        }
 
         switch (flower_slot1 + tree_slot2 + stone_slot3 + house_slot4 + luwei_slot5) {
             case 0:case 1:case 2:case 3:case 4:
@@ -294,6 +331,52 @@ public class OptionActivity extends AppCompatActivity {
         });
     }
 
+    private void requestAds(){
+        AdSettings.setSupportHttps(true);
+        String adPlaceId = "5545249";//重要： 请填上你的代码位ID,否则无法请求到广告
+        interAd = new InterstitialAd(this, adPlaceId);
+        interAd.setListener(new InterstitialAdListener(){
+            @Override
+            public void onAdClick(InterstitialAd arg0) {
+                Toast.makeText(OptionActivity.this,"onAdClick",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdDismissed() {
+                Toast.makeText(OptionActivity.this,"onAdDismissed",Toast.LENGTH_SHORT).show();
+                interAd.loadAd();
+            }
+
+            @Override
+            public void onAdFailed(String arg0) {
+                Log.i("InterstitialAd", "onAdFailed:"+arg0);
+                Toast.makeText(OptionActivity.this,"onAdFailed",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdPresent() {
+                Toast.makeText(OptionActivity.this,"onAdPresent",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdReady() {
+                Toast.makeText(OptionActivity.this,"onAdReady",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        interAd.loadAd();
+        AD_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (interAd.isAdReady()) {
+                    interAd.showAd(OptionActivity.this);
+                } else {
+                    interAd.loadAd();
+                }
+            }
+        });
+    }
+
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(OptionActivity.this, MyPalaceActivity.class);
@@ -310,5 +393,26 @@ public class OptionActivity extends AppCompatActivity {
         super.onDestroy();
         //clean.cleanExternalCache(MyPalaceActivity.this);
         ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        switch (requestCode){
+            case 1:
+                if (grantResults.length > 0){
+                    for (int result:grantResults){
+                        if(result != PackageManager.PERMISSION_GRANTED){
+                            Toast.makeText(this,R.string.permission_hint,Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    requestAds();
+                }
+                else{
+                    Toast.makeText(this,R.string.AD_error,Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+        }
     }
 }

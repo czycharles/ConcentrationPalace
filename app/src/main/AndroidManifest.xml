@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,6 +20,20 @@
         android:supportsRtl="true"
         android:fullBackupContent="@xml/backup_rules"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="BaiduMobAd_APP_ID"
+            android:value="e4ba4c7c" />
+
+        <provider
+            android:name="com.baidu.mobads.openad.FileProvider"
+            android:authorities="${packageName}.bd.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/bd_file_paths" />
+        </provider>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.charles.concentrationpalace.fileprovider"
@@ -83,8 +98,9 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"/>
-        <service android:name="com.qq.e.comm.DownloadService" android:exported="false" />
-        <activity android:name="com.qq.e.ads.ADActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+        <activity android:name="com.baidu.mobads.AppActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>
