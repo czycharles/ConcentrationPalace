@@ -9,12 +9,12 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -45,14 +45,19 @@ public class OptionActivity extends AppCompatActivity {
     int house_slot4;
     int luwei_slot5;
 
+    int AD_time;
+
     SharedPreferences data;
+    SharedPreferences.Editor editor;
 
     int my_coin;
     int origin_coin = 200;
+    int AD_coin;
 
     TextView coin_display;
     TextView option_title;
     TextView option_msg;
+    TextView AD_hint;
 
     Animation animation1;
     TextView process;
@@ -101,8 +106,29 @@ public class OptionActivity extends AppCompatActivity {
         stone_slot3 = data.getInt("slot3", 0);
         house_slot4 = data.getInt("slot4", 0);
         luwei_slot5 = data.getInt("slot5",0);
+        AD_time = data.getInt("AD_time",0);
 
         AD_btn= findViewById(R.id.opt3_button);
+
+        AD_hint = findViewById(R.id.ad_hint);
+        AD_hint.setText(String.format(getResources().getString(R.string.AD_hint),AD_time));
+
+        Button info_button = findViewById(R.id.info_button);
+        info_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder InfoAlert = new AlertDialog.Builder(OptionActivity.this);
+                InfoAlert.setMessage(R.string.lotus_opt3_desc);
+                InfoAlert.setCancelable(false);
+                InfoAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface InfoAlert, int i) {
+                        InfoAlert.cancel();
+                    }
+                });
+                InfoAlert.show();
+            }
+        });
 
         List<String> permissionList = new ArrayList<>();
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
@@ -202,7 +228,7 @@ public class OptionActivity extends AppCompatActivity {
                 WarnAlert.setTitle(R.string.focus_title);
                 WarnAlert.setMessage(R.string.focus_hint);
                 WarnAlert.setCancelable(false);
-                WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                WarnAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface WarnAlert, int i) {
                         Intent intent = new Intent(OptionActivity.this, WaitingActivity.class);
@@ -216,7 +242,7 @@ public class OptionActivity extends AppCompatActivity {
                         }
                     }
                 });
-                WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                WarnAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface WarnAlert, int i) {
                         WarnAlert.cancel();
@@ -233,7 +259,7 @@ public class OptionActivity extends AppCompatActivity {
                 WarnAlert.setTitle(R.string.focus_title);
                 WarnAlert.setMessage(R.string.focus_hint);
                 WarnAlert.setCancelable(false);
-                WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                WarnAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface WarnAlert, int i) {
                         Intent intent = new Intent(OptionActivity.this, WaitingActivity.class);
@@ -247,7 +273,7 @@ public class OptionActivity extends AppCompatActivity {
                         }
                     }
                 });
-                WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                WarnAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface WarnAlert, int i) {
                         WarnAlert.cancel();
@@ -264,7 +290,7 @@ public class OptionActivity extends AppCompatActivity {
                 WarnAlert.setTitle(R.string.focus_title);
                 WarnAlert.setMessage(R.string.focus_hint);
                 WarnAlert.setCancelable(false);
-                WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                WarnAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface WarnAlert, int i) {
                         Intent intent = new Intent(OptionActivity.this, WaitingActivity.class);
@@ -278,7 +304,7 @@ public class OptionActivity extends AppCompatActivity {
                         }
                     }
                 });
-                WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                WarnAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface WarnAlert, int i) {
                         WarnAlert.cancel();
@@ -295,7 +321,7 @@ public class OptionActivity extends AppCompatActivity {
                 WarnAlert.setTitle(R.string.focus_title);
                 WarnAlert.setMessage(R.string.focus_hint);
                 WarnAlert.setCancelable(false);
-                WarnAlert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                WarnAlert.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface WarnAlert, int i) {
                         Intent intent = new Intent(OptionActivity.this, WaitingActivity.class);
@@ -309,7 +335,7 @@ public class OptionActivity extends AppCompatActivity {
                         }
                     }
                 });
-                WarnAlert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                WarnAlert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface WarnAlert, int i) {
                         WarnAlert.cancel();
@@ -319,56 +345,98 @@ public class OptionActivity extends AppCompatActivity {
             }
         });
 
-        Button share_btn = findViewById(R.id.opt2_button);
-
-        share_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(OptionActivity.this, MyPalaceActivity.class);
-                intent.putExtra("Share_Action",1);
-                startActivity(intent);
-            }
-        });
+//        Button share_btn = findViewById(R.id.opt2_button);
+//
+//        share_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v){
+//                Intent intent = new Intent(OptionActivity.this, MyPalaceActivity.class);
+//                intent.putExtra("Share_Action",1);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     private void requestAds(){
+
+        final CountDownTimer mc1;
+
+        mc1 = new CountDownTimer(5000, 1000) {
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                int random = (int)(Math.random()*10);
+                if(random >= 9)
+                    AD_coin = 15;
+                else if(random >= 8)
+                    AD_coin = 12;
+                else if(random >= 5)
+                    AD_coin = 10;
+                else if(random >= 2)
+                    AD_coin = 8;
+                else if(random >= 0)
+                    AD_coin = 5;
+
+                my_coin = my_coin+AD_coin;
+                editor.putInt("my_coin", my_coin);
+                editor.apply();
+                coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+                Toast.makeText(OptionActivity.this,String.format(getResources().getString(R.string.AD_coin_hint),AD_coin),Toast.LENGTH_LONG).show();
+            }
+        };
+
+        editor = getSharedPreferences("data", MODE_PRIVATE).edit();
         AdSettings.setSupportHttps(true);
-        String adPlaceId = "5545249";//重要： 请填上你的代码位ID,否则无法请求到广告
+        String adPlaceId = "5544509";//重要： 请填上你的代码位ID,否则无法请求到广告
         interAd = new InterstitialAd(this, adPlaceId);
         interAd.setListener(new InterstitialAdListener(){
             @Override
             public void onAdClick(InterstitialAd arg0) {
-                Toast.makeText(OptionActivity.this,"onAdClick",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(OptionActivity.this,"onAdClick",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onAdDismissed() {
-                Toast.makeText(OptionActivity.this,"onAdDismissed",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(OptionActivity.this,"onAdDismissed",Toast.LENGTH_SHORT).show();
+                mc1.cancel();
                 interAd.loadAd();
             }
 
             @Override
             public void onAdFailed(String arg0) {
-                Log.i("InterstitialAd", "onAdFailed:"+arg0);
-                Toast.makeText(OptionActivity.this,"onAdFailed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(OptionActivity.this,R.string.AD_fail_hint,Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onAdPresent() {
-                Toast.makeText(OptionActivity.this,"onAdPresent",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(OptionActivity.this,"onAdPresent",Toast.LENGTH_SHORT).show();
+                Toast.makeText(OptionActivity.this,R.string.AD_begin_hint,Toast.LENGTH_SHORT).show();
+                AD_time--;
+                editor.putInt("AD_time", AD_time);
+                editor.apply();
+                AD_hint.setText(String.format(getResources().getString(R.string.AD_hint),AD_time));
+                mc1.start();
             }
 
             @Override
             public void onAdReady() {
-                Toast.makeText(OptionActivity.this,"onAdReady",Toast.LENGTH_SHORT).show();
+                Toast.makeText(OptionActivity.this,R.string.AD_load_hint,Toast.LENGTH_LONG).show();
             }
         });
 
         interAd.loadAd();
+
         AD_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (interAd.isAdReady()) {
+                if(AD_time<=0){
+                    Toast.makeText(OptionActivity.this,R.string.AD_no_time_hint,Toast.LENGTH_LONG).show();
+                }
+                else if (interAd.isAdReady()) {
                     interAd.showAd(OptionActivity.this);
                 } else {
                     interAd.loadAd();

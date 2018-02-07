@@ -116,6 +116,8 @@ public class CP_MainActivity extends AppCompatActivity {
                     editor.apply();
                     editor.putBoolean("slot5_crash", false);
                     editor.apply();
+                    editor.putInt("AD_time", 3);
+                    editor.apply();
                     Intent intent = new Intent(CP_MainActivity.this, TutorialActivity.class);
                     startActivity(intent);
                     if (version > 5) {

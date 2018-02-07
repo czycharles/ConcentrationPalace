@@ -55,6 +55,10 @@ public class WaitingActivity extends AppCompatActivity {
     int my_coin;
     int origin_coin = 200;
     int coin_gain = 0;
+    int cost_coin = 0;
+
+    int AD_time;
+    int AD_time_gain = 0;
 
     TextView coin_display;
 
@@ -101,7 +105,9 @@ public class WaitingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         building_slot = intent.getIntExtra("building_slot", 0);
         int building_time = intent.getIntExtra("building_time", 0);
-        coin_gain = intent.getIntExtra("building_coin", 100);
+        coin_gain = intent.getIntExtra("building_coin", 10);
+        cost_coin = intent.getIntExtra("building_price",0);
+        AD_time_gain = building_time/10;
         mc = new MyCount(building_time, 1000);
         mc.start();
         mpMediaPlayer = MediaPlayer.create(this, R.raw.bgm_maoudamashii_piano41);
@@ -122,6 +128,7 @@ public class WaitingActivity extends AppCompatActivity {
         stone_slot3 = data.getInt("slot3", 0);
         house_slot4 = data.getInt("slot4", 0);
         luwei_slot5 = data.getInt("slot5", 0);
+        AD_time = data.getInt("AD_time",0);
 
         animation1 = AnimationUtils.loadAnimation(WaitingActivity.this, R.anim.fade_in);
         Waiting = findViewById(R.id.Waiting_ui);
@@ -311,14 +318,21 @@ public class WaitingActivity extends AppCompatActivity {
 
     @Override
     public void onTrimMemory(int level) {
+
+        editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+
         if ((level == TRIM_MEMORY_UI_HIDDEN)&&(building_slot >= 0)) {
             countdown.setText(R.string.fail_hint);
             mc.cancel();
             if (building_slot == 0)
                 Toast.makeText(WaitingActivity.this, R.string.point_fail_hint, Toast.LENGTH_LONG).show();
-            else
-                Toast.makeText(WaitingActivity.this, R.string.build_fail_hint, Toast.LENGTH_LONG).show();
-            editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+            else {
+                AD_time_gain = cost_coin/40;
+                AD_time = AD_time + AD_time_gain;
+                editor.putInt("AD_time", AD_time);
+                editor.apply();
+                Toast.makeText(WaitingActivity.this, String.format(getResources().getString(R.string.build_fail_hint),AD_time_gain), Toast.LENGTH_LONG).show();
+            }
             switch (building_slot) {
                 case 1:
                     slot1_crash = true;
@@ -389,6 +403,9 @@ public class WaitingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
+
+        editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+
         if(building_slot > 0) {
             AlertDialog.Builder failAlert = new AlertDialog.Builder(WaitingActivity.this);
             failAlert.setTitle(R.string.alert_title);
@@ -400,8 +417,15 @@ public class WaitingActivity extends AppCompatActivity {
             failAlert.setPositiveButton(R.string.exit_button, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface failAlert, int i) {
-                    Toast.makeText(WaitingActivity.this, R.string.build_fail_hint, Toast.LENGTH_LONG).show();
-                    mc.cancel();
+                    if (building_slot == 0)
+                        Toast.makeText(WaitingActivity.this, R.string.point_fail_hint, Toast.LENGTH_LONG).show();
+                    else {
+                        AD_time_gain = cost_coin/40;
+                        AD_time = AD_time + AD_time_gain;
+                        editor.putInt("AD_time", AD_time);
+                        editor.apply();
+                        Toast.makeText(WaitingActivity.this, String.format(getResources().getString(R.string.build_fail_hint),AD_time_gain), Toast.LENGTH_LONG).show();
+                    }                    mc.cancel();
                     editor = getSharedPreferences("data", MODE_PRIVATE).edit();
                     switch (building_slot) {
                         case 1:
@@ -562,10 +586,12 @@ public class WaitingActivity extends AppCompatActivity {
 
                 case 0:
                     my_coin = my_coin + coin_gain;
+                    AD_time = AD_time + AD_time_gain;
                     coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
                     editor.putInt("my_coin", my_coin);
+                    editor.putInt("AD_time", AD_time);
                     editor.apply();
-                    item_desc.setText(String.format(getResources().getString(R.string.gain_coin_success_hint), coin_gain));
+                    item_desc.setText(String.format(getResources().getString(R.string.gain_coin_success_hint), coin_gain, AD_time_gain));
                     break;
                 case 1:
                     flower_slot1++;

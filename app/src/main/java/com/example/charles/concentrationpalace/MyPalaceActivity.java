@@ -498,6 +498,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                                 Intent intent = new Intent(MyPalaceActivity.this, WaitingActivity.class);
                                                 intent.putExtra("building_slot", 1);
                                                 intent.putExtra("building_time", next_building_time);
+                                                intent.putExtra("building_price",price_matrix[0][flower_slot1]);
                                                 startActivity(intent);
                                                 int version = Build.VERSION.SDK_INT;
                                                 if (version > 5) {
@@ -583,6 +584,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                                 Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                                 intent.putExtra("building_slot",4);
                                                 intent.putExtra("building_time",next_building_time);
+                                                intent.putExtra("building_price",price_matrix[3][house_slot4]);
                                                 startActivity(intent);
                                                 int version = Build.VERSION.SDK_INT;
                                                 if(version > 5 ){
@@ -668,6 +670,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                                 Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                                 intent.putExtra("building_slot",3);
                                                 intent.putExtra("building_time",next_building_time);
+                                                intent.putExtra("building_price",price_matrix[2][stone_slot3]);
                                                 startActivity(intent);
                                                 int version = Build.VERSION.SDK_INT;
                                                 if(version > 5 ){
@@ -753,6 +756,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                                 Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                                 intent.putExtra("building_slot",2);
                                                 intent.putExtra("building_time",next_building_time);
+                                                intent.putExtra("building_price",price_matrix[1][tree_slot2]);
                                                 startActivity(intent);
                                                 int version = Build.VERSION.SDK_INT;
                                                 if(version > 5 ){
@@ -839,6 +843,7 @@ public class MyPalaceActivity extends AppCompatActivity implements OnClickListen
                                                 Intent intent = new Intent(MyPalaceActivity.this,WaitingActivity.class);
                                                 intent.putExtra("building_slot",5);
                                                 intent.putExtra("building_time",next_building_time);
+                                                intent.putExtra("building_price",price_matrix[4][luwei_slot5]);
                                                 startActivity(intent);
                                                 int version = Build.VERSION.SDK_INT;
                                                 if(version > 5 ){

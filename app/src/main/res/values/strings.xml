@@ -37,10 +37,10 @@
     <string name="focus_title">开始收集专注度？</string>
 	<string name="focus_hint">一旦开始保持专注，任何返回桌面、打开其他应用的行为都可能会导致当前的收集或建造行为失败。</string>
     <string name="build_begin_hint">已开始建造，请离开手机一段时间，直到倒计时结束。</string>
-    <string name="gain_coin_success_hint">恭喜！你已获得%1$d专注度。</string>
+    <string name="gain_coin_success_hint">恭喜！你已获得%1$d专注度和%2$d次广告机会。</string>
 	<string name="fail_hint">失败</string>
 	<string name="point_fail_hint">抱歉，你使用了手机，本次未获得专注度。</string>
-    <string name="build_fail_hint">抱歉，你使用了手机，该位置已坍塌，需要花费专注度恢复原有进度。</string>
+    <string name="build_fail_hint">抱歉，你使用了手机，该位置已坍塌，需要花费专注度恢复原有进度。不要灰心，你额外获得%1$d广告次数</string>
 
 	<string name="waiting_hint">保持专注\n升级将在倒计时结束后完成</string>
 	<string name="waiting_hint1">自从树叶落在某个伟人的额头上后，\n就成为了专注的象征。</string>
@@ -79,9 +79,15 @@
 	<string name="finish_msg">你已经完成了专注禅院的建设，\n点击发光的荷花观看结局。</string>
 	<string name="lotus_opt1">远离手机</string>
 	<string name="lotus_opt2">分享</string>
-	<string name="lotus_opt2_desc">每日首次分享 +10专注度</string>
-	<string name="lotus_opt3">观看一段广告 +10专注度</string>
-	<string name="time_title">选择远离手机的时间，你会获得对应的专注度。</string>
+	<string name="lotus_opt3">更多专注度</string>
+	<string name="lotus_opt3_desc">每保持10分钟专注，就可以获得一次观看广告的机会，观看5s就可随机获得5到15专注度。</string>
+    <string name="AD_hint">目前还有%1$d次机会。</string>
+    <string name="AD_fail_hint">目前暂无广告，请稍后再试。</string>
+    <string name="AD_no_time_hint">您目前没有广告次数，每保持10分钟专注可获得一次。</string>
+    <string name="AD_coin_hint">您已观看足够时间，本次获得%1$d专注度。</string>
+    <string name="AD_begin_hint">观看5秒即可获得奖励。</string>
+    <string name="AD_load_hint">广告已加载完毕，如果没有播放，请再点击一次按钮，不会扣除次数。</string>
+    <string name="time_title">选择远离手机的时间，你会获得对应的专注度。</string>
 	<string name="time_opt">保持%1$d分钟专注</string>
 	<string name="prologue_1">人们从过往的废墟中铭记历史，</string>
 	<string name="prologue_2">然后从过往的历史中学会专注。</string>
