@@ -107,7 +107,7 @@ public class WaitingActivity extends AppCompatActivity {
         int building_time = intent.getIntExtra("building_time", 0);
         coin_gain = intent.getIntExtra("building_coin", 10);
         cost_coin = intent.getIntExtra("building_price",0);
-        AD_time_gain = building_time/10;
+        AD_time_gain = building_time/1000/60/10;
         mc = new MyCount(building_time, 1000);
         mc.start();
         mpMediaPlayer = MediaPlayer.create(this, R.raw.bgm_maoudamashii_piano41);

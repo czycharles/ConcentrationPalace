@@ -424,7 +424,7 @@ public class OptionActivity extends AppCompatActivity {
 
             @Override
             public void onAdReady() {
-                Toast.makeText(OptionActivity.this,R.string.AD_load_hint,Toast.LENGTH_LONG).show();
+                Toast.makeText(OptionActivity.this,R.string.AD_load_hint,Toast.LENGTH_SHORT).show();
             }
         });
 
