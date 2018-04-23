@@ -30,6 +30,12 @@ import com.baidu.mobads.AdSettings;
 import com.baidu.mobads.InterstitialAd;
 import com.baidu.mobads.InterstitialAdListener;
 
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +43,7 @@ import java.util.List;
  * Get coin option activity.
  */
 
-public class OptionActivity extends AppCompatActivity {
+public class OptionActivity extends AppCompatActivity implements RewardedVideoAdListener {
 
     int flower_slot1;
     int tree_slot2;
@@ -66,6 +72,7 @@ public class OptionActivity extends AppCompatActivity {
     LinearLayout Time_select_page;
 
     InterstitialAd interAd;
+    RewardedVideoAd mRewardedVideoAd;
     Button AD_btn;
 
     int[] time_num = {10,30,60,120};
@@ -88,6 +95,12 @@ public class OptionActivity extends AppCompatActivity {
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_option);
+
+        MobileAds.initialize(this, "ca-app-pub-7673009663565218~2558432815");
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mRewardedVideoAd.setRewardedVideoAdListener(this);
+
+        loadRewardedVideoAd();
 
         Option_select_page = findViewById(R.id.option_page);
         Time_select_page = findViewById(R.id.time_select_page);
@@ -357,6 +370,11 @@ public class OptionActivity extends AppCompatActivity {
 //        });
     }
 
+    private void loadRewardedVideoAd() {
+        mRewardedVideoAd.loadAd("ca-app-pub-7673009663565218/1633321813",
+                new AdRequest.Builder().build());
+    }
+
     private void requestAds(){
 
         final CountDownTimer mc1;
@@ -428,7 +446,7 @@ public class OptionActivity extends AppCompatActivity {
             }
         });
 
-        interAd.loadAd();
+        //interAd.loadAd();
 
         AD_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -436,10 +454,10 @@ public class OptionActivity extends AppCompatActivity {
                 if(AD_time<=0){
                     Toast.makeText(OptionActivity.this,R.string.AD_no_time_hint,Toast.LENGTH_LONG).show();
                 }
-                else if (interAd.isAdReady()) {
-                    interAd.showAd(OptionActivity.this);
+                else if (mRewardedVideoAd.isLoaded()) {
+                    mRewardedVideoAd.show();
                 } else {
-                    interAd.loadAd();
+                    loadRewardedVideoAd();
                 }
             }
         });
@@ -458,9 +476,22 @@ public class OptionActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        mRewardedVideoAd.destroy(this);
         super.onDestroy();
         //clean.cleanExternalCache(MyPalaceActivity.this);
         ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public void onResume() {
+        mRewardedVideoAd.resume(this);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        mRewardedVideoAd.pause(this);
+        super.onPause();
     }
 
     @Override
@@ -482,5 +513,64 @@ public class OptionActivity extends AppCompatActivity {
                 break;
             default:
         }
+    }
+
+    //Google
+    @Override
+    public void onRewarded(RewardItem reward) {
+        int random = (int)(Math.random()*10);
+        if(random >= 9)
+            AD_coin = 15;
+        else if(random >= 8)
+            AD_coin = 12;
+        else if(random >= 5)
+            AD_coin = 10;
+        else if(random >= 2)
+            AD_coin = 8;
+        else if(random >= 0)
+            AD_coin = 5;
+
+        my_coin = my_coin+AD_coin;
+        editor.putInt("my_coin", my_coin);
+        editor.apply();
+        coin_display.setText(String.format(getResources().getString(R.string.coin_bar), my_coin));
+        Toast.makeText(OptionActivity.this,String.format(getResources().getString(R.string.AD_coin_hint),AD_coin),Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+        Toast.makeText(this, "onRewardedVideoAdLeftApplication",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+        loadRewardedVideoAd();
+        Toast.makeText(this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int errorCode) {
+        Toast.makeText(OptionActivity.this,R.string.AD_fail_hint,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+        Toast.makeText(OptionActivity.this,R.string.AD_load_hint,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+        Toast.makeText(this, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+        Toast.makeText(this, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoCompleted() {
+        Toast.makeText(this, "onRewardedVideoCompleted", Toast.LENGTH_SHORT).show();
     }
 }
